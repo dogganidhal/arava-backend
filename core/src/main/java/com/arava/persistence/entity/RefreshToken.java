@@ -1,10 +1,12 @@
 package com.arava.persistence.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * Created by Nidhal Dogga
@@ -14,11 +16,30 @@ import javax.validation.constraints.NotBlank;
 
 
 @Data
+@Builder
 @Entity
-@EqualsAndHashCode(callSuper = true)
-public class RefreshToken extends AbstractEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class RefreshToken {
 
-  @NotBlank
+  @Id
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
   private String token;
+
+  @CreationTimestamp
+  @Column
+  private Date created;
+
+  @UpdateTimestamp
+  @Column
+  private Date updated;
+
+  @Column
+  @Builder.Default
+  private Boolean revoked = false;
+
+  @ManyToOne
+  private User user;
 
 }

@@ -1,11 +1,18 @@
 package com.arava.rest.configuration;
 
+import com.arava.persistence.entity.RefreshToken;
+import com.arava.persistence.repository.RefreshTokenRepository;
+import com.arava.persistence.repository.UserRepository;
+import com.arava.rest.exception.ApiException;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Created by Nidhal Dogga
@@ -23,19 +30,17 @@ public class JwtTokenProvider {
   @Value("${jwt.expiration}")
   private int jwtExpirationInMs;
 
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private RefreshTokenRepository refreshTokenRepository;
+
   public String generateToken(Authentication authentication) {
 
     UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+    return generateForUser(userPrincipal.getUsername());
 
-    Date now = new Date();
-    Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-
-    return Jwts.builder()
-            .setSubject(userPrincipal.getUsername())
-            .setIssuedAt(new Date())
-            .setExpiration(expiryDate)
-            .signWith(SignatureAlgorithm.HS512, jwtSecret)
-            .compact();
   }
 
   public String getUsernameFromJWT(String token) {
@@ -45,6 +50,17 @@ public class JwtTokenProvider {
             .getBody();
 
     return claims.getSubject();
+  }
+
+  public String refresh(String refreshToken) throws ApiException {
+    Optional<RefreshToken> token = refreshTokenRepository.findById(refreshToken);
+    if (!token.isPresent()) {
+      throw ApiException.builder()
+              .status(HttpStatus.UNAUTHORIZED)
+              .message(String.format("No refresh token with id '%s' was found", refreshToken))
+              .build();
+    }
+    return generateForUser(token.get().getUser().getEmail());
   }
 
   public boolean validateToken(String authToken) {
@@ -64,4 +80,17 @@ public class JwtTokenProvider {
     }
     return false;
   }
+
+  private String generateForUser(String username) {
+    Date now = new Date();
+    Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+
+    return Jwts.builder()
+            .setSubject(username)
+            .setIssuedAt(new Date())
+            .setExpiration(expiryDate)
+            .signWith(SignatureAlgorithm.HS512, jwtSecret)
+            .compact();
+  }
+
 }

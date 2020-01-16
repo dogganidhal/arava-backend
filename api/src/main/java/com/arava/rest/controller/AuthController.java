@@ -1,15 +1,17 @@
 package com.arava.rest.controller;
 
+import com.arava.business.manager.AccessManager;
 import com.arava.persistence.entity.User;
 import com.arava.persistence.repository.UserRepository;
 import com.arava.rest.configuration.JwtTokenProvider;
+import com.arava.rest.configuration.UserPrincipal;
+import com.arava.rest.dto.request.RefreshAuthRequest;
 import com.arava.rest.dto.request.SignUpRequest;
 import com.arava.rest.dto.request.LoginRequest;
 import com.arava.rest.dto.response.JwtAuthenticationResponse;
 import com.arava.rest.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,18 +41,23 @@ public class AuthController {
   @Value("${jwt.token-type}")
   private String tokenType;
 
-  @Autowired
-  AuthenticationManager authenticationManager;
+  @Value("${jwt.expiration}")
+  private Long jwtExpirationInMs;
 
   @Autowired
-  UserRepository userRepository;
+  private AuthenticationManager authenticationManager;
 
   @Autowired
-  PasswordEncoder passwordEncoder;
+  private UserRepository userRepository;
 
   @Autowired
-  JwtTokenProvider tokenProvider;
+  private PasswordEncoder passwordEncoder;
 
+  @Autowired
+  private JwtTokenProvider tokenProvider;
+
+  @Autowired
+  private AccessManager accessManager;
 
   @PostMapping("/login")
   public JwtAuthenticationResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ApiException {
@@ -97,6 +104,17 @@ public class AuthController {
     return ResponseEntity.created(location).body(authenticationResponse);
   }
 
+  @PostMapping("/refresh")
+  public JwtAuthenticationResponse refresh(@RequestBody RefreshAuthRequest request) {
+    String jwt = tokenProvider.refresh(request.getRefreshToken());
+    return JwtAuthenticationResponse.builder()
+            .accessToken(jwt)
+            .tokenType(tokenType)
+            .expiresIn(jwtExpirationInMs)
+            .refreshToken(request.getRefreshToken())
+            .build();
+  }
+
   private JwtAuthenticationResponse authenticate(String email, String password) {
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(email, password)
@@ -104,10 +122,16 @@ public class AuthController {
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
+    UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+
     String jwt = tokenProvider.generateToken(authentication);
+    String refreshToken = accessManager.generateRefreshTokenById(principal.getId()).getToken();
+
     return JwtAuthenticationResponse.builder()
             .accessToken(jwt)
             .tokenType(tokenType)
+            .expiresIn(jwtExpirationInMs)
+            .refreshToken(refreshToken)
             .build();
   }
 

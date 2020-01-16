@@ -1,4 +1,4 @@
-package com.arava.rest.dto.response;
+package com.arava.rest.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,23 +7,17 @@ import lombok.NoArgsConstructor;
 
 /**
  * Created by Nidhal Dogga
- * Date : 15/01/2020 23:33
+ * Date : 16/01/2020 08:33
  * All rights reserved.
  */
 
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class JwtAuthenticationResponse {
-
-  private String accessToken;
-
-  private String tokenType;
+public class RefreshAuthRequest {
 
   private String refreshToken;
-
-  private Long expiresIn;
 
 }

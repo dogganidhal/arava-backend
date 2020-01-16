@@ -1,7 +1,6 @@
 package com.arava.persistence.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -14,7 +13,10 @@ import javax.persistence.ManyToOne;
 
 
 @Data
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Favorite extends AbstractEntity {
 
