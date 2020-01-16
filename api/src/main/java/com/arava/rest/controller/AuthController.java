@@ -42,7 +42,7 @@ public class AuthController {
   private String tokenType;
 
   @Value("${jwt.expiration}")
-  private Long jwtExpirationInMs;
+  private Long jwtExpiration;
 
   @Autowired
   private AuthenticationManager authenticationManager;
@@ -110,7 +110,7 @@ public class AuthController {
     return JwtAuthenticationResponse.builder()
             .accessToken(jwt)
             .tokenType(tokenType)
-            .expiresIn(jwtExpirationInMs)
+            .expiresIn(jwtExpiration)
             .refreshToken(request.getRefreshToken())
             .build();
   }
@@ -130,7 +130,7 @@ public class AuthController {
     return JwtAuthenticationResponse.builder()
             .accessToken(jwt)
             .tokenType(tokenType)
-            .expiresIn(jwtExpirationInMs)
+            .expiresIn(jwtExpiration)
             .refreshToken(refreshToken)
             .build();
   }

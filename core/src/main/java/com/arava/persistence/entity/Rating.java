@@ -24,7 +24,7 @@ public class Rating extends AbstractEntity {
 
   @Column
   @NotBlank
-  private Integer score;
+  private Double score;
 
   @ManyToOne
   private Poi poi;

@@ -25,9 +25,11 @@ public class Comment extends AbstractEntity {
   @ManyToOne
   private User user;
 
+  @ManyToOne
+  private Poi poi;
+
   @Column
   @NotBlank
   private String content;
-
 
 }

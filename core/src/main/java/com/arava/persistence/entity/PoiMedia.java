@@ -15,22 +15,13 @@ import javax.validation.constraints.NotBlank;
 
 
 @Data
-@Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class PoiMedia extends AbstractEntity {
+public class PoiMedia extends Media {
 
   @ManyToOne
   private Poi poi;
-
-  @Column
-  @NotBlank
-  private String url;
-
-  @Column
-  @NotBlank
-  private String mediaType;
 
 }

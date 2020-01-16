@@ -53,6 +53,9 @@ public class User extends AbstractEntity {
   @OneToMany
   private List<Favorite> favorites;
 
+  @ManyToOne
+  private Media avatar;
+
   @Transient
   private List<Role> roles;
 

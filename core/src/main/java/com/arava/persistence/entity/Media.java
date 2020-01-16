@@ -4,16 +4,14 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 /**
  * Created by Nidhal Dogga
- * Date : 14/01/2020 07:34
+ * Date : 16/01/2020 23:55
  * All rights reserved.
  */
+
 
 @Data
 @Builder
@@ -21,16 +19,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class PoiCategorySection extends AbstractEntity {
+public class Media extends AbstractEntity {
 
   @Column
   @NotBlank
-  private String name;
+  private String url;
 
-  @ManyToOne
-  private PoiMedia icon;
-
-  @OneToMany
-  private List<PoiCategory> categories;
+  @Column
+  @NotBlank
+  private String mediaType;
 
 }

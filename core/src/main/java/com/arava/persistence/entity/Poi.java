@@ -17,10 +17,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Poi extends AbstractEntity {
 
-  @Column
-  @NotBlank
-  private String title;
-
   @OneToOne
   private PoiDetails details;
 
@@ -35,6 +31,9 @@ public class Poi extends AbstractEntity {
 
   @OneToMany
   private List<PoiMedia> medias;
+
+  @OneToMany
+  private List<Comment> comments;
 
   @Column
   @NotBlank

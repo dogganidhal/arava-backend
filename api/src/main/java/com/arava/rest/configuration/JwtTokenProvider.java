@@ -28,10 +28,7 @@ public class JwtTokenProvider {
   private String jwtSecret;
 
   @Value("${jwt.expiration}")
-  private int jwtExpirationInMs;
-
-  @Autowired
-  private UserRepository userRepository;
+  private int jwtExpiration;
 
   @Autowired
   private RefreshTokenRepository refreshTokenRepository;
@@ -83,7 +80,7 @@ public class JwtTokenProvider {
 
   private String generateForUser(String username) {
     Date now = new Date();
-    Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+    Date expiryDate = new Date(now.getTime() + jwtExpiration * 1000);
 
     return Jwts.builder()
             .setSubject(username)

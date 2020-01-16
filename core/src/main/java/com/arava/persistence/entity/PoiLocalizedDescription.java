@@ -29,6 +29,10 @@ public class PoiLocalizedDescription extends AbstractEntity {
 
   @Column
   @NotBlank
+  private String title;
+
+  @Column
+  @NotBlank
   private String description;
 
   @Transient

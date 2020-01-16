@@ -3,6 +3,7 @@ package com.arava.persistence.entity;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by Nidhal Dogga
@@ -15,5 +16,8 @@ import javax.persistence.Entity;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class PoiCategory extends PoiCategorySection {
+
+  @ManyToOne
+  private PoiCategorySection section;
 
 }
