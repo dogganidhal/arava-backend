@@ -1,0 +1,25 @@
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+    jcenter()
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+
+dependencies {
+
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-mail:$springBootVersion"
+    compile "de.codecentric:spring-boot-admin-starter-client:$springBootAdminVersion"
+    compile "de.codecentric:spring-boot-admin-starter-server:$springBootAdminVersion"
+    compile "org.hibernate:hibernate-spatial:5.2.12.Final"
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+}

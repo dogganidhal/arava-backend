@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/avara
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+jwt:
+  secret: f9408b20-98fd-4501-8daa-20468e3731ff
+  expiration: 864_000_000
+  token-type: "Bearer"

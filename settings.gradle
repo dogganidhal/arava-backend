@@ -1,0 +1,4 @@
+rootProject.name = 'arava-backend'
+
+include ':api', ':core', ':admin'
+
