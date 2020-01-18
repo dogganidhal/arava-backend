@@ -1,6 +1,7 @@
 package com.arava.persistence.entity;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,25 +32,13 @@ public class PoiLocalizedDescription extends AbstractEntity {
   @NotBlank
   private String title;
 
-  @Column
+  @Column(length = 8192)
   @NotBlank
   private String description;
 
   @Transient
-  private Language language;
-
-  @PostLoad
-  private void fillLanguage() {
-    if (languageCode != null) {
-      language = Language.fromCode(languageCode);
-    }
-  }
-
-  @PrePersist
-  private void fillLanguageCode() {
-    if (language != null) {
-      languageCode = language.getCode();
-    }
+  public Language getLanguage() {
+    return Language.fromCode(getLanguageCode());
   }
 
 }

@@ -1,6 +1,7 @@
 package com.arava.rest.controller;
 
 import com.arava.rest.exception.ApiException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
+@Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler({ ApiException.class })
@@ -33,6 +35,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler({ Exception.class })
   public ResponseEntity<ApiException> handleInternalException(Exception exception, WebRequest request) {
+    log.error(exception.getLocalizedMessage(), exception);
     return new ResponseEntity<>(
             ApiException.INTERNAL_SERVER_ERROR,
             new HttpHeaders(),

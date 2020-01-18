@@ -2,7 +2,6 @@ package com.arava.persistence.entity;
 
 
 import lombok.*;
-import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -30,18 +29,22 @@ public class Poi extends AbstractEntity {
   private List<Rating> ratings;
 
   @OneToMany
-  private List<PoiMedia> medias;
+  private List<Media> medias;
 
   @OneToMany
   private List<Comment> comments;
 
   @Column
   @NotBlank
-  private Point coordinate;
+  private Double latitude;
 
   @Column
-  @Enumerated(EnumType.STRING)
-  private Island island;
+  @NotBlank
+  private Double longitude;
+
+  @Column
+  @NotBlank
+  private String island;
 
   @Column
   @Builder.Default

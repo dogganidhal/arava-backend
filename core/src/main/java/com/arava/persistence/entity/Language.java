@@ -14,9 +14,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Language {
 
-  FRENCH("fr_FR", "French"),
-  ENGLISH("en_US", "English"),
-  CHINESE("zh_CN", "Chinese");
+  FRENCH("fr", "French"),
+  ENGLISH("en", "English"),
+  CHINESE("cn", "Chinese");
 
   private String code;
   private String name;

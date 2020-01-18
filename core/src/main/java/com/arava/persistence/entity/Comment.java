@@ -23,7 +23,7 @@ import javax.validation.constraints.NotBlank;
 public class Comment extends AbstractEntity {
 
   @ManyToOne
-  private User user;
+  private User author;
 
   @ManyToOne
   private Poi poi;

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  * Created by Nidhal Dogga
@@ -34,19 +35,19 @@ public class PoiDetails extends AbstractEntity {
   @Column
   private String email;
 
-  @Column
+  @Column(length = 1024)
   private String website;
 
-  @Column
+  @Column(length = 1024)
   private String facebookUrl;
 
-  @Column
+  @Column(length = 1024)
   private String instagramAccount;
 
   @Column
-  private Date openingHour;
+  private Time openingHour;
 
   @Column
-  private Date closingHour;
+  private Time closingHour;
 
 }

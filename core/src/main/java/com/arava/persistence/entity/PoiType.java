@@ -21,14 +21,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class PoiCategorySection extends AbstractEntity {
+public class PoiType extends AbstractEntity {
 
   @Column
   @NotBlank
   private String name;
 
   @ManyToOne
-  private PoiMedia icon;
+  private Media icon;
 
   @OneToMany
   private List<PoiCategory> categories;

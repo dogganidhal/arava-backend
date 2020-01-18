@@ -1,7 +1,6 @@
 package com.arava.rest.dto.request;
 
 import com.arava.indexer.query.SearchQuery;
-import com.arava.persistence.entity.Island;
 import com.arava.rest.dto.LatLng;
 import lombok.*;
 import org.springframework.data.geo.Point;
@@ -20,7 +19,7 @@ import org.springframework.data.geo.Point;
 public class SearchRequest {
 
   private String title;
-  private Island island;
+  private String island;
   private String category;
   private Region region;
   private SearchSort sort;
@@ -29,7 +28,7 @@ public class SearchRequest {
     return SearchQuery.builder()
             .title(title)
             .category(category)
-            .island(island.name())
+            .island(island)
             .region(SearchQuery.Region.builder()
                     .center(new Point(
                             region.getCenter().getLatitude(),

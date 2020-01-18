@@ -29,4 +29,7 @@ public class Rating extends AbstractEntity {
   @ManyToOne
   private Poi poi;
 
+  @ManyToOne
+  private User author;
+
 }

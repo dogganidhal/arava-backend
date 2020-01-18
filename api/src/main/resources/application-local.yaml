@@ -5,15 +5,16 @@ spring:
     password: root
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
-  data:
-    mongodb:
-      uri: mongodb+srv://root:root@localhost:27017/arava
   jpa:
     hibernate:
       ddl-auto: update
     generate-ddl: true
-    show-sql: true
 jwt:
   secret: f9408b20-98fd-4501-8daa-20468e3731ff
   expiration: 3600
   token-type: "Bearer"
+hibernate:
+  search:
+    default:
+      directory_provider: filesystem
+      indexBase: /data/arava/index/default
