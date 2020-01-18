@@ -9,6 +9,8 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
+  main:
+    allow-bean-definition-overriding: true
 jwt:
   secret: f9408b20-98fd-4501-8daa-20468e3731ff
   expiration: 3600
@@ -17,4 +19,4 @@ hibernate:
   search:
     default:
       directory_provider: filesystem
-      indexBase: /data/arava/index/default
+      indexBase: /tmp/arava/index/default

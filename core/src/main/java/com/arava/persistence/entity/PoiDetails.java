@@ -1,11 +1,12 @@
 package com.arava.persistence.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import java.sql.Date;
 import java.sql.Time;
 
 /**
@@ -18,6 +19,7 @@ import java.sql.Time;
 @Data
 @Builder
 @Entity
+@Indexed
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -26,12 +28,15 @@ public class PoiDetails extends AbstractEntity {
   @OneToOne
   private Poi poi;
 
+  @Field
   @Column
   private String address;
 
+  @Field
   @Column
   private String phone;
 
+  @Field
   @Column
   private String email;
 
@@ -44,9 +49,11 @@ public class PoiDetails extends AbstractEntity {
   @Column(length = 1024)
   private String instagramAccount;
 
+  @Field
   @Column
   private Time openingHour;
 
+  @Field
   @Column
   private Time closingHour;
 

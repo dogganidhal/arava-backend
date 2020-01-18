@@ -18,11 +18,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ApiException extends RuntimeException {
+public class ApiException extends Throwable {
 
   public static final ApiException INTERNAL_SERVER_ERROR = ApiException.builder()
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
           .message("Server is having some trouble right now, please come back later")
+          .build();
+
+  public static final ApiException FORBIDDEN = ApiException.builder()
+          .status(HttpStatus.FORBIDDEN)
+          .message("Sorry, you don't have access to the requested resource")
           .build();
 
   private HttpStatus status;
