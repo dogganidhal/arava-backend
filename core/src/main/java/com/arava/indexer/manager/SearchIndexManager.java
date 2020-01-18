@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface SearchIndexManager {
 
-  void reindexAll();
+  void reindexAll() throws InterruptedException;
   void indexOrUpdate(Poi poi);
   List<Poi> searchPois(SearchQuery query);
 

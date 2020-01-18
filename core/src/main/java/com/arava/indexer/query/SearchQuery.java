@@ -1,11 +1,8 @@
 package com.arava.indexer.query;
 
 import lombok.*;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Point;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
 /**
  * Created by Nidhal Dogga
@@ -26,19 +23,6 @@ public class SearchQuery {
   private String category;
 
   private QuerySort sort;
-
-  public Query mongoQuery() {
-    return new Query()
-            .with(Sort.by(getSort().getDirection().sort(), getSort().getField()))
-            .addCriteria(Criteria
-                    .where("localizedDescriptions.title")
-                    .alike(Example.of(getTitle()))
-                    .and("island")
-                    .alike(Example.of(getIsland()))
-                    .and("coordinate")
-                    .maxDistance(region.getDistance())
-            );
-  }
 
   @NoArgsConstructor
   @AllArgsConstructor

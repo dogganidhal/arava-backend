@@ -1,6 +1,9 @@
 package com.arava.persistence.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,16 +20,22 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Builder
 @Entity
+@Indexed
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Rating extends AbstractEntity {
 
+  @Field
   @Column
   @NotBlank
   private Double score;
 
   @ManyToOne
   private Poi poi;
+
+  @IndexedEmbedded
+  @ManyToOne
+  private User author;
 
 }

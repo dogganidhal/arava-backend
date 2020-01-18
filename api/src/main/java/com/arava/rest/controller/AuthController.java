@@ -10,6 +10,7 @@ import com.arava.rest.dto.request.SignUpRequest;
 import com.arava.rest.dto.request.LoginRequest;
 import com.arava.rest.dto.response.JwtAuthenticationResponse;
 import com.arava.rest.exception.ApiException;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -73,6 +74,7 @@ public class AuthController {
 
   }
 
+  @SneakyThrows
   @PostMapping("/signup")
   public ResponseEntity<JwtAuthenticationResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
     if(userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -104,6 +106,7 @@ public class AuthController {
     return ResponseEntity.created(location).body(authenticationResponse);
   }
 
+  @SneakyThrows
   @PostMapping("/refresh")
   public JwtAuthenticationResponse refresh(@RequestBody RefreshAuthRequest request) {
     String jwt = tokenProvider.refresh(request.getRefreshToken());

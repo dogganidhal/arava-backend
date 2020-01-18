@@ -1,11 +1,13 @@
 package com.arava.persistence.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import java.sql.Date;
+import java.sql.Time;
 
 /**
  * Created by Nidhal Dogga
@@ -17,6 +19,7 @@ import java.sql.Date;
 @Data
 @Builder
 @Entity
+@Indexed
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -25,28 +28,33 @@ public class PoiDetails extends AbstractEntity {
   @OneToOne
   private Poi poi;
 
+  @Field
   @Column
   private String address;
 
+  @Field
   @Column
   private String phone;
 
+  @Field
   @Column
   private String email;
 
-  @Column
+  @Column(length = 1024)
   private String website;
 
-  @Column
+  @Column(length = 1024)
   private String facebookUrl;
 
-  @Column
+  @Column(length = 1024)
   private String instagramAccount;
 
+  @Field
   @Column
-  private Date openingHour;
+  private Time openingHour;
 
+  @Field
   @Column
-  private Date closingHour;
+  private Time closingHour;
 
 }

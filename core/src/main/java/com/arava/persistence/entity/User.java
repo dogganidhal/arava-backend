@@ -1,6 +1,8 @@
 package com.arava.persistence.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,18 +21,22 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @Entity
+@Indexed
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name="\"user\"")
 public class User extends AbstractEntity {
 
+  @Field
   @Column
   private String firstName;
 
+  @Field
   @Column
   private String lastName;
 
+  @Field
   @NotBlank
   @Column
   private String email;

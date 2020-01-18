@@ -1,5 +1,7 @@
 package com.arava.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,7 @@ import java.util.List;
 public class PoiDto {
 
   private String id;
+  private List<LocalizedDescription> localizedDescription;
   private Category category;
   private LatLng coordinate;
   private String island;
@@ -35,12 +38,38 @@ public class PoiDto {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
+  public static class LocalizedDescription {
+
+    private String title;
+    private String description;
+    private String language;
+    private String languageCode;
+
+  }
+
+  @Data
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class Type {
+
+    private String id;
+    private String name;
+    private Media icon;
+
+  }
+
+  @Data
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
   public static class Category {
 
     private String id;
     private String name;
     private Media icon;
-    private Category section;
+    @JsonInclude(Include.NON_NULL)
+    private Type type;
 
   }
 
@@ -76,7 +105,7 @@ public class PoiDto {
     private String id;
     private String content;
     private Date date;
-    private CommentAuthor author;
+    private User author;
 
   }
 
@@ -84,7 +113,7 @@ public class PoiDto {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public static class CommentAuthor {
+  public static class User {
 
     private String id;
     private String fullName;
