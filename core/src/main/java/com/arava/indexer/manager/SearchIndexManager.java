@@ -14,7 +14,7 @@ import java.util.List;
 public interface SearchIndexManager {
 
   void reindexAll() throws InterruptedException;
-  void indexOrUpdate(Poi poi);
   List<Poi> searchPois(SearchQuery query);
+  List<Poi> getSimilarPois(String poiId);
 
 }

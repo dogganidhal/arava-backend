@@ -2,13 +2,14 @@ package com.arava.persistence.entity;
 
 
 import lombok.*;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.TermVector;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -16,23 +17,44 @@ import java.util.List;
 @Builder
 @Entity
 @Indexed
+@Spatial(spatialMode = SpatialMode.HASH)
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class Poi extends AbstractEntity {
+public class Poi {
+
+  @Id
+  @SortableField
+  @DocumentId
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+  private String id;
+
+  @CreationTimestamp
+  @Column
+  private Date created;
+
+  @UpdateTimestamp
+  @Column
+  private Date updated;
+
+  @Column
+  private Boolean disabled = false;
 
   @IndexedEmbedded
   @OneToOne
   private PoiDetails details;
 
+  @ContainedIn
   @IndexedEmbedded
   @OneToMany
   private List<PoiLocalizedDescription> localizedDescriptions;
 
+  @ContainedIn
   @IndexedEmbedded
   @ManyToOne
   private PoiCategory category;
 
+  @ContainedIn
   @IndexedEmbedded
   @OneToMany
   private List<Rating> ratings;
@@ -46,11 +68,13 @@ public class Poi extends AbstractEntity {
   @Field
   @Column
   @NotBlank
+  @Latitude
   private Double latitude;
 
   @Field
   @Column
   @NotBlank
+  @Longitude
   private Double longitude;
 
   @Field(termVector = TermVector.YES)

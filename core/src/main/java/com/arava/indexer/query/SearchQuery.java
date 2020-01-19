@@ -2,7 +2,8 @@ package com.arava.indexer.query;
 
 import lombok.*;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.geo.Point;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * Created by Nidhal Dogga
@@ -21,7 +22,6 @@ public class SearchQuery {
   private Region region;
   private String island;
   private String category;
-
   private QuerySort sort;
 
   @NoArgsConstructor
@@ -30,7 +30,11 @@ public class SearchQuery {
   @Builder
   public static class Region {
 
-    private Point center;
+    @NotBlank
+    private Double centerLatitude;
+    @NotBlank
+    private Double centerLongitude;
+    @NotBlank
     private Double distance;
 
   }
@@ -41,8 +45,9 @@ public class SearchQuery {
   @Builder
   public static class QuerySort {
 
+    @NotBlank
     private String field;
-    private QuerySortDirection direction;
+    private QuerySortDirection direction = QuerySortDirection.ASC;
 
   }
 

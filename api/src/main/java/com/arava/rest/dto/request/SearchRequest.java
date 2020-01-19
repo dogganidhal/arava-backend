@@ -3,7 +3,6 @@ package com.arava.rest.dto.request;
 import com.arava.indexer.query.SearchQuery;
 import com.arava.rest.dto.LatLng;
 import lombok.*;
-import org.springframework.data.geo.Point;
 
 /**
  * Created by Nidhal Dogga
@@ -29,18 +28,20 @@ public class SearchRequest {
             .title(title)
             .category(category)
             .island(island)
-            .region(SearchQuery.Region.builder()
-                    .center(new Point(
-                            region.getCenter().getLatitude(),
-                            region.getCenter().getLongitude())
-                    )
-                    .distance(region.getDistance())
-                    .build()
+            .region(region != null ?
+                    SearchQuery.Region.builder()
+                            .centerLatitude(region.getCenter().getLatitude())
+                            .centerLongitude(region.getCenter().getLongitude())
+                            .distance(region.getDistance())
+                            .build() :
+                    null
             )
-            .sort(SearchQuery.QuerySort.builder()
-                    .direction(sort.getDirection().querySortDirection())
-                    .field(sort.getField())
-                    .build()
+            .sort(sort != null ?
+                    SearchQuery.QuerySort.builder()
+                            .direction(sort.getDirection().querySortDirection())
+                            .field(sort.getField())
+                            .build() :
+                    null
             )
             .build();
   }

@@ -48,7 +48,7 @@ public class SearchController {
 
   @PostMapping
   public SearchResponse searchPois(@RequestBody SearchRequest request) {
-    List<PoiDto> pois = poiRepository.findAll()
+    List<PoiDto> pois = searchIndexManager.searchPois(request.searchQuery())
             .stream()
             .map(poiMapper::map)
             .collect(Collectors.toList());

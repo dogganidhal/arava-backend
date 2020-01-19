@@ -19,4 +19,4 @@ hibernate:
   search:
     default:
       directory_provider: filesystem
-      indexBase: /tmp/arava/index/default
+      indexBase: /var/indexed_data/arava/default

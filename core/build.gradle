@@ -17,8 +17,8 @@ dependencies {
     compile "de.codecentric:spring-boot-admin-starter-client:$springBootAdminVersion"
     compile "de.codecentric:spring-boot-admin-starter-server:$springBootAdminVersion"
 
-    compile "org.hibernate:hibernate-spatial:5.2.12.Final"
-    compile "org.hibernate:hibernate-search-orm:5.8.2.Final"
+    compile "org.hibernate:hibernate-spatial:5.4.10.Final"
+    compile "org.hibernate:hibernate-search-orm:5.11.4.Final"
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
