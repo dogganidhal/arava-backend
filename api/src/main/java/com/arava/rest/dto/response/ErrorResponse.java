@@ -1,6 +1,6 @@
 package com.arava.rest.dto.response;
 
-import com.arava.rest.exception.ApiException;
+import com.arava.rest.exception.ApiThrowable;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +31,7 @@ public class ErrorResponse {
   private Integer status;
   private String path;
 
-  public static ErrorResponse fromApiException(ApiException exception, String path) {
+  public static ErrorResponse fromApiException(ApiThrowable exception, String path) {
     return ErrorResponse.builder()
             .status(exception.getStatus().value())
             .statusCode(exception.getStatus())

@@ -33,3 +33,4 @@ out/
 
 ### MacOS ###
 *.Ds_Store
+com.arava.persistence.entity.*

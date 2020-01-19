@@ -3,7 +3,9 @@ package com.arava.rest.configuration;
 import com.arava.persistence.entity.RefreshToken;
 import com.arava.persistence.repository.RefreshTokenRepository;
 import com.arava.persistence.repository.UserRepository;
+import com.arava.rest.exception.ApiClientException;
 import com.arava.rest.exception.ApiException;
+import com.arava.rest.exception.ApiThrowable;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +51,11 @@ public class JwtTokenProvider {
     return claims.getSubject();
   }
 
-  public String refresh(String refreshToken) throws ApiException {
+  public String refresh(String refreshToken) throws ApiThrowable {
     Optional<RefreshToken> token = refreshTokenRepository.findById(refreshToken);
     if (!token.isPresent()) {
-      throw ApiException.builder()
-              .status(HttpStatus.UNAUTHORIZED)
-              .message(String.format("No refresh token with id '%s' was found", refreshToken))
-              .build();
+      throw ApiClientException.BAD_CREDENTIALS
+              .getThrowable();
     }
     return generateForUser(token.get().getUser().getEmail());
   }

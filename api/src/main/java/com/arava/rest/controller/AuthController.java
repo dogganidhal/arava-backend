@@ -5,15 +5,15 @@ import com.arava.persistence.entity.User;
 import com.arava.persistence.repository.UserRepository;
 import com.arava.rest.configuration.JwtTokenProvider;
 import com.arava.rest.configuration.UserPrincipal;
+import com.arava.rest.dto.request.LoginRequest;
 import com.arava.rest.dto.request.RefreshAuthRequest;
 import com.arava.rest.dto.request.SignUpRequest;
-import com.arava.rest.dto.request.LoginRequest;
 import com.arava.rest.dto.response.JwtAuthenticationResponse;
-import com.arava.rest.exception.ApiException;
+import com.arava.rest.exception.ApiClientException;
+import com.arava.rest.exception.ApiThrowable;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,15 +61,13 @@ public class AuthController {
   private AccessManager accessManager;
 
   @PostMapping("/login")
-  public JwtAuthenticationResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ApiException {
+  public JwtAuthenticationResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ApiThrowable {
 
     try {
       return authenticate(loginRequest.getEmail(), loginRequest.getPassword());
     } catch (Exception e) {
-      throw ApiException.builder()
-              .status(HttpStatus.UNAUTHORIZED)
-              .message(e.getLocalizedMessage())
-              .build();
+      throw ApiClientException.BAD_CREDENTIALS
+              .getThrowable();
     }
 
   }
@@ -78,10 +76,8 @@ public class AuthController {
   @PostMapping("/signup")
   public ResponseEntity<JwtAuthenticationResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
     if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-      throw ApiException.builder()
-              .status(HttpStatus.BAD_REQUEST)
-              .message("Email exists already")
-              .build();
+      throw ApiClientException.USER_EXISTS
+              .getThrowable();
     }
 
     User user = User.builder()

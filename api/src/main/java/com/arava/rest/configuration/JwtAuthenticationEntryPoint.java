@@ -24,6 +24,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
           HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
           AuthenticationException e) throws IOException {
     log.error("Responding with unauthorized error. Message - {}", e.getMessage());
-    httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+    httpServletResponse.sendError(
+            HttpServletResponse.SC_UNAUTHORIZED,
+            "Authentication needed for the requested resource"
+    );
   }
 }

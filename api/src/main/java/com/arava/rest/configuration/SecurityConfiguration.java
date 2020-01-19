@@ -3,7 +3,6 @@ package com.arava.rest.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -26,12 +25,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-        prePostEnabled = true
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true
 )
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  UserPrincipalDetailsService customUserDetailsService;
+  UserPrincipalDetailsService userDetailsService;
 
   @Autowired
   private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -44,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
     authenticationManagerBuilder
-            .userDetailsService(customUserDetailsService)
+            .userDetailsService(userDetailsService)
             .passwordEncoder(passwordEncoder());
   }
 
@@ -69,30 +70,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
             .authenticationEntryPoint(unauthorizedHandler)
             .and()
+            .anonymous()
+            .disable()
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeRequests()
-            .antMatchers("/",
-                    "/favicon.ico",
-                    "/**/*.png",
-                    "/**/*.gif",
-                    "/**/*.svg",
-                    "/**/*.jpg",
-                    "/**/*.html",
-                    "/**/*.css",
-                    "/**/*.js",
-                    "/v3/api-docs",
-                    "/v3/api-docs/*")
-            .permitAll()
-            .antMatchers("/api/auth/**")
-            .permitAll()
-            .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-            .permitAll()
-            .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
-            .permitAll()
-            .anyRequest()
-            .authenticated();
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
