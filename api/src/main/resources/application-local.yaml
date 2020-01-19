@@ -20,3 +20,6 @@ hibernate:
     default:
       directory_provider: filesystem
       indexBase: /var/indexed_data/arava/default
+arava:
+  search:
+    max-similar-results: 20

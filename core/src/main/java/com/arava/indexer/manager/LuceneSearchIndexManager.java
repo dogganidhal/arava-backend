@@ -5,13 +5,13 @@ import com.arava.persistence.entity.Poi;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.hibernate.search.engine.ProjectionConstants;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.dsl.Unit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManagerFactory;
@@ -26,12 +26,15 @@ import java.util.List;
 
 
 @Component
-public class HSSearchIndexManager implements SearchIndexManager {
+public class LuceneSearchIndexManager implements SearchIndexManager {
 
   private FullTextEntityManager fullTextEntityManager;
 
+  @Value("${arava.search.max-similar-results}")
+  private Integer maxSimilarResults;
+
   @Autowired
-  public HSSearchIndexManager(EntityManagerFactory entityManagerFactory) {
+  public LuceneSearchIndexManager(EntityManagerFactory entityManagerFactory) {
     fullTextEntityManager = Search.getFullTextEntityManager(
             entityManagerFactory.createEntityManager()
     );
@@ -51,20 +54,20 @@ public class HSSearchIndexManager implements SearchIndexManager {
   @SuppressWarnings("unchecked")
   public List<Poi> getSimilarPois(String poiId) {
 
-    QueryBuilder qb = fullTextEntityManager.getSearchFactory()
+    QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
             .buildQueryBuilder()
             .forEntity(Poi.class)
             .get();
 
-    Query mltQuery = qb
+    Query query = queryBuilder
             .moreLikeThis()
-            .comparingAllFields()
+            .comparingFields("island", "category.name", "category.type.name")
             .toEntityWithId(poiId)
             .createQuery();
 
     return (List<Poi>) fullTextEntityManager
-            .createFullTextQuery(mltQuery, Poi.class)
-            .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE)
+            .createFullTextQuery(query, Poi.class)
+            .setMaxResults(maxSimilarResults)
             .getResultList();
   }
 
@@ -129,14 +132,12 @@ public class HSSearchIndexManager implements SearchIndexManager {
       sortDirection = searchQuery.getSort().getDirection();
     }
 
-    // TODO: Figure out how to do sort
-
-//    query.setSort(createQueryBuilder()
-//            .sort()
-//            .byField(sortField)
-//            .asc()
-//            .createSort()
-//    );
+    query.setSort(createQueryBuilder()
+            .sort()
+            .byField(sortField)
+            .asc()
+            .createSort()
+    );
 
     List<Poi> result = (List<Poi>) query.getResultList();
     if (sortDirection == SearchQuery.QuerySortDirection.DESC) {

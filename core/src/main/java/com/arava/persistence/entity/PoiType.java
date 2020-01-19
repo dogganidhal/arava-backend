@@ -3,6 +3,8 @@ package com.arava.persistence.entity;
 import lombok.*;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +28,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class PoiType extends AbstractEntity {
 
-  @Field
+  @Field(termVector = TermVector.YES)
   @Column
   @NotBlank
   private String name;
@@ -34,6 +36,7 @@ public class PoiType extends AbstractEntity {
   @ManyToOne
   private Media icon;
 
+  @IndexedEmbedded
   @OneToMany
   private List<PoiCategory> categories;
 
