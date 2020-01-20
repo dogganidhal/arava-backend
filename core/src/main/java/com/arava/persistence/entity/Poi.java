@@ -38,6 +38,7 @@ public class Poi {
   private Date updated;
 
   @Column
+  @Builder.Default
   private Boolean disabled = false;
 
   @IndexedEmbedded

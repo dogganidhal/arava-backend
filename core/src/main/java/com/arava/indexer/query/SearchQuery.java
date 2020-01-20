@@ -47,6 +47,7 @@ public class SearchQuery {
 
     @NotBlank
     private String field;
+    @Builder.Default
     private QuerySortDirection direction = QuerySortDirection.ASC;
 
   }

@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+  main:
+    allow-bean-definition-overriding: true
+jwt:
+  secret: f9408b20-98fd-4501-8daa-20468e3731ff
+  expiration: 3600
+  token-type: "Bearer"
+hibernate:
+  search:
+    default:
+      directory_provider: filesystem
+      indexBase: /var/indexed_data/arava/default
+arava:
+  search:
+    max-similar-results: 20
