@@ -2,6 +2,7 @@ package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.*;
 import com.arava.rest.dto.LatLng;
+import com.arava.rest.dto.MediaDto;
 import com.arava.rest.dto.PoiDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiDto> {
 
   @Autowired
-  private Mapper<Media, PoiDto.Media> mediaMapper;
+  private Mapper<Media, MediaDto> mediaMapper;
 
   @Autowired
   private Mapper<Comment, PoiDto.Comment> commentMapper;
@@ -44,7 +45,7 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
             )
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
-            .island(object.getIsland())
+            .island(object.getIsland().getName())
             .category(categoryMapper.map(object.getCategory()))
             .coordinate(LatLng.builder()
                     .latitude(object.getLatitude())

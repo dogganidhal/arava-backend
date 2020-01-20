@@ -3,6 +3,7 @@ package com.arava.rest.mapper;
 import com.arava.persistence.entity.Media;
 import com.arava.persistence.entity.PoiCategory;
 import com.arava.persistence.entity.PoiType;
+import com.arava.rest.dto.MediaDto;
 import com.arava.rest.dto.PoiDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class CategoryBiMapper implements Mapper<PoiCategory, PoiDto.Category>, R
   private Mapper<PoiType, PoiDto.Type> typeMapper;
 
   @Autowired
-  private Mapper<Media, PoiDto.Media> mediaMapper;
+  private Mapper<Media, MediaDto> mediaMapper;
 
   @Override
   public PoiDto.Category map(PoiCategory object) {

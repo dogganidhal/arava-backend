@@ -1,7 +1,7 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.Media;
-import com.arava.rest.dto.PoiDto;
+import com.arava.rest.dto.MediaDto;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class MediaBiMapper implements Mapper<Media, PoiDto.Media>, ReverseMapper<Media, PoiDto.Media> {
+public class MediaBiMapper implements Mapper<Media, MediaDto>, ReverseMapper<Media, MediaDto> {
 
   @Override
-  public PoiDto.Media map(Media object) {
-    return PoiDto.Media.builder()
+  public MediaDto map(Media object) {
+    return MediaDto.builder()
             .id(object.getId())
             .type(object.getMediaType())
             .url(object.getUrl())
@@ -24,7 +24,7 @@ public class MediaBiMapper implements Mapper<Media, PoiDto.Media>, ReverseMapper
   }
 
   @Override
-  public Media reverseMap(PoiDto.Media object) {
+  public Media reverseMap(MediaDto object) {
     return null;
   }
 

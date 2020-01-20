@@ -30,7 +30,7 @@ public class PoiDto {
   private String island;
   private boolean sponsored;
   private boolean featured;
-  private List<Media> medias;
+  private List<MediaDto> medias;
   private List<Comment> comments;
   private Ratings ratings;
 
@@ -55,7 +55,7 @@ public class PoiDto {
 
     private String id;
     private String name;
-    private Media icon;
+    private MediaDto icon;
 
   }
 
@@ -67,21 +67,9 @@ public class PoiDto {
 
     private String id;
     private String name;
-    private Media icon;
+    private MediaDto icon;
     @JsonInclude(Include.NON_NULL)
     private Type type;
-
-  }
-
-  @Data
-  @Builder
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public static class Media {
-
-    private String id;
-    private String url;
-    private String type;
 
   }
 
@@ -117,7 +105,7 @@ public class PoiDto {
 
     private String id;
     private String fullName;
-    private Media avatar;
+    private MediaDto avatar;
 
   }
 

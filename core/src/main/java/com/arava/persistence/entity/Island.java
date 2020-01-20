@@ -1,32 +1,29 @@
 package com.arava.persistence.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
+import org.hibernate.search.annotations.Indexed;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 /**
  * Created by Nidhal Dogga
- * Date : 15/01/2020 20:26
+ * Date : 20/01/2020 21:59
  * All rights reserved.
  */
 
 @Data
 @Builder
 @Entity
+@Indexed
+@Cacheable
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Role extends AbstractEntity {
+public class Island extends AbstractEntity {
 
   @NotBlank
-  @UniqueElements
   private String name;
-
-  @OneToMany
-  private List<Authority> authorities;
 
 }

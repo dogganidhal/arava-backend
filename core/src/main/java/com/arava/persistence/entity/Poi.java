@@ -78,15 +78,22 @@ public class Poi {
   @Longitude
   private Double longitude;
 
-  @Field(termVector = TermVector.YES)
-  @Column
-  @NotBlank
-  private String island;
+  @ManyToOne
+  @IndexedEmbedded
+  private Island island;
+
+  /**
+   * Premium poi (paid subscription)
+   */
 
   @Field
   @Column
   @Builder.Default
   private Boolean sponsored = false;
+
+  /**
+   * Poi to be displayed in photos tab
+   */
 
   @Field
   @Column

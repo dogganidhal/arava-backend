@@ -2,6 +2,7 @@ package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.Media;
 import com.arava.persistence.entity.PoiType;
+import com.arava.rest.dto.MediaDto;
 import com.arava.rest.dto.PoiDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class PoiTypeBiMapper implements Mapper<PoiType, PoiDto.Type>, ReverseMapper<PoiType, PoiDto.Type> {
 
   @Autowired
-  private Mapper<Media, PoiDto.Media> mediaMapper;
+  private Mapper<Media, MediaDto> mediaMapper;
 
   @Override
   public PoiDto.Type map(PoiType object) {

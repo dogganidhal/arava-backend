@@ -6,9 +6,7 @@ import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -46,10 +44,6 @@ public class User extends AbstractEntity {
 
   @Column
   @Builder.Default
-  private Integer roleMask = 1;
-
-  @Column
-  @Builder.Default
   private Boolean expired = false;
 
   @Column
@@ -62,15 +56,7 @@ public class User extends AbstractEntity {
   @ManyToOne
   private Media avatar;
 
-  @Transient
+  @OneToMany
   private List<Role> roles;
-
-  @PrePersist
-  @PostLoad
-  private void fillRoles() {
-    roles = Arrays.stream(Role.values())
-            .filter(role -> (role.getMask() & roleMask) != 0)
-            .collect(Collectors.toList());
-  }
 
 }

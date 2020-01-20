@@ -1,7 +1,11 @@
 package com.arava.persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
+
+import javax.persistence.Entity;
 
 
 /**
@@ -10,24 +14,19 @@ import lombok.Getter;
  *  All rights reserved.
  */
 
-@Getter
+@Data
+@Builder
+@Entity
+@Indexed
 @AllArgsConstructor
-public enum Language {
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class Language extends AbstractEntity {
 
-  FRENCH("fr", "French"),
-  ENGLISH("en", "English"),
-  CHINESE("cn", "Chinese");
-
+  @Field(termVector = TermVector.YES)
   private String code;
-  private String name;
 
-  public static Language fromCode(String languageCode) {
-    for (Language language : values()) {
-      if (language.getCode().equals(languageCode)) {
-        return language;
-      }
-    }
-    return null;
-  }
+  @Field(termVector = TermVector.YES)
+  private String name;
 
 }

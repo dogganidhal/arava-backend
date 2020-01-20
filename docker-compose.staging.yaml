@@ -10,11 +10,22 @@ services:
     - 10100:8080
     environment:
       SPRING_PROFILES_ACTIVE: staging
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/arava
+      SPRING_DATASOURCE_USERNAME: arava-admin
+      SPRING_DATASOURCE_PASSWORD: Admin@rava
   db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: arava
+      POSTGRES_USER: arava-admin
+      POSTGRES_PASSWORD: Admin@rava
+    volumes:
+    - /data/postgresql/arava:/var/lib/postgresql/data
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    environment:
+    - discovery.type=single-node
+    ports:
+    - 10101:9200
+    - 10102:9300

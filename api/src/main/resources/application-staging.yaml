@@ -15,8 +15,9 @@ jwt:
 hibernate:
   search:
     default:
-      directory_provider: filesystem
-      indexBase: /var/indexed_data/arava/default
+      indexmanager: elasticsearch
+      elasticsearch:
+        host: http://elasticsearch:9200
 arava:
   search:
     max-similar-results: 20

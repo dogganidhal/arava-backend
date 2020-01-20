@@ -21,7 +21,7 @@ public class LocalizedDescriptionBiMapper implements Mapper<PoiLocalizedDescript
             .title(object.getTitle())
             .description(object.getDescription())
             .language(object.getLanguage().getName())
-            .languageCode(object.getLanguageCode())
+            .languageCode(object.getLanguage().getCode())
             .build();
   }
 
