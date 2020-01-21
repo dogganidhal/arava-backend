@@ -1,9 +1,15 @@
 package com.arava.rest.controller;
 
+import com.arava.persistence.entity.Island;
 import com.arava.persistence.entity.Poi;
+import com.arava.persistence.entity.PoiCategory;
+import com.arava.persistence.repository.IslandRepository;
+import com.arava.persistence.repository.PoiCategoryRepository;
 import com.arava.persistence.repository.PoiRepository;
 import com.arava.rest.annotation.Admin;
+import com.arava.rest.dto.IslandDto;
 import com.arava.rest.dto.PoiDto;
+import com.arava.rest.dto.request.PoiCategoryWriteRequest;
 import com.arava.rest.dto.request.PoiWriteRequest;
 import com.arava.rest.exception.ApiClientException;
 import com.arava.rest.mapper.Mapper;
@@ -30,10 +36,24 @@ public class PoiController {
   private PoiRepository poiRepository;
 
   @Autowired
+  private PoiCategoryRepository poiCategoryRepository;
+
+  @Autowired
+  private IslandRepository islandRepository;
+
+  @Autowired
   private Mapper<PoiWriteRequest, Poi> writePoiMapper;
 
   @Autowired
   private Mapper<Poi, PoiDto> poiMapper;
+
+  @Autowired
+  private Mapper<PoiCategoryWriteRequest, PoiCategory> poiCategoryMapper;
+
+  @Autowired
+  private Mapper<Island, IslandDto> islandMapper;
+
+  //region Poi CRUD operations
 
   @SneakyThrows
   @GetMapping
@@ -84,5 +104,35 @@ public class PoiController {
               .getThrowable();
     }
   }
+
+  //endregion
+
+  //region Poi category CRUD operations
+
+  @Admin
+  @PostMapping("/category")
+  public void createPoiCategory(@RequestBody PoiCategoryWriteRequest request) {
+    PoiCategory poiCategory = poiCategoryMapper.map(request);
+    poiCategoryRepository.save(poiCategory);
+  }
+
+  @PutMapping("/category")
+  public void updatePoiCategory(@RequestBody PoiCategoryWriteRequest request) {
+    PoiCategory poiCategory = poiCategoryMapper.map(request);
+    poiCategoryRepository.save(poiCategory);
+  }
+
+  //endregion
+
+  //region Island inspection
+
+  @GetMapping("/island")
+  public List<IslandDto> getIslands() {
+    return islandRepository.findAll().stream()
+            .map(islandMapper::map)
+            .collect(Collectors.toList());
+  }
+
+  //endregion
 
 }

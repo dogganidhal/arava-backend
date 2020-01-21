@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * Created by Nidhal Dogga
- * Date : 20/01/2020 21:38
+ * Date : 21/01/2020 08:28
  * All rights reserved.
  */
 
@@ -18,11 +18,14 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MediaWriteRequest {
+public class PoiCategoryWriteRequest {
 
+  private String id;
   @NotBlank
-  private String url;
+  private String typeId;
   @NotBlank
-  private String type;
+  private String name;
+  @NotBlank
+  private MediaWriteRequest icon;
 
 }
