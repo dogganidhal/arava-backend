@@ -1,11 +1,13 @@
 package com.arava.persistence.entity;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,7 +19,7 @@ import java.util.List;
 
 
 @Data
-@Builder
+@SuperBuilder
 @Entity
 @Indexed
 @AllArgsConstructor
@@ -56,7 +58,8 @@ public class User extends AbstractEntity {
   @ManyToOne
   private Media avatar;
 
-  @OneToMany
-  private List<Role> roles;
+  @OneToMany(fetch = FetchType.EAGER)
+  @Builder.Default
+  private List<Role> roles = new ArrayList<>();
 
 }

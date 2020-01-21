@@ -1,6 +1,10 @@
 package com.arava.persistence.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Cacheable;
@@ -14,7 +18,7 @@ import javax.validation.constraints.NotBlank;
  */
 
 @Data
-@Builder
+@SuperBuilder
 @Entity
 @Indexed
 @Cacheable

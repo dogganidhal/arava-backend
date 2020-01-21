@@ -24,6 +24,10 @@ public class SearchQuery {
   private String category;
   private QuerySort sort;
 
+  public boolean isEmpty() {
+    return title == null && region == null && island == null && category == null;
+  }
+
   @NoArgsConstructor
   @AllArgsConstructor
   @Data

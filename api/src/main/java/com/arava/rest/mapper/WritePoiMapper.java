@@ -6,8 +6,8 @@ import com.arava.persistence.entity.PoiDetails;
 import com.arava.persistence.entity.PoiLocalizedDescription;
 import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiCategoryRepository;
-import com.arava.rest.dto.request.CreateMediaRequest;
-import com.arava.rest.dto.request.CreatePoiRequest;
+import com.arava.rest.dto.request.MediaWriteRequest;
+import com.arava.rest.dto.request.PoiWriteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class CreatePoiMapper implements Mapper<CreatePoiRequest, Poi> {
+public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
 
   @Autowired
   private IslandRepository islandRepository;
@@ -30,22 +30,24 @@ public class CreatePoiMapper implements Mapper<CreatePoiRequest, Poi> {
   private PoiCategoryRepository poiCategoryRepository;
 
   @Autowired
-  private Mapper<CreatePoiRequest.LocalizedDescription, PoiLocalizedDescription> localizedDescriptionMapper;
+  private Mapper<PoiWriteRequest.LocalizedDescription, PoiLocalizedDescription> localizedDescriptionMapper;
 
   @Autowired
-  private Mapper<CreateMediaRequest, Media> mediaMapper;
+  private Mapper<MediaWriteRequest, Media> mediaMapper;
 
   @Autowired
-  private Mapper<CreatePoiRequest.Details, PoiDetails> detailsMapper;
+  private Mapper<PoiWriteRequest.Details, PoiDetails> detailsMapper;
 
   @Override
-  public Poi map(CreatePoiRequest object) {
+  public Poi map(PoiWriteRequest object) {
     return Poi.builder()
+            .id(object.getId())
             .latitude(object.getLatitude())
             .longitude(object.getLongitude())
             .island(islandRepository.getOne(object.getIslandId()))
             .category(poiCategoryRepository.getOne(object.getCategoryId()))
             .sponsored(object.getSponsored())
+            .thingsToDo(object.getThingsToDo())
             .details(detailsMapper.map(object.getDetails()))
             .localizedDescriptions(object.getDescriptions().stream()
                     .map(localizedDescriptionMapper::map)

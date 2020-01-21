@@ -2,7 +2,7 @@ package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.PoiLocalizedDescription;
 import com.arava.persistence.repository.LanguageRepository;
-import com.arava.rest.dto.request.CreatePoiRequest;
+import com.arava.rest.dto.request.PoiWriteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +14,16 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class CreateLocalizedDescriptionMapper
-        implements Mapper<CreatePoiRequest.LocalizedDescription, PoiLocalizedDescription> {
+public class WriteLocalizedDescriptionMapper
+        implements Mapper<PoiWriteRequest.LocalizedDescription, PoiLocalizedDescription> {
 
   @Autowired
   private LanguageRepository languageRepository;
 
   @Override
-  public PoiLocalizedDescription map(CreatePoiRequest.LocalizedDescription object) {
+  public PoiLocalizedDescription map(PoiWriteRequest.LocalizedDescription object) {
     return PoiLocalizedDescription.builder()
+            .id(object.getId())
             .title(object.getTitle())
             .description(object.getDescription())
             .language(languageRepository.getOne(object.getLanguageCode()))

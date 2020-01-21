@@ -1,7 +1,7 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.Media;
-import com.arava.rest.dto.request.CreateMediaRequest;
+import com.arava.rest.dto.request.MediaWriteRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class CreateMediaMapper implements Mapper<CreateMediaRequest, Media> {
+public class WriteMediaMapper implements Mapper<MediaWriteRequest, Media> {
 
   @Override
-  public Media map(CreateMediaRequest object) {
+  public Media map(MediaWriteRequest object) {
     return Media.builder()
             .url(object.getUrl())
             .mediaType(object.getType())

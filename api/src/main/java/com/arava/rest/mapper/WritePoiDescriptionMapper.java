@@ -1,7 +1,7 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.PoiDetails;
-import com.arava.rest.dto.request.CreatePoiRequest;
+import com.arava.rest.dto.request.PoiWriteRequest;
 import org.springframework.stereotype.Component;
 
 import java.sql.Time;
@@ -14,11 +14,12 @@ import java.sql.Time;
 
 
 @Component
-public class CreatePoiDescriptionMapper implements Mapper<CreatePoiRequest.Details, PoiDetails> {
+public class WritePoiDescriptionMapper implements Mapper<PoiWriteRequest.Details, PoiDetails> {
 
   @Override
-  public PoiDetails map(CreatePoiRequest.Details object) {
+  public PoiDetails map(PoiWriteRequest.Details object) {
     return PoiDetails.builder()
+            .id(object.getId())
             .address(object.getAddress())
             .email(object.getEmail())
             .website(object.getWebsite())

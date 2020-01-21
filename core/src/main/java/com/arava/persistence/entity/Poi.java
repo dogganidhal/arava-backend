@@ -1,11 +1,16 @@
 package com.arava.persistence.entity;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.search.annotations.*;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,9 +18,9 @@ import java.sql.Date;
 import java.util.List;
 
 
-@Data
-@Builder
 @Entity
+@Data
+@SuperBuilder
 @Indexed
 @Spatial(spatialMode = SpatialMode.HASH)
 @AllArgsConstructor
@@ -39,7 +44,37 @@ public class Poi {
 
   @Column
   @Builder.Default
+  @Field
+  @FieldBridge(impl = BooleanBridge.class)
   private Boolean disabled = false;
+
+  /**
+   * Will be the default search result filter
+   */
+
+  @Column
+  @Builder.Default
+  @Field
+  @FieldBridge(impl = BooleanBridge.class)
+  private Boolean thingsToDo = false;
+
+  /**
+   * Premium poi (paid subscription)
+   */
+
+  @Field
+  @Column
+  @Builder.Default
+  private Boolean sponsored = false;
+
+  /**
+   * Poi to be displayed in photos tab
+   */
+
+  @Field
+  @Column
+  @Builder.Default
+  private Boolean featured = false;
 
   @IndexedEmbedded
   @OneToOne
@@ -81,23 +116,5 @@ public class Poi {
   @ManyToOne
   @IndexedEmbedded
   private Island island;
-
-  /**
-   * Premium poi (paid subscription)
-   */
-
-  @Field
-  @Column
-  @Builder.Default
-  private Boolean sponsored = false;
-
-  /**
-   * Poi to be displayed in photos tab
-   */
-
-  @Field
-  @Column
-  @Builder.Default
-  private Boolean featured = false;
 
 }

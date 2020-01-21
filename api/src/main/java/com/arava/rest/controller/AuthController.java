@@ -36,7 +36,7 @@ import java.net.URI;
  */
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
   @Value("${jwt.token-type}")

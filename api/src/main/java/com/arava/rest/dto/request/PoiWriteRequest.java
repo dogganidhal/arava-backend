@@ -19,8 +19,9 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatePoiRequest {
+public class PoiWriteRequest {
 
+  private String id;
   @NotBlank
   private Details details;
   @NotBlank
@@ -30,11 +31,13 @@ public class CreatePoiRequest {
   @NotBlank
   private Double longitude;
   @NotBlank
-  private List<CreateMediaRequest> medias;
+  private List<MediaWriteRequest> medias;
   @NotBlank
   private String islandId;
   @Builder.Default
   private Boolean sponsored = false;
+  @Builder.Default
+  private Boolean thingsToDo = false;
   @NotBlank
   private String categoryId;
 
@@ -44,8 +47,12 @@ public class CreatePoiRequest {
   @NoArgsConstructor
   public static class LocalizedDescription {
 
+    private String id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String description;
+    @NotBlank
     private String languageCode;
 
   }
@@ -56,6 +63,7 @@ public class CreatePoiRequest {
   @NoArgsConstructor
   public static class Details {
 
+    private String id;
     private String address;
     private String phone;
     private String email;

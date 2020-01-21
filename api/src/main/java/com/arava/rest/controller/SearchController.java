@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/search")
+@RequestMapping("/search")
 public class SearchController {
 
   @Autowired

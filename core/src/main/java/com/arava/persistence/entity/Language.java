@@ -1,6 +1,10 @@
 package com.arava.persistence.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
@@ -15,7 +19,7 @@ import javax.persistence.Entity;
  */
 
 @Data
-@Builder
+@SuperBuilder
 @Entity
 @Indexed
 @AllArgsConstructor

@@ -50,6 +50,19 @@ public enum ApiClientException implements ApiException {
       return "User exists";
     }
 
+  },
+  NOT_FOUND {
+
+    @Override
+    public HttpStatus getStatus() {
+      return HttpStatus.NOT_FOUND;
+    }
+
+    @Override
+    public String getMessage() {
+      return "No entity with specified ids was found";
+    }
+
   };
 
   @Override

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateMediaRequest {
+public class MediaWriteRequest {
 
   private String url;
   private String type;

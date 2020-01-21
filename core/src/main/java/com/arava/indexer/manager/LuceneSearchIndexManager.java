@@ -74,7 +74,25 @@ public class LuceneSearchIndexManager implements SearchIndexManager {
   @SuppressWarnings("unchecked")
   private List<Poi> executeLuceneQuery(SearchQuery searchQuery) {
 
-    BooleanQuery.Builder queryBuilder = new BooleanQuery.Builder();
+    BooleanQuery.Builder queryBuilder = new BooleanQuery.Builder()
+            .add(createQueryBuilder()
+                            .keyword()
+                            .onField("disabled")
+                            .matching("false")
+                            .createQuery(),
+                    BooleanClause.Occur.MUST
+            );
+
+    if (searchQuery.isEmpty()) {
+      queryBuilder.add(createQueryBuilder()
+                      .keyword()
+                      .onField("thingsToDo")
+                      .matching("true")
+                      .createQuery(),
+              BooleanClause.Occur.MUST
+      );
+
+    }
 
     if (searchQuery.getTitle() != null) {
       queryBuilder.add(

@@ -1,6 +1,10 @@
 package com.arava.persistence.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -21,6 +25,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Entity
 @Indexed
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class PoiCategory extends AbstractEntity {
 
