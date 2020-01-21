@@ -45,6 +45,7 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
             )
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
+            .thingsToDo(object.getThingsToDo())
             .island(object.getIsland().getName())
             .category(categoryMapper.map(object.getCategory()))
             .coordinate(LatLng.builder()

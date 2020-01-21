@@ -28,8 +28,9 @@ public class PoiDto {
   private Category category;
   private LatLng coordinate;
   private String island;
-  private boolean sponsored;
-  private boolean featured;
+  private Boolean sponsored;
+  private Boolean featured;
+  private Boolean thingsToDo;
   private List<MediaDto> medias;
   private List<Comment> comments;
   private Ratings ratings;

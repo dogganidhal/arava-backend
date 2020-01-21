@@ -6,16 +6,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
 
 /**
  * Created by Nidhal Dogga
- * Date : 20/01/2020 21:59
+ * Date : 21/01/2020 20:26
  * All rights reserved.
  */
 
@@ -27,13 +24,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Island extends AbstractEntity {
+public class Archipelago extends AbstractEntity {
 
-  @NotBlank
   private String name;
-
-  @IndexedEmbedded
-  @ManyToOne
-  private Archipelago archipelago;
 
 }

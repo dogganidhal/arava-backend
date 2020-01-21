@@ -19,6 +19,7 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
     return IslandDto.builder()
             .id(object.getId())
             .name(object.getName())
+            .archipelago(object.getArchipelago().getName())
             .build();
   }
 

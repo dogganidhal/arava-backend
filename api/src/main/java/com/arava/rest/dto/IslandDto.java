@@ -20,5 +20,6 @@ public class IslandDto {
 
   private String id;
   private String name;
+  private String archipelago;
 
 }
