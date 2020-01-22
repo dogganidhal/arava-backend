@@ -13,7 +13,7 @@ import org.hibernate.search.annotations.*;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -35,11 +35,11 @@ public class Poi {
 
   @CreationTimestamp
   @Column
-  private Date created;
+  private LocalDate created;
 
   @UpdateTimestamp
   @Column
-  private Date updated;
+  private LocalDate updated;
 
   @Column
   @Builder.Default

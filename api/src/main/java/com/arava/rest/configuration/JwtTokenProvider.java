@@ -2,17 +2,15 @@ package com.arava.rest.configuration;
 
 import com.arava.persistence.entity.RefreshToken;
 import com.arava.persistence.repository.RefreshTokenRepository;
-import com.arava.persistence.repository.UserRepository;
 import com.arava.rest.exception.ApiClientException;
-import com.arava.rest.exception.ApiException;
 import com.arava.rest.exception.ApiThrowable;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+
 import java.util.Date;
 import java.util.Optional;
 

@@ -13,15 +13,19 @@ import java.util.Arrays;
  */
 
 @Component
-public class IslandCacheManager extends SimpleCacheManager {
+public class CacheManager extends SimpleCacheManager {
 
   public static final String islandByNameCache = "islandByName";
   public static final String allIslandsCache = "allIslands";
+  public static final String appVersionConfigurationCache = "appVersionConfiguration";
+  public static final String allPoiTypesCache = "allPoiTypes";
 
-  public IslandCacheManager() {
+  public CacheManager() {
     setCaches(Arrays.asList(
             new ConcurrentMapCache(islandByNameCache),
-            new ConcurrentMapCache(allIslandsCache)
+            new ConcurrentMapCache(allIslandsCache),
+            new ConcurrentMapCache(appVersionConfigurationCache),
+            new ConcurrentMapCache(allPoiTypesCache)
     ));
   }
 

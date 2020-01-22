@@ -6,25 +6,26 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
  * Created by Nidhal Dogga
- * Date : 14/01/2020 07:45
+ * Date : 22/01/2020 07:37
  * All rights reserved.
  */
 
 @Data
 @SuperBuilder
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractEntity {
+public class AppVersionConfiguration {
 
   @Id
   @GeneratedValue(generator = "uuid2")
@@ -35,11 +36,12 @@ public abstract class AbstractEntity {
   @Column
   private LocalDate created;
 
-  @UpdateTimestamp
-  @Column
-  private LocalDate updated;
+  @NotNull
+  private Integer minVersion;
 
-  @Column
-  private Boolean disabled = false;
+  @NotNull
+  private LocalDate maxDate;
+
+  private Boolean forceUpdate;
 
 }

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Entity;
 
@@ -19,7 +18,6 @@ import javax.persistence.Entity;
 @Data
 @SuperBuilder
 @Entity
-@Indexed
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
