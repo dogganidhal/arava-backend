@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Nidhal Dogga
@@ -21,11 +21,14 @@ import javax.validation.constraints.NotBlank;
 public class PoiCategoryWriteRequest {
 
   private String id;
-  @NotBlank
+
+  @NotNull
   private String typeId;
-  @NotBlank
+
+  @NotNull
   private String name;
-  @NotBlank
+
+  @NotNull
   private MediaWriteRequest icon;
 
 }

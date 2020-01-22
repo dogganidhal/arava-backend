@@ -8,10 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
 
 /**
  * Created by Nidhal Dogga
@@ -29,11 +26,11 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode(callSuper = true)
 public class Island extends AbstractEntity {
 
-  @NotBlank
   private String name;
 
   @IndexedEmbedded
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Archipelago archipelago;
 
 }

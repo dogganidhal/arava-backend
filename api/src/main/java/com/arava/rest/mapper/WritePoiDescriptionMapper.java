@@ -26,8 +26,8 @@ public class WritePoiDescriptionMapper implements Mapper<PoiWriteRequest.Details
             .facebookUrl(object.getFacebookUrl())
             .instagramAccount(object.getInstagramUrl())
             .phone(object.getPhone())
-            .openingHour(Time.valueOf(object.getOpeningHour()))
-            .closingHour(Time.valueOf(object.getClosingHour()))
+            .openingHour(object.getOpeningHour() != null ? Time.valueOf(object.getOpeningHour()) : null)
+            .closingHour(object.getClosingHour() != null ? Time.valueOf(object.getClosingHour()) : null)
             .build();
   }
 

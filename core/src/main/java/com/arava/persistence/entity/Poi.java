@@ -13,7 +13,6 @@ import org.hibernate.search.annotations.*;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.util.List;
 
@@ -77,44 +76,44 @@ public class Poi {
   private Boolean featured = false;
 
   @IndexedEmbedded
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private PoiDetails details;
 
   @ContainedIn
   @IndexedEmbedded
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   private List<PoiLocalizedDescription> localizedDescriptions;
 
   @ContainedIn
   @IndexedEmbedded
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private PoiCategory category;
 
   @ContainedIn
   @IndexedEmbedded
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   private List<Rating> ratings;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   private List<Media> medias;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   private List<Comment> comments;
 
   @Field
   @Column
-  @NotBlank
   @Latitude
   private Double latitude;
 
   @Field
   @Column
-  @NotBlank
   @Longitude
   private Double longitude;
 
-  @ManyToOne
   @IndexedEmbedded
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Island island;
 
 }

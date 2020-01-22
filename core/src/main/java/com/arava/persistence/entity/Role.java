@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.UniqueElements;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -26,11 +26,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Role extends AbstractEntity {
 
-  @NotBlank
   @UniqueElements
   private String name;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   private List<Authority> authorities;
 
 }

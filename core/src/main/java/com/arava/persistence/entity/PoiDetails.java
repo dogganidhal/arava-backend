@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -29,7 +30,7 @@ import java.sql.Time;
 @EqualsAndHashCode(callSuper = true)
 public class PoiDetails extends AbstractEntity {
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private Poi poi;
 
   @Field

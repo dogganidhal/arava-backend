@@ -5,16 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.TermVector;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -34,14 +30,15 @@ public class PoiType extends AbstractEntity {
 
   @Field(termVector = TermVector.YES)
   @Column
-  @NotBlank
   private String name;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Media icon;
 
-  @IndexedEmbedded
-  @OneToMany
+  @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE })
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn
   private List<PoiCategory> categories;
 
 }

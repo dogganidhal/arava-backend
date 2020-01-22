@@ -3,8 +3,6 @@ package com.arava.indexer.query;
 import lombok.*;
 import org.springframework.data.domain.Sort;
 
-import javax.validation.constraints.NotBlank;
-
 /**
  * Created by Nidhal Dogga
  * Date : 16/01/2020 22:06
@@ -34,11 +32,10 @@ public class SearchQuery {
   @Builder
   public static class Region {
 
-    @NotBlank
     private Double centerLatitude;
-    @NotBlank
+
     private Double centerLongitude;
-    @NotBlank
+
     private Double distance;
 
   }
@@ -49,8 +46,8 @@ public class SearchQuery {
   @Builder
   public static class QuerySort {
 
-    @NotBlank
     private String field;
+
     @Builder.Default
     private QuerySortDirection direction = QuerySortDirection.ASC;
 

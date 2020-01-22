@@ -8,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
 
 /**
  * Created by Nidhal Dogga
@@ -26,11 +25,9 @@ import javax.validation.constraints.NotBlank;
 public class Media extends AbstractEntity {
 
   @Column
-  @NotBlank
   private String url;
 
   @Column
-  @NotBlank
   private String mediaType;
 
 }

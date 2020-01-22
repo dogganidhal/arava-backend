@@ -27,7 +27,7 @@ public class WritePoiCategoryMapper implements Mapper<PoiCategoryWriteRequest, P
   public PoiCategory map(PoiCategoryWriteRequest object) {
     return PoiCategory.builder()
             .id(object.getId())
-            .type(poiTypeRepository.getOne(object.getTypeId()))
+            .type(object.getTypeId() != null ?poiTypeRepository.getOne(object.getTypeId()) : null)
             .icon(mediaMapper.map(object.getIcon()))
             .name(object.getName())
             .build();

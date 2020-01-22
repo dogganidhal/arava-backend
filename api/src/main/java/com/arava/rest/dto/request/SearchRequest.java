@@ -4,6 +4,8 @@ import com.arava.indexer.query.SearchQuery;
 import com.arava.rest.dto.LatLng;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by Nidhal Dogga
  * Date : 16/01/2020 23:40
@@ -52,7 +54,10 @@ public class SearchRequest {
   @NoArgsConstructor
   public static class Region {
 
+    @NotNull
     private LatLng center;
+
+    @NotNull
     private Double distance;
 
   }
@@ -63,7 +68,10 @@ public class SearchRequest {
   @Builder
   public static class SearchSort {
 
+    @NotNull
     private String field;
+
+    @NotNull
     private SearchSortDirection direction;
 
   }

@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.search.annotations.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
 
 /**
  * Created by Nidhal Dogga
@@ -28,20 +25,20 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode(callSuper = true)
 public class PoiLocalizedDescription extends AbstractEntity {
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Poi poi;
 
-  @ManyToOne
   @IndexedEmbedded
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Language language;
 
   @Column
-  @NotBlank
   @SortableField
   @Field(termVector = TermVector.YES)
   private String title;
 
-  @NotBlank
   @Column(length = 8192)
   @Field(termVector = TermVector.YES)
   private String description;

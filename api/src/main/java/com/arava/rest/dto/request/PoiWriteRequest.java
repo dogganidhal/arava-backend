@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -22,23 +22,32 @@ import java.util.List;
 public class PoiWriteRequest {
 
   private String id;
-  @NotBlank
+
+  @NotNull
   private Details details;
-  @NotBlank
+
+  @NotNull
   private List<LocalizedDescription> descriptions;
-  @NotBlank
+
+  @NotNull
   private Double latitude;
-  @NotBlank
+
+  @NotNull
   private Double longitude;
-  @NotBlank
+
+  @NotNull
   private List<MediaWriteRequest> medias;
-  @NotBlank
+
+  @NotNull
   private String islandId;
+
   @Builder.Default
   private Boolean sponsored = false;
+
   @Builder.Default
   private Boolean thingsToDo = false;
-  @NotBlank
+
+  @NotNull
   private String categoryId;
 
   @Data
@@ -48,11 +57,14 @@ public class PoiWriteRequest {
   public static class LocalizedDescription {
 
     private String id;
-    @NotBlank
+
+    @NotNull
     private String title;
-    @NotBlank
+
+    @NotNull
     private String description;
-    @NotBlank
+
+    @NotNull
     private String languageCode;
 
   }

@@ -43,7 +43,8 @@ public class RefreshToken {
   @Builder.Default
   private Boolean revoked = false;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private User user;
 
 }

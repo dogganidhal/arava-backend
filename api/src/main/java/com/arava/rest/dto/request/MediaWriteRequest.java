@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Nidhal Dogga
@@ -20,9 +20,10 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class MediaWriteRequest {
 
-  @NotBlank
+  @NotNull
   private String url;
-  @NotBlank
+
+  @NotNull
   private String type;
 
 }

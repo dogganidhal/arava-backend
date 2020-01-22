@@ -3,13 +3,16 @@ package com.arava.rest.controller;
 import com.arava.persistence.entity.Island;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiCategory;
+import com.arava.persistence.entity.PoiType;
 import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiCategoryRepository;
 import com.arava.persistence.repository.PoiRepository;
+import com.arava.persistence.repository.PoiTypeRepository;
 import com.arava.rest.annotation.Admin;
 import com.arava.rest.dto.IslandDto;
 import com.arava.rest.dto.PoiDto;
 import com.arava.rest.dto.request.PoiCategoryWriteRequest;
+import com.arava.rest.dto.request.PoiTypeWriteRequest;
 import com.arava.rest.dto.request.PoiWriteRequest;
 import com.arava.rest.exception.ApiClientException;
 import com.arava.rest.mapper.Mapper;
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +43,9 @@ public class PoiController {
   private PoiCategoryRepository poiCategoryRepository;
 
   @Autowired
+  private PoiTypeRepository poiTypeRepository;
+
+  @Autowired
   private IslandRepository islandRepository;
 
   @Autowired
@@ -49,6 +56,9 @@ public class PoiController {
 
   @Autowired
   private Mapper<PoiCategoryWriteRequest, PoiCategory> poiCategoryMapper;
+
+  @Autowired
+  private Mapper<PoiTypeWriteRequest, PoiType> poiTypeMapper;
 
   @Autowired
   private Mapper<Island, IslandDto> islandMapper;
@@ -81,13 +91,13 @@ public class PoiController {
 
   @Admin
   @PostMapping
-  public void createPoi(@RequestBody PoiWriteRequest request) {
+  public void createPoi(@Valid @RequestBody PoiWriteRequest request) {
     poiRepository.save(writePoiMapper.map(request));
   }
 
   @Admin
   @PutMapping
-  public void updatePoi(@RequestBody PoiWriteRequest request) {
+  public void updatePoi(@Valid @RequestBody PoiWriteRequest request) {
     poiRepository.save(writePoiMapper.map(request));
   }
 
@@ -107,19 +117,32 @@ public class PoiController {
 
   //endregion
 
-  //region Poi category CRUD operations
+  //region Poi type / category CRUD operations
 
   @Admin
   @PostMapping("/category")
-  public void createPoiCategory(@RequestBody PoiCategoryWriteRequest request) {
+  public void createPoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
     PoiCategory poiCategory = poiCategoryMapper.map(request);
     poiCategoryRepository.save(poiCategory);
   }
 
   @PutMapping("/category")
-  public void updatePoiCategory(@RequestBody PoiCategoryWriteRequest request) {
+  public void updatePoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
     PoiCategory poiCategory = poiCategoryMapper.map(request);
     poiCategoryRepository.save(poiCategory);
+  }
+
+  @Admin
+  @PostMapping("/type")
+  public void createPoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
+    PoiType poiType = poiTypeMapper.map(request);
+    poiTypeRepository.save(poiType);
+  }
+
+  @PutMapping("/type")
+  public void updatePoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
+    PoiType poiType = poiTypeMapper.map(request);
+    poiTypeRepository.save(poiType);
   }
 
   //endregion

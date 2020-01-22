@@ -5,12 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nidhal Dogga
- * Date : 15/01/2020 07:07
+ * Date : 21/01/2020 22:53
  * All rights reserved.
  */
 
@@ -19,13 +20,17 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class PoiTypeWriteRequest {
 
-  @Email
-  @NotNull
-  private String email;
+  private String id;
 
   @NotNull
-  private String password;
+  private String name;
+
+  @NotNull
+  private MediaWriteRequest icon;
+
+  @Builder.Default
+  private List<PoiCategoryWriteRequest> categories = new ArrayList<>();
 
 }

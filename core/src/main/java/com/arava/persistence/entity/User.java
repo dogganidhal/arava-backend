@@ -6,7 +6,6 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +36,6 @@ public class User extends AbstractEntity {
   private String lastName;
 
   @Field
-  @NotBlank
   @Column
   private String email;
 
@@ -52,13 +50,14 @@ public class User extends AbstractEntity {
   @Builder.Default
   private Boolean locked = false;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   private List<Favorite> favorites;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Media avatar;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Builder.Default
   private List<Role> roles = new ArrayList<>();
 

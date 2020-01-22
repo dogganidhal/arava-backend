@@ -9,10 +9,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
 
 /**
  * Created by Nidhal Dogga
@@ -32,14 +29,15 @@ public class Rating extends AbstractEntity {
 
   @Field
   @Column
-  @NotBlank
   private Double score;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private Poi poi;
 
   @IndexedEmbedded
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn
   private User author;
 
 }
