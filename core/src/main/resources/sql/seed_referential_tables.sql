@@ -1,4 +1,8 @@
+-- INSERT DEFAULT LANGUAGES 
 
+INSERT INTO language" ("id", "created", "disabled", "updated", "code", "name") VALUES ('cn', '2020-01-24', 'f', '2020-01-24', 'cn', '中文');
+INSERT INTO language" ("id", "created", "disabled", "updated", "code", "name") VALUES ('en', '2020-01-24', 'f', '2020-01-24', 'en', 'English');
+INSERT INTO language" ("id", "created", "disabled", "updated", "code", "name") VALUES ('fr', '2020-01-24', 'f', '2020-01-24', 'fr', 'Français');
 
 -- INSERT DEFAULT USER ROLES
 

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Nidhal Dogga
@@ -27,7 +28,10 @@ public class PoiWriteRequest {
   private Details details;
 
   @NotNull
-  private List<LocalizedDescription> descriptions;
+  private Map<String, String> title;
+
+  @NotNull
+  private Map<String, String> description;
 
   @NotNull
   private Double latitude;
@@ -49,25 +53,6 @@ public class PoiWriteRequest {
 
   @NotNull
   private String categoryId;
-
-  @Data
-  @Builder
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public static class LocalizedDescription {
-
-    private String id;
-
-    @NotNull
-    private String title;
-
-    @NotNull
-    private String description;
-
-    @NotNull
-    private String languageCode;
-
-  }
 
   @Data
   @Builder

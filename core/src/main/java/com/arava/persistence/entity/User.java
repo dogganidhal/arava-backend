@@ -54,7 +54,6 @@ public class User extends AbstractEntity {
   private List<Favorite> favorites;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private Media avatar;
 
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

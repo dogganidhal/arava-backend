@@ -44,7 +44,6 @@ public class RefreshToken {
   private Boolean revoked = false;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private User user;
 
 }

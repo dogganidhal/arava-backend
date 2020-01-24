@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 /**
  * Created by Nidhal Dogga
@@ -26,7 +27,7 @@ public class PoiCategoryWriteRequest {
   private String typeId;
 
   @NotNull
-  private String name;
+  private Map<String, String> name;
 
   @NotNull
   private MediaWriteRequest icon;

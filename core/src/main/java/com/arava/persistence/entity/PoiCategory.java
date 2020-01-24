@@ -6,12 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.TermVector;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Nidhal Dogga
@@ -29,18 +27,17 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public class PoiCategory extends AbstractEntity {
 
-  @Field(termVector = TermVector.YES)
-  @Column
-  private String name;
+  @ContainedIn
+  @IndexedEmbedded
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<LocalizedResource> name;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private Media icon;
 
   @IndexedEmbedded(depth = 2)
   @ManyToOne(cascade = CascadeType.ALL)
   @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE })
-  @JoinColumn
   private PoiType type;
 
 }

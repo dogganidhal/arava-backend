@@ -27,11 +27,9 @@ import javax.persistence.ManyToOne;
 public class Favorite extends AbstractEntity {
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private User user;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private Poi poi;
 
 }

@@ -10,4 +10,4 @@ COPY api api
 
 RUN gradle build
 
-CMD cd /app/arava && gradle api:bootRun
+CMD cd /app/arava && java -jar api/build/libs/api.jar

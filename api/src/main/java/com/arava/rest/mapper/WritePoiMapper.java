@@ -1,9 +1,9 @@
 package com.arava.rest.mapper;
 
+import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiDetails;
-import com.arava.persistence.entity.PoiLocalizedDescription;
 import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiCategoryRepository;
 import com.arava.rest.dto.request.MediaWriteRequest;
@@ -11,6 +11,8 @@ import com.arava.rest.dto.request.PoiWriteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,7 +32,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
   private PoiCategoryRepository poiCategoryRepository;
 
   @Autowired
-  private Mapper<PoiWriteRequest.LocalizedDescription, PoiLocalizedDescription> localizedDescriptionMapper;
+  private Mapper<Map<String, String>, List<LocalizedResource>> localizedResourceMapper;
 
   @Autowired
   private Mapper<MediaWriteRequest, Media> mediaMapper;
@@ -49,10 +51,8 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())
             .details(detailsMapper.map(object.getDetails()))
-            .localizedDescriptions(object.getDescriptions().stream()
-                    .map(localizedDescriptionMapper::map)
-                    .collect(Collectors.toList())
-            )
+            .title(localizedResourceMapper.map(object.getTitle()))
+            .description(localizedResourceMapper.map(object.getDescription()))
             .medias(object.getMedias().stream()
                     .map(mediaMapper::map)
                     .collect(Collectors.toList())

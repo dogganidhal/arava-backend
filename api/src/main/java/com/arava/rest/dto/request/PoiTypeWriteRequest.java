@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Nidhal Dogga
@@ -25,7 +26,7 @@ public class PoiTypeWriteRequest {
   private String id;
 
   @NotNull
-  private String name;
+  private Map<String, String> name;
 
   @NotNull
   private MediaWriteRequest icon;

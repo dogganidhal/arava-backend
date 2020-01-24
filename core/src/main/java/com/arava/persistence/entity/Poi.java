@@ -82,12 +82,16 @@ public class Poi {
   @ContainedIn
   @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL)
-  private List<PoiLocalizedDescription> localizedDescriptions;
+  private List<LocalizedResource> title;
+
+  @ContainedIn
+  @IndexedEmbedded
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<LocalizedResource> description;
 
   @ContainedIn
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private PoiCategory category;
 
   @ContainedIn
@@ -113,7 +117,6 @@ public class Poi {
 
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private Island island;
 
 }

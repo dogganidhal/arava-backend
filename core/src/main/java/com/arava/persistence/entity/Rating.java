@@ -32,12 +32,10 @@ public class Rating extends AbstractEntity {
   private Double score;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private Poi poi;
 
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private User author;
 
 }

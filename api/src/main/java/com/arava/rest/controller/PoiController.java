@@ -126,6 +126,7 @@ public class PoiController {
     poiCategoryRepository.save(poiCategory);
   }
 
+  @Admin
   @PutMapping("/category")
   public void updatePoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
     PoiCategory poiCategory = poiCategoryMapper.map(request);
@@ -139,6 +140,7 @@ public class PoiController {
     poiTypeRepository.save(poiType);
   }
 
+  @Admin
   @PutMapping("/type")
   public void updatePoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
     PoiType poiType = poiTypeMapper.map(request);

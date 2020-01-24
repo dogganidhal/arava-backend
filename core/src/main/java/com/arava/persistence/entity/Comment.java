@@ -24,11 +24,9 @@ import javax.persistence.*;
 public class Comment extends AbstractEntity {
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private User author;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn
   private Poi poi;
 
   @Column

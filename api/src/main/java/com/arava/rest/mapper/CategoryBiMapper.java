@@ -1,5 +1,6 @@
 package com.arava.rest.mapper;
 
+import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;
 import com.arava.persistence.entity.PoiCategory;
 import com.arava.persistence.entity.PoiType;
@@ -7,6 +8,9 @@ import com.arava.rest.dto.MediaDto;
 import com.arava.rest.dto.PoiDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Nidhal Dogga
@@ -24,11 +28,14 @@ public class CategoryBiMapper implements Mapper<PoiCategory, PoiDto.Category>, R
   @Autowired
   private Mapper<Media, MediaDto> mediaMapper;
 
+  @Autowired
+  private ReverseMapper<Map<String, String>, List<LocalizedResource>> localizedResourceReverseMapper;
+
   @Override
   public PoiDto.Category map(PoiCategory object) {
     return PoiDto.Category.builder()
             .id(object.getId())
-            .name(object.getName())
+            .name(localizedResourceReverseMapper.reverseMap(object.getName()))
             .icon(mediaMapper.map(object.getIcon()))
             .type(typeMapper.map(object.getType()))
             .build();
