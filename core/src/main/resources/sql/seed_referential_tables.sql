@@ -1,8 +1,9 @@
 -- INSERT DEFAULT LANGUAGES 
 
-INSERT INTO language" ("id", "created", "disabled", "updated", "code", "name") VALUES ('cn', '2020-01-24', 'f', '2020-01-24', 'cn', '中文');
-INSERT INTO language" ("id", "created", "disabled", "updated", "code", "name") VALUES ('en', '2020-01-24', 'f', '2020-01-24', 'en', 'English');
-INSERT INTO language" ("id", "created", "disabled", "updated", "code", "name") VALUES ('fr', '2020-01-24', 'f', '2020-01-24', 'fr', 'Français');
+INSERT INTO language ("id", "created", "disabled", "updated", "code", "name") VALUES 
+    ('zh_Hans', '2020-01-24', 'f', '2020-01-24', 'cn', '中文'),
+    ('en', '2020-01-24', 'f', '2020-01-24', 'en', 'English'),
+    ('fr', '2020-01-24', 'f', '2020-01-24', 'fr', 'Français') ON CONFLICT DO NOTHING;
 
 -- INSERT DEFAULT USER ROLES
 
@@ -10,12 +11,9 @@ INSERT INTO role (
                   "id", "created", "disabled", "updated", "name"
 ) VALUES (
           'd9199aec-712a-4eac-b965-2c7096f9f123', '2020-01-21', 'f', '2020-01-21', 'ADMIN'
-);
-INSERT INTO role (
-                  "id", "created", "disabled", "updated", "name"
-) VALUES (
+), (
           'd5694e36-1024-48ef-96f8-0a452054934e', '2020-01-21', 'f', '2020-01-21', 'USER'
-);
+) ON CONFLICT DO NOTHING;
 
 -- INSERT DEFAULT ARCHIPELAGOS
 
@@ -24,35 +22,35 @@ INSERT INTO archipelago (
 ) VALUES (
           'fb9bdda0-df9e-49f1-b737-4cf5bc5d6bf4',
           'Archipel de la Société'
-);
+) ON CONFLICT DO NOTHING;
 
 INSERT INTO archipelago (
     id, name
 ) VALUES (
              '49b263b0-0326-496d-bfa1-3a3986797bba',
              'Archipel Australes'
-         );
+         ) ON CONFLICT DO NOTHING;
 
 INSERT INTO archipelago (
     id, name
 ) VALUES (
              '02cbe4a1-fef8-46ec-b89e-30ad801cfd25',
              'Archipel des Tuamotu'
-         );
+         ) ON CONFLICT DO NOTHING;
 
 INSERT INTO archipelago (
     id, name
 ) VALUES (
              'c75f6eeb-0ca7-4d79-911c-fbba6979a1f3',
              'Archipel des Marquises'
-         );
+         ) ON CONFLICT DO NOTHING;
 
 INSERT INTO archipelago (
     id, name
 ) VALUES (
              '32b915b5-6fbd-4ece-b660-acab06391247',
              'Archipel des Gambiers'
-         );
+         ) ON CONFLICT DO NOTHING;
 
 -- INSERT DEFAULT ISLANDS
 
@@ -81,7 +79,7 @@ VALUES (
           'd2c54228-86d5-4aa8-8853-903d980a6ff9',
           'Raiatea',
           'fb9bdda0-df9e-49f1-b737-4cf5bc5d6bf4'
-);
+) ON CONFLICT DO NOTHING;
 
 INSERT INTO island (id, name, archipelago_id)
 VALUES (
@@ -104,7 +102,7 @@ VALUES (
            'c3231656-5d96-454f-9654-9ccd7d667842',
            'Avera',
            '49b263b0-0326-496d-bfa1-3a3986797bba'
-       );
+       ) ON CONFLICT DO NOTHING;
 
 INSERT INTO island (id, name, archipelago_id)
 VALUES (
@@ -161,7 +159,7 @@ VALUES (
            'a24cc1d3-3af5-4660-b004-a2b9ea97ecc1',
            'Makemo',
            '02cbe4a1-fef8-46ec-b89e-30ad801cfd25'
-       );
+       ) ON CONFLICT DO NOTHING;
 
 INSERT INTO island (id, name, archipelago_id)
 VALUES (
@@ -184,7 +182,7 @@ VALUES (
            '05c0fa55-66d2-4451-a540-3aa31fadcd1b',
            'Tahuata',
            'c75f6eeb-0ca7-4d79-911c-fbba6979a1f3'
-       );
+       ) ON CONFLICT DO NOTHING;
 
 INSERT INTO island (id, name, archipelago_id)
 VALUES (
@@ -207,4 +205,4 @@ VALUES (
            '13b6d542-4311-468c-86bc-c580812cd57a',
            'Kamaka',
            '32b915b5-6fbd-4ece-b660-acab06391247'
-       );
+       ) ON CONFLICT DO NOTHING;
