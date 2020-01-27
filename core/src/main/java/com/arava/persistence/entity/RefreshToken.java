@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Nidhal Dogga
@@ -33,11 +34,11 @@ public class RefreshToken {
 
   @CreationTimestamp
   @Column
-  private Date created;
+  private LocalDateTime created;
 
   @UpdateTimestamp
   @Column
-  private Date updated;
+  private LocalDateTime updated;
 
   @Column
   @Builder.Default

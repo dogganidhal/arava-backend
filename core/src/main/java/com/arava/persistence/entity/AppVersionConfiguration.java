@@ -1,6 +1,7 @@
 package com.arava.persistence.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,7 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by Nidhal Dogga
@@ -34,14 +35,17 @@ public class AppVersionConfiguration {
 
   @CreationTimestamp
   @Column
-  private LocalDate created;
+  private LocalDateTime created;
 
   @NotNull
+  @Column
   private Integer minVersion;
 
-  @NotNull
-  private LocalDate maxDate;
+  @Column
+  private LocalDateTime maxDate;
 
-  private Boolean forceUpdate;
+  @Builder.Default
+  @Column
+  private Boolean forceUpdate = false;
 
 }

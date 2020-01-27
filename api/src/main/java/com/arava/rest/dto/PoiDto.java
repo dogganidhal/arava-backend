@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +82,7 @@ public class PoiDto {
 
     private String id;
     private String content;
-    private LocalDate date;
+    private LocalDateTime date;
     private User author;
 
   }

@@ -2,6 +2,7 @@ package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.Island;
 import com.arava.rest.dto.IslandDto;
+import com.arava.rest.dto.LatLng;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,6 +21,12 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
             .id(object.getId())
             .name(object.getName())
             .archipelago(object.getArchipelago().getName())
+            .center(LatLng.builder()
+                    .latitude(object.getLatitude())
+                    .longitude(object.getLongitude())
+                    .build()
+            )
+            .zoom(object.getZoom())
             .build();
   }
 

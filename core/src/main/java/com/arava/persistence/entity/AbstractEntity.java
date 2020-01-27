@@ -10,7 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by Nidhal Dogga
@@ -33,11 +33,11 @@ public abstract class AbstractEntity {
 
   @CreationTimestamp
   @Column
-  private LocalDate created;
+  private LocalDateTime created;
 
   @UpdateTimestamp
   @Column
-  private LocalDate updated;
+  private LocalDateTime updated;
 
   @Column
   private Boolean disabled = false;

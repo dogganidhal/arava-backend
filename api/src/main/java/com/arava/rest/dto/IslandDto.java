@@ -21,5 +21,7 @@ public class IslandDto {
   private String id;
   private String name;
   private String archipelago;
+  private LatLng center;
+  private Double zoom;
 
 }
