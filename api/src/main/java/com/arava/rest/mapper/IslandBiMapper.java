@@ -1,8 +1,11 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.Island;
+import com.arava.persistence.entity.Media;
 import com.arava.rest.dto.IslandDto;
 import com.arava.rest.dto.LatLng;
+import com.arava.rest.dto.MediaDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +17,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<Island, IslandDto> {
+
+  @Autowired
+  private Mapper<Media, MediaDto> mediaMapper;
 
   @Override
   public IslandDto map(Island object) {
@@ -27,6 +33,7 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
                     .build()
             )
             .zoom(object.getZoom())
+            .image(mediaMapper.map(object.getImage()))
             .build();
   }
 

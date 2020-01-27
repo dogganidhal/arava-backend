@@ -46,4 +46,7 @@ public class Island extends AbstractEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private Archipelago archipelago;
 
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Media image;
+
 }

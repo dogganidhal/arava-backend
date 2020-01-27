@@ -23,5 +23,6 @@ public class IslandDto {
   private String archipelago;
   private LatLng center;
   private Double zoom;
+  private MediaDto image;
 
 }
