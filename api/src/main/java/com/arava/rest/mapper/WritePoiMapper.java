@@ -41,7 +41,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
   private Mapper<PoiWriteRequest.Details, PoiDetails> detailsMapper;
 
   @Override
-  public Poi map(PoiWriteRequest object) {
+  public Poi deepMap(PoiWriteRequest object) {
     return Poi.builder()
             .id(object.getId())
             .latitude(object.getLatitude())
@@ -50,11 +50,11 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .category(poiCategoryRepository.getOne(object.getCategoryId()))
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())
-            .details(detailsMapper.map(object.getDetails()))
-            .title(localizedResourceMapper.map(object.getTitle()))
-            .description(localizedResourceMapper.map(object.getDescription()))
+            .details(detailsMapper.deepMap(object.getDetails()))
+            .title(localizedResourceMapper.deepMap(object.getTitle()))
+            .description(localizedResourceMapper.deepMap(object.getDescription()))
             .medias(object.getMedias().stream()
-                    .map(mediaMapper::map)
+                    .map(mediaMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .build();

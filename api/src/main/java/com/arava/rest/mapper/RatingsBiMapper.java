@@ -17,7 +17,7 @@ import java.util.List;
 public class RatingsBiMapper implements Mapper<List<Rating>, PoiDto.Ratings>, ReverseMapper<List<Rating>, PoiDto.Ratings> {
 
   @Override
-  public PoiDto.Ratings map(List<Rating> objects) {
+  public PoiDto.Ratings deepMap(List<Rating> objects) {
     return PoiDto.Ratings.builder()
             .averageScore(objects.stream()
                     .reduce((lhs, rhs) -> Rating.builder()

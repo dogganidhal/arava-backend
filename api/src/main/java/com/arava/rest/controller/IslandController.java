@@ -47,7 +47,7 @@ public class IslandController {
   @GetMapping("/island")
   public List<IslandDto> getIslands() {
     return islandRepository.findAll().stream()
-            .map(islandMapper::map)
+            .map(islandMapper::deepMap)
             .collect(Collectors.toList());
   }
 
@@ -58,7 +58,7 @@ public class IslandController {
     try {
       Island island = islandMerger.merge(
               islandRepository.getOne(request.getId()),
-              islandUpdateMapper.map(request)
+              islandUpdateMapper.deepMap(request)
       );
       islandRepository.save(island);
     } catch (ConstraintViolationException e) {

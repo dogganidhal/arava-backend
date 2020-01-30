@@ -17,7 +17,7 @@ import java.sql.Time;
 public class WritePoiDescriptionMapper implements Mapper<PoiWriteRequest.Details, PoiDetails> {
 
   @Override
-  public PoiDetails map(PoiWriteRequest.Details object) {
+  public PoiDetails deepMap(PoiWriteRequest.Details object) {
     return PoiDetails.builder()
             .id(object.getId())
             .address(object.getAddress())

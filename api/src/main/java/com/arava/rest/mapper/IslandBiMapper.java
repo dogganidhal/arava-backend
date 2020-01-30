@@ -27,7 +27,7 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
   private Mapper<Archipelago, ArchipelagoDto> archipelagoMapper;
 
   @Override
-  public IslandDto map(Island object) {
+  public IslandDto deepMap(Island object) {
     return IslandDto.builder()
             .id(object.getId())
             .name(object.getName())
@@ -38,7 +38,7 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
                     .build()
             )
             .zoom(object.getZoom())
-            .image(mediaMapper.map(object.getImage()))
+            .image(mediaMapper.deepMap(object.getImage()))
             .build();
   }
 
@@ -53,7 +53,7 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
                     .build()
             )
             .zoom(object.getZoom())
-            .image(mediaMapper.map(object.getImage()))
+            .image(mediaMapper.deepMap(object.getImage()))
             .build();
   }
 

@@ -38,7 +38,7 @@ public class UserController {
   @GetMapping("/favorite")
   public List<FavoriteDto> getFavorites(@AuthenticationPrincipal UserPrincipal userPrincipal) {
     return favoriteRepository.findByUserId(userPrincipal.getId()).stream()
-            .map(favoriteMapper::map)
+            .map(favoriteMapper::deepMap)
             .collect(Collectors.toList());
   }
 

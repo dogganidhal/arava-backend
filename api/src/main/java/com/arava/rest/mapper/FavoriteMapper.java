@@ -20,10 +20,10 @@ public class FavoriteMapper implements Mapper<Favorite, FavoriteDto> {
   private Mapper<Poi, PoiDto> poiMapper;
 
   @Override
-  public FavoriteDto map(Favorite object) {
+  public FavoriteDto deepMap(Favorite object) {
     return FavoriteDto.builder()
             .id(object.getId())
-            .poi(poiMapper.map(object.getPoi()))
+            .poi(poiMapper.deepMap(object.getPoi()))
             .build();
   }
 

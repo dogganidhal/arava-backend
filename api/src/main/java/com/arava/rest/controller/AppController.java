@@ -52,15 +52,15 @@ public class AppController {
   @GetMapping("/configuration")
   public AppConfigurationDto getAppConfiguration() {
     return AppConfigurationDto.builder()
-            .versionConfiguration(appVersionConfigurationMapper.map(
+            .versionConfiguration(appVersionConfigurationMapper.deepMap(
                     appVersionConfigurationRepository.getLatestRevision()
             ))
             .archipelagos(archipelagoRepository.findAll().stream()
-                    .map(archipelagoMapper::map)
+                    .map(archipelagoMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .poiTypes(poiTypeRepository.findAll().stream()
-                    .map(poiTypeMapper::map)
+                    .map(poiTypeMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .build();

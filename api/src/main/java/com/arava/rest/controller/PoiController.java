@@ -61,7 +61,7 @@ public class PoiController {
   public List<PoiDto> getAllPois() {
     try {
       return poiRepository.findAll().stream()
-              .map(poiMapper::map)
+              .map(poiMapper::deepMap)
               .collect(Collectors.toList());
     } catch (EntityNotFoundException e) {
       throw ApiClientException.NOT_FOUND
@@ -73,7 +73,7 @@ public class PoiController {
   @GetMapping("/{poiId}")
   public PoiDto getPoi(@PathVariable("poiId") String poiId) {
     try {
-      return poiMapper.map(poiRepository.getOne(poiId));
+      return poiMapper.deepMap(poiRepository.getOne(poiId));
     } catch (EntityNotFoundException e) {
       throw ApiClientException.NOT_FOUND
               .getThrowable();
@@ -83,13 +83,13 @@ public class PoiController {
   @Admin
   @PostMapping
   public void createPoi(@Valid @RequestBody PoiWriteRequest request) {
-    poiRepository.save(writePoiMapper.map(request));
+    poiRepository.save(writePoiMapper.deepMap(request));
   }
 
   @Admin
   @PutMapping
   public void updatePoi(@Valid @RequestBody PoiWriteRequest request) {
-    poiRepository.save(writePoiMapper.map(request));
+    poiRepository.save(writePoiMapper.deepMap(request));
   }
 
   @Admin
@@ -113,28 +113,28 @@ public class PoiController {
   @Admin
   @PostMapping("/category")
   public void createPoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
-    PoiCategory poiCategory = poiCategoryMapper.map(request);
+    PoiCategory poiCategory = poiCategoryMapper.deepMap(request);
     poiCategoryRepository.save(poiCategory);
   }
 
   @Admin
   @PutMapping("/category")
   public void updatePoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
-    PoiCategory poiCategory = poiCategoryMapper.map(request);
+    PoiCategory poiCategory = poiCategoryMapper.deepMap(request);
     poiCategoryRepository.save(poiCategory);
   }
 
   @Admin
   @PostMapping("/type")
   public void createPoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
-    PoiType poiType = poiTypeMapper.map(request);
+    PoiType poiType = poiTypeMapper.deepMap(request);
     poiTypeRepository.save(poiType);
   }
 
   @Admin
   @PutMapping("/type")
   public void updatePoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
-    PoiType poiType = poiTypeMapper.map(request);
+    PoiType poiType = poiTypeMapper.deepMap(request);
     poiTypeRepository.save(poiType);
   }
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class WriteMediaMapper implements Mapper<MediaWriteRequest, Media> {
 
   @Override
-  public Media map(MediaWriteRequest object) {
+  public Media deepMap(MediaWriteRequest object) {
     return Media.builder()
             .url(object.getUrl())
             .mediaType(object.getType())

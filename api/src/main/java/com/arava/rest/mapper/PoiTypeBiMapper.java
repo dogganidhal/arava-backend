@@ -28,11 +28,11 @@ public class PoiTypeBiMapper implements Mapper<PoiType, PoiDto.Type>, ReverseMap
   private ReverseMapper<Map<String, String>, List<LocalizedResource>> localizedResourceReverseMapper;
 
   @Override
-  public PoiDto.Type map(PoiType object) {
+  public PoiDto.Type deepMap(PoiType object) {
     return PoiDto.Type.builder()
             .id(object.getId())
             .name(localizedResourceReverseMapper.reverseMap(object.getName()))
-            .icon(mediaMapper.map(object.getIcon()))
+            .icon(mediaMapper.deepMap(object.getIcon()))
             .build();
   }
 

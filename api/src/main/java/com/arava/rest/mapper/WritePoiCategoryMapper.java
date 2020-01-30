@@ -31,12 +31,12 @@ public class WritePoiCategoryMapper implements Mapper<PoiCategoryWriteRequest, P
   private Mapper<Map<String, String>, List<LocalizedResource>> localizedResourceMapper;
 
   @Override
-  public PoiCategory map(PoiCategoryWriteRequest object) {
+  public PoiCategory deepMap(PoiCategoryWriteRequest object) {
     return PoiCategory.builder()
             .id(object.getId())
             .type(object.getTypeId() != null ?poiTypeRepository.getOne(object.getTypeId()) : null)
-            .icon(mediaMapper.map(object.getIcon()))
-            .name(localizedResourceMapper.map(object.getName()))
+            .icon(mediaMapper.deepMap(object.getIcon()))
+            .name(localizedResourceMapper.deepMap(object.getName()))
             .build();
   }
 

@@ -26,7 +26,7 @@ public class LocalizedResourceBiMapper
   private LanguageRepository languageRepository;
 
   @Override
-  public List<LocalizedResource> map(Map<String, String> object) {
+  public List<LocalizedResource> deepMap(Map<String, String> object) {
     return object.entrySet().stream()
             .map(entry -> LocalizedResource.builder()
                     .resource(entry.getValue())

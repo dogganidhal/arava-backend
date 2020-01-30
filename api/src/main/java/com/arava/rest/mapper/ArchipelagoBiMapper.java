@@ -22,7 +22,7 @@ public class ArchipelagoBiMapper implements Mapper<Archipelago, ArchipelagoDto>,
   private Mapper<Island, IslandDto> islandMapper;
 
   @Override
-  public ArchipelagoDto map(Archipelago object) {
+  public ArchipelagoDto deepMap(Archipelago object) {
     return ArchipelagoDto.builder()
             .id(object.getId())
             .name(object.getName())

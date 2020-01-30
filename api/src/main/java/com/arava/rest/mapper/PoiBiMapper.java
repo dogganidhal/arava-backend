@@ -40,7 +40,7 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
   private ReverseMapper<Map<String, String>, List<LocalizedResource>> localizedResourceReverseMapper;
 
   @Override
-  public PoiDto map(Poi object) {
+  public PoiDto deepMap(Poi object) {
       return PoiDto.builder()
             .id(object.getId())
             .title(localizedResourceReverseMapper.reverseMap(object.getTitle()))
@@ -49,21 +49,21 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())
             .island(object.getIsland().getName())
-            .category(categoryMapper.map(object.getCategory()))
+            .category(categoryMapper.deepMap(object.getCategory()))
             .coordinate(LatLng.builder()
                     .latitude(object.getLatitude())
                     .longitude(object.getLongitude())
                     .build()
             )
             .comments(object.getComments().stream()
-                    .map(commentMapper::map)
+                    .map(commentMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .medias(object.getMedias().stream()
-                    .map(mediaMapper::map)
+                    .map(mediaMapper::deepMap)
                     .collect(Collectors.toList())
             )
-            .ratings(ratingsMapper.map(object.getRatings()))
+            .ratings(ratingsMapper.deepMap(object.getRatings()))
             .build();
   }
 

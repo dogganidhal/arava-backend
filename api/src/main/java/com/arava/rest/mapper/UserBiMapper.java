@@ -21,11 +21,11 @@ public class UserBiMapper implements Mapper<User, PoiDto.User>, ReverseMapper<Us
   private Mapper<Media, MediaDto> mediaMapper;
 
   @Override
-  public PoiDto.User map(User object) {
+  public PoiDto.User deepMap(User object) {
     return PoiDto.User.builder()
             .id(object.getId())
             .fullName(object.getFirstName() + " " + object.getLastName())
-            .avatar(mediaMapper.map(object.getAvatar()))
+            .avatar(mediaMapper.deepMap(object.getAvatar()))
             .build();
   }
 

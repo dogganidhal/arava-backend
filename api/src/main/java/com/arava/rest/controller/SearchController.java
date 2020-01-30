@@ -45,7 +45,7 @@ public class SearchController {
   public SearchResponse searchPois(@RequestBody SearchRequest request) {
     List<PoiDto> pois = searchIndexManager.searchPois(request.searchQuery())
             .stream()
-            .map(poiMapper::map)
+            .map(poiMapper::deepMap)
             .collect(Collectors.toList());
     return SearchResponse.builder()
             .count(pois.size())
@@ -57,7 +57,7 @@ public class SearchController {
   public SearchResponse getSimilar(@PathVariable("poiId") String poiId) {
     List<PoiDto> pois = searchIndexManager.getSimilarPois(poiId)
             .stream()
-            .map(poiMapper::map)
+            .map(poiMapper::deepMap)
             .collect(Collectors.toList());
     return SearchResponse.builder()
             .count(pois.size())

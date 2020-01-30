@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class MediaBiMapper implements Mapper<Media, MediaDto>, ReverseMapper<Media, MediaDto> {
 
   @Override
-  public MediaDto map(Media object) {
+  public MediaDto deepMap(Media object) {
     return MediaDto.builder()
             .id(object.getId())
             .type(object.getMediaType())

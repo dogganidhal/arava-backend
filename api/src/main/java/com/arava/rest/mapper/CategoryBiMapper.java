@@ -32,12 +32,12 @@ public class CategoryBiMapper implements Mapper<PoiCategory, PoiDto.Category>, R
   private ReverseMapper<Map<String, String>, List<LocalizedResource>> localizedResourceReverseMapper;
 
   @Override
-  public PoiDto.Category map(PoiCategory object) {
+  public PoiDto.Category deepMap(PoiCategory object) {
     return PoiDto.Category.builder()
             .id(object.getId())
             .name(localizedResourceReverseMapper.reverseMap(object.getName()))
-            .icon(mediaMapper.map(object.getIcon()))
-            .type(typeMapper.map(object.getType()))
+            .icon(mediaMapper.deepMap(object.getIcon()))
+            .type(typeMapper.deepMap(object.getType()))
             .build();
   }
 

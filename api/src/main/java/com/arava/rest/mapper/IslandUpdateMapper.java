@@ -24,7 +24,7 @@ public class IslandUpdateMapper implements Mapper<IslandUpdateRequest, Island> {
   private Mapper<MediaWriteRequest, Media> mediaMapper;
 
   @Override
-  public Island map(IslandUpdateRequest object) {
+  public Island deepMap(IslandUpdateRequest object) {
     return Island.builder()
             .id(object.getId())
             .name(object.getName())
@@ -35,7 +35,7 @@ public class IslandUpdateMapper implements Mapper<IslandUpdateRequest, Island> {
                     null
             )
             .image(object.getImage() != null ?
-                    mediaMapper.map(object.getImage()) :
+                    mediaMapper.deepMap(object.getImage()) :
                     null
             )
             .zoom(object.getZoom())

@@ -18,7 +18,7 @@ public class AppVersionConfigurationBiMapper
   ReverseMapper<AppVersionConfiguration, AppConfigurationDto.AppVersionConfiguration> {
 
   @Override
-  public AppConfigurationDto.AppVersionConfiguration map(AppVersionConfiguration object) {
+  public AppConfigurationDto.AppVersionConfiguration deepMap(AppVersionConfiguration object) {
     return AppConfigurationDto.AppVersionConfiguration.builder()
             .minVersion(object.getMinVersion())
             .force(object.getForceUpdate())

@@ -19,12 +19,12 @@ public class CommentBiMapper implements Mapper<Comment, PoiDto.Comment>, Reverse
   private Mapper<User, PoiDto.User> userMapper;
 
   @Override
-  public PoiDto.Comment map(Comment object) {
+  public PoiDto.Comment deepMap(Comment object) {
     return PoiDto.Comment.builder()
             .id(object.getId())
             .content(object.getContent())
             .date(object.getCreated())
-            .author(userMapper.map(object.getAuthor()))
+            .author(userMapper.deepMap(object.getAuthor()))
             .build();
   }
 

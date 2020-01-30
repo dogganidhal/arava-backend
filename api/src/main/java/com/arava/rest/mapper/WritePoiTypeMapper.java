@@ -34,13 +34,13 @@ public class WritePoiTypeMapper implements Mapper<PoiTypeWriteRequest, PoiType> 
   private Mapper<Map<String, String>, List<LocalizedResource>> localizedResourceMapper;
 
   @Override
-  public PoiType map(PoiTypeWriteRequest object) {
+  public PoiType deepMap(PoiTypeWriteRequest object) {
     PoiType type = PoiType.builder()
             .id(object.getId())
-            .icon(mediaMapper.map(object.getIcon()))
-            .name(localizedResourceMapper.map(object.getName()))
+            .icon(mediaMapper.deepMap(object.getIcon()))
+            .name(localizedResourceMapper.deepMap(object.getName()))
             .categories(object.getCategories().stream()
-                    .map(poiCategoryMapper::map)
+                    .map(poiCategoryMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .build();
