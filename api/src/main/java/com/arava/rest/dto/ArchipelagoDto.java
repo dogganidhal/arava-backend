@@ -1,5 +1,6 @@
 package com.arava.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class ArchipelagoDto {
 
   private String id;
   private String name;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   private List<IslandDto> islands;
 
 }

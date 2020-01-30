@@ -34,6 +34,14 @@ public class ArchipelagoBiMapper implements Mapper<Archipelago, ArchipelagoDto>,
   }
 
   @Override
+  public ArchipelagoDto partialMap(Archipelago object) {
+    return ArchipelagoDto.builder()
+            .id(object.getId())
+            .name(object.getName())
+            .build();
+  }
+
+  @Override
   public Archipelago reverseMap(ArchipelagoDto object) {
     return null;
   }

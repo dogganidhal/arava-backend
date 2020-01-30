@@ -31,7 +31,7 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
     return IslandDto.builder()
             .id(object.getId())
             .name(object.getName())
-            .archipelago(archipelagoMapper.map(object.getArchipelago()))
+            .archipelago(archipelagoMapper.partialMap(object.getArchipelago()))
             .center(LatLng.builder()
                     .latitude(object.getLatitude())
                     .longitude(object.getLongitude())

@@ -1,6 +1,7 @@
 package com.arava.rest.controller;
 
 import com.arava.persistence.entity.Island;
+import com.arava.persistence.merger.EntityMerger;
 import com.arava.persistence.repository.IslandRepository;
 import com.arava.rest.annotation.Admin;
 import com.arava.rest.dto.IslandDto;
@@ -38,6 +39,9 @@ public class IslandController {
   @Autowired
   private Mapper<IslandUpdateRequest, Island> islandUpdateMapper;
 
+  @Autowired
+  private EntityMerger<Island> islandMerger;
+
   //region Island inspection
 
   @GetMapping("/island")
@@ -52,7 +56,10 @@ public class IslandController {
   @PutMapping("/island")
   public void updateIsland(@Valid @RequestBody IslandUpdateRequest request) {
     try {
-      Island island = islandUpdateMapper.map(request);
+      Island island = islandMerger.merge(
+              islandRepository.getOne(request.getId()),
+              islandUpdateMapper.map(request)
+      );
       islandRepository.save(island);
     } catch (ConstraintViolationException e) {
       throw ApiClientException.VALIDATION_ERROR
