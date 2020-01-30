@@ -63,6 +63,17 @@ public enum ApiClientException implements ApiException {
       return "No entity with specified ids was found";
     }
 
+  },
+  VALIDATION_ERROR {
+    @Override
+    public HttpStatus getStatus() {
+      return HttpStatus.BAD_REQUEST;
+    }
+
+    @Override
+    public String getMessage() {
+      return "Validation failed for request, please check your input";
+    }
   };
 
   @Override

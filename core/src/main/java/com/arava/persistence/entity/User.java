@@ -2,6 +2,7 @@ package com.arava.persistence.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -23,6 +24,7 @@ import java.util.List;
 @Indexed
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @EqualsAndHashCode(callSuper = true)
 @Table(name="\"user\"")
 public class User extends AbstractEntity {

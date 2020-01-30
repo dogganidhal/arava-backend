@@ -1,15 +1,12 @@
 package com.arava.rest.controller;
 
-import com.arava.persistence.entity.Island;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiCategory;
 import com.arava.persistence.entity.PoiType;
-import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiCategoryRepository;
 import com.arava.persistence.repository.PoiRepository;
 import com.arava.persistence.repository.PoiTypeRepository;
 import com.arava.rest.annotation.Admin;
-import com.arava.rest.dto.IslandDto;
 import com.arava.rest.dto.PoiDto;
 import com.arava.rest.dto.request.PoiCategoryWriteRequest;
 import com.arava.rest.dto.request.PoiTypeWriteRequest;
@@ -46,9 +43,6 @@ public class PoiController {
   private PoiTypeRepository poiTypeRepository;
 
   @Autowired
-  private IslandRepository islandRepository;
-
-  @Autowired
   private Mapper<PoiWriteRequest, Poi> writePoiMapper;
 
   @Autowired
@@ -59,9 +53,6 @@ public class PoiController {
 
   @Autowired
   private Mapper<PoiTypeWriteRequest, PoiType> poiTypeMapper;
-
-  @Autowired
-  private Mapper<Island, IslandDto> islandMapper;
 
   //region Poi CRUD operations
 
@@ -145,17 +136,6 @@ public class PoiController {
   public void updatePoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
     PoiType poiType = poiTypeMapper.map(request);
     poiTypeRepository.save(poiType);
-  }
-
-  //endregion
-
-  //region Island inspection
-
-  @GetMapping("/island")
-  public List<IslandDto> getIslands() {
-    return islandRepository.findAll().stream()
-            .map(islandMapper::map)
-            .collect(Collectors.toList());
   }
 
   //endregion

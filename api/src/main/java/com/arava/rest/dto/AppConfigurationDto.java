@@ -1,5 +1,6 @@
 package com.arava.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,7 @@ import java.util.List;
 public class AppConfigurationDto {
 
   private AppVersionConfiguration versionConfiguration;
-  private List<IslandDto> islands;
+  private List<ArchipelagoDto> archipelagos;
   private List<PoiDto.Type> poiTypes;
 
   @Data
@@ -31,7 +32,9 @@ public class AppConfigurationDto {
   public static class AppVersionConfiguration {
 
     private Integer minVersion;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime maxDate;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean force;
 
   }

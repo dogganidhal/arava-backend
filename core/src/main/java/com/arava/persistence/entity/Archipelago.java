@@ -5,10 +5,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.Collection;
 
 /**
  * Created by Nidhal Dogga
@@ -23,9 +26,13 @@ import javax.persistence.Entity;
 @Cacheable
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @EqualsAndHashCode(callSuper = true)
 public class Archipelago extends AbstractEntity {
 
   private String name;
+
+  @OneToMany(mappedBy = "archipelago")
+  private Collection<Island> islands;
 
 }

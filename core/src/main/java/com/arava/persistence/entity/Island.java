@@ -5,13 +5,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.TermVector;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by Nidhal Dogga
@@ -26,24 +30,22 @@ import javax.validation.constraints.NotNull;
 @Cacheable
 @AllArgsConstructor
 @NoArgsConstructor
+@SelectBeforeUpdate
+@DynamicUpdate
 @EqualsAndHashCode(callSuper = true)
 public class Island extends AbstractEntity {
 
-  @NotNull
   @Field(termVector = TermVector.YES)
   private String name;
 
-  @NotNull
   private Double latitude;
 
-  @NotNull
   private Double longitude;
 
-  @NotNull
   private Double zoom;
 
   @IndexedEmbedded
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   private Archipelago archipelago;
 
   @ManyToOne(cascade = CascadeType.ALL)

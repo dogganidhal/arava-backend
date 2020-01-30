@@ -1,14 +1,14 @@
 package com.arava.rest.controller;
 
 import com.arava.persistence.entity.AppVersionConfiguration;
-import com.arava.persistence.entity.Island;
+import com.arava.persistence.entity.Archipelago;
 import com.arava.persistence.entity.PoiType;
 import com.arava.persistence.repository.AppVersionConfigurationRepository;
-import com.arava.persistence.repository.IslandRepository;
+import com.arava.persistence.repository.ArchipelagoRepository;
 import com.arava.persistence.repository.PoiTypeRepository;
 import com.arava.rest.annotation.Admin;
 import com.arava.rest.dto.AppConfigurationDto;
-import com.arava.rest.dto.IslandDto;
+import com.arava.rest.dto.ArchipelagoDto;
 import com.arava.rest.dto.PoiDto;
 import com.arava.rest.mapper.Mapper;
 import com.arava.rest.mapper.ReverseMapper;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class AppController {
 
   @Autowired
-  private IslandRepository islandRepository;
+  private ArchipelagoRepository archipelagoRepository;
 
   @Autowired
   private PoiTypeRepository poiTypeRepository;
@@ -38,7 +38,7 @@ public class AppController {
   private AppVersionConfigurationRepository appVersionConfigurationRepository;
 
   @Autowired
-  private Mapper<Island, IslandDto> islandMapper;
+  private Mapper<Archipelago, ArchipelagoDto> archipelagoMapper;
 
   @Autowired
   private Mapper<PoiType, PoiDto.Type> poiTypeMapper;
@@ -55,8 +55,8 @@ public class AppController {
             .versionConfiguration(appVersionConfigurationMapper.map(
                     appVersionConfigurationRepository.getLatestRevision()
             ))
-            .islands(islandRepository.findAll().stream()
-                    .map(islandMapper::map)
+            .archipelagos(archipelagoRepository.findAll().stream()
+                    .map(archipelagoMapper::map)
                     .collect(Collectors.toList())
             )
             .poiTypes(poiTypeRepository.findAll().stream()

@@ -1,7 +1,9 @@
 package com.arava.rest.mapper;
 
+import com.arava.persistence.entity.Archipelago;
 import com.arava.persistence.entity.Island;
 import com.arava.persistence.entity.Media;
+import com.arava.rest.dto.ArchipelagoDto;
 import com.arava.rest.dto.IslandDto;
 import com.arava.rest.dto.LatLng;
 import com.arava.rest.dto.MediaDto;
@@ -21,12 +23,30 @@ public class IslandBiMapper implements Mapper<Island, IslandDto>, ReverseMapper<
   @Autowired
   private Mapper<Media, MediaDto> mediaMapper;
 
+  @Autowired
+  private Mapper<Archipelago, ArchipelagoDto> archipelagoMapper;
+
   @Override
   public IslandDto map(Island object) {
     return IslandDto.builder()
             .id(object.getId())
             .name(object.getName())
-            .archipelago(object.getArchipelago().getName())
+            .archipelago(archipelagoMapper.map(object.getArchipelago()))
+            .center(LatLng.builder()
+                    .latitude(object.getLatitude())
+                    .longitude(object.getLongitude())
+                    .build()
+            )
+            .zoom(object.getZoom())
+            .image(mediaMapper.map(object.getImage()))
+            .build();
+  }
+
+  @Override
+  public IslandDto partialMap(Island object) {
+    return IslandDto.builder()
+            .id(object.getId())
+            .name(object.getName())
             .center(LatLng.builder()
                     .latitude(object.getLatitude())
                     .longitude(object.getLongitude())

@@ -8,4 +8,7 @@ package com.arava.rest.mapper;
 
 public interface Mapper<T, R> {
   R map(T object);
+  default R partialMap(T object) {
+    return map(object);
+  }
 }

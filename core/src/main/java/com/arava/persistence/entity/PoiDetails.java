@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -27,6 +28,7 @@ import java.sql.Time;
 @Indexed
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @EqualsAndHashCode(callSuper = true)
 public class PoiDetails extends AbstractEntity {
 

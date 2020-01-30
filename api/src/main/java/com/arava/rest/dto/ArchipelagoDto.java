@@ -1,14 +1,15 @@
 package com.arava.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Created by Nidhal Dogga
- * Date : 21/01/2020 09:51
+ * Date : 28/01/2020 19:26
  * All rights reserved.
  */
 
@@ -17,14 +18,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class IslandDto {
+public class ArchipelagoDto {
 
   private String id;
   private String name;
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private ArchipelagoDto archipelago;
-  private LatLng center;
-  private Double zoom;
-  private MediaDto image;
+  private List<IslandDto> islands;
 
 }
