@@ -8,6 +8,7 @@ import com.arava.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -39,10 +40,13 @@ public class AccessManagerImpl implements AccessManager {
   }
 
   @Override
-  public void revokeRefreshTokenById(String id) {
-    Optional<RefreshToken> tokenOptional = refreshTokenRepository.findById(id);
+  public void revokeRefreshToken(String userId, String refreshToken) throws IllegalAccessException {
+    Optional<RefreshToken> tokenOptional = refreshTokenRepository.findById(refreshToken);
     if (tokenOptional.isPresent()) {
       RefreshToken token = tokenOptional.get();
+      if (!Objects.equals(token.getUser().getId(), userId)) {
+        throw new IllegalAccessException();
+      }
       token.setRevoked(true);
       refreshTokenRepository.save(token);
     }

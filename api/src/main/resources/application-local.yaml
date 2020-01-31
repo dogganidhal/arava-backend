@@ -23,3 +23,5 @@ hibernate:
 arava:
   search:
     max-similar-results: 20
+logging:
+  file: logs/api.log

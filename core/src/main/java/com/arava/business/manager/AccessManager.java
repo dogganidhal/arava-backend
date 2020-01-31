@@ -11,6 +11,6 @@ import com.arava.persistence.entity.RefreshToken;
 public interface AccessManager {
 
   RefreshToken generateRefreshTokenById(String userId);
-  void revokeRefreshTokenById(String id);
+  void revokeRefreshToken(String userId, String refreshToken) throws IllegalAccessException;
 
 }
