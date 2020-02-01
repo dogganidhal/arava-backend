@@ -2,10 +2,11 @@
 
 if [[ $1 == "deploy" ]]
 then
-   docker build -t arava-backend .
-   docker tag arava-backend registry.ndogga.com/arava/arava-backend:latest
-   docker push registry.ndogga.com/arava/arava-backend:latest
+   docker build -t arava-backend . || exit 1
+   docker tag arava-backend registry.ndogga.com/arava/arava-backend:latest || exit 1
+   docker push registry.ndogga.com/arava/arava-backend:latest || exit 1
    curl -X POST https://portainer.ndogga.com/api/webhooks/fef45523-c348-4f63-b48f-26e76778d796
+   echo "Successfully built and deployed to Portainer"
    exit 0
 fi
 

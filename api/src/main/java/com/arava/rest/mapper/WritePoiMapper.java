@@ -8,6 +8,7 @@ import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiCategoryRepository;
 import com.arava.rest.dto.request.MediaWriteRequest;
 import com.arava.rest.dto.request.PoiWriteRequest;
+import com.arava.rest.exception.ApiClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
   private PoiCategoryRepository poiCategoryRepository;
 
   @Autowired
-  private Mapper<Map<String, String>, List<LocalizedResource>> localizedResourceMapper;
+  private ReverseMapper<List<LocalizedResource>, Map<String, String>> localizedResourceReverseMapper;
 
   @Autowired
   private Mapper<MediaWriteRequest, Media> mediaMapper;
@@ -46,13 +47,19 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .id(object.getId())
             .latitude(object.getLatitude())
             .longitude(object.getLongitude())
-            .island(islandRepository.getOne(object.getIslandId()))
-            .category(poiCategoryRepository.getOne(object.getCategoryId()))
+            .island(islandRepository
+                    .findById(object.getIslandId())
+                    .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+            )
+            .category(poiCategoryRepository
+                    .findById(object.getCategoryId())
+                    .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+            )
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())
             .details(detailsMapper.deepMap(object.getDetails()))
-            .title(localizedResourceMapper.deepMap(object.getTitle()))
-            .description(localizedResourceMapper.deepMap(object.getDescription()))
+            .title(localizedResourceReverseMapper.reverseMap(object.getTitle()))
+            .description(localizedResourceReverseMapper.reverseMap(object.getDescription()))
             .medias(object.getMedias().stream()
                     .map(mediaMapper::deepMap)
                     .collect(Collectors.toList())

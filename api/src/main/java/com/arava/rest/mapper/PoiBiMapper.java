@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,17 +33,14 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
   private Mapper<List<Rating>, PoiDto.Ratings> ratingsMapper;
 
   @Autowired
-  private Mapper<Map<String, String>, List<LocalizedResource>> localizedResourceMapper;
-
-  @Autowired
-  private ReverseMapper<Map<String, String>, List<LocalizedResource>> localizedResourceReverseMapper;
+  private Mapper<List<LocalizedResource>, String> localizedResourceMapper;
 
   @Override
   public PoiDto deepMap(Poi object) {
       return PoiDto.builder()
             .id(object.getId())
-            .title(localizedResourceReverseMapper.reverseMap(object.getTitle()))
-            .description(localizedResourceReverseMapper.reverseMap(object.getDescription()))
+            .title(localizedResourceMapper.deepMap(object.getTitle()))
+            .description(localizedResourceMapper.deepMap(object.getDescription()))
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())

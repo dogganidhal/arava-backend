@@ -12,6 +12,7 @@ import com.arava.rest.dto.ArchipelagoDto;
 import com.arava.rest.dto.PoiDto;
 import com.arava.rest.mapper.Mapper;
 import com.arava.rest.mapper.ReverseMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  * All rights reserved.
  */
 
+@Slf4j
 @RestController
 @RequestMapping("/app")
 public class AppController {

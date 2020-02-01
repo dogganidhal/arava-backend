@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Nidhal Dogga
@@ -29,13 +28,13 @@ public class CategoryBiMapper implements Mapper<PoiCategory, PoiDto.Category>, R
   private Mapper<Media, MediaDto> mediaMapper;
 
   @Autowired
-  private ReverseMapper<Map<String, String>, List<LocalizedResource>> localizedResourceReverseMapper;
+  private Mapper<List<LocalizedResource>, String> localizedResourceMapper;
 
   @Override
   public PoiDto.Category deepMap(PoiCategory object) {
     return PoiDto.Category.builder()
             .id(object.getId())
-            .name(localizedResourceReverseMapper.reverseMap(object.getName()))
+            .name(localizedResourceMapper.deepMap(object.getName()))
             .icon(mediaMapper.deepMap(object.getIcon()))
             .type(typeMapper.deepMap(object.getType()))
             .build();

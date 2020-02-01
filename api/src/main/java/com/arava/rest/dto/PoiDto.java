@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Nidhal Dogga
@@ -25,8 +24,8 @@ import java.util.Map;
 public class PoiDto {
 
   private String id;
-  private Map<String, String> title;
-  private Map<String, String> description;
+  private String title;
+  private String description;
   private Category category;
   private LatLng coordinate;
   private String island;
@@ -44,7 +43,7 @@ public class PoiDto {
   public static class Type {
 
     private String id;
-    private Map<String, String> name;
+    private String name;
     private MediaDto icon;
 
   }
@@ -56,7 +55,7 @@ public class PoiDto {
   public static class Category {
 
     private String id;
-    private Map<String, String> name;
+    private String name;
     private MediaDto icon;
     @JsonInclude(Include.NON_NULL)
     private Type type;

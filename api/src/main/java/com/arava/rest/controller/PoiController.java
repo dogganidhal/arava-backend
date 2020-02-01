@@ -72,12 +72,10 @@ public class PoiController {
   @SneakyThrows
   @GetMapping("/{poiId}")
   public PoiDto getPoi(@PathVariable("poiId") String poiId) {
-    try {
-      return poiMapper.deepMap(poiRepository.getOne(poiId));
-    } catch (EntityNotFoundException e) {
-      throw ApiClientException.NOT_FOUND
-              .getThrowable();
-    }
+    return poiMapper.deepMap(poiRepository
+            .findById(poiId)
+            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+    );
   }
 
   @Admin
@@ -96,14 +94,11 @@ public class PoiController {
   @SneakyThrows
   @DeleteMapping("/{poiId}")
   public void deletePoi(@PathVariable("poiId") String poiId) {
-    try {
-      Poi poi = poiRepository.getOne(poiId);
-      poi.setDisabled(true);
-      poiRepository.save(poi);
-    } catch (EntityNotFoundException e) {
-      throw ApiClientException.NOT_FOUND
-              .getThrowable();
-    }
+    Poi poi = poiRepository
+            .findById(poiId)
+            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable);
+    poi.setDisabled(true);
+    poiRepository.save(poi);
   }
 
   //endregion

@@ -10,6 +10,7 @@ import com.arava.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +35,16 @@ public class FavoriteManagerImpl implements FavoriteManager {
 
   @Override
   public void createByUserIdAndPoiId(String userId, String poiId) {
-    User user = userRepository.getOne(userId);
-    Poi poi = poiRepository.getOne(poiId);
+    User user = userRepository
+            .findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException(
+                    String.format("No user with id '%s' exists", userId)
+            ));
+    Poi poi = poiRepository
+            .findById(poiId)
+            .orElseThrow(() -> new EntityNotFoundException(
+                    String.format("No poi with id '%s' exists", poiId)
+            ));
     Favorite favorite = Favorite.builder()
             .poi(poi)
             .user(user)
@@ -45,13 +54,22 @@ public class FavoriteManagerImpl implements FavoriteManager {
 
   @Override
   public void synchronizeUserFavorites(List<String> poiIds, String userId) {
-    User user = userRepository.getOne(userId);
+    User user = userRepository
+            .findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException(
+                    String.format("No user with id '%s' exists", userId)
+            ));
     List<Favorite> favorites = poiIds.parallelStream()
             .map(poiId -> favoriteRepository
                     .findByUserIdAndPoiId(userId, poiId)
                     .orElseGet(() -> Favorite.builder()
                             .user(user)
-                            .poi(poiRepository.getOne(poiId))
+                            .poi(poiRepository
+                                    .findById(poiId)
+                                    .orElseThrow(() -> new EntityNotFoundException(
+                                            String.format("No poi with id '%s' exists", poiId)
+                                    ))
+                            )
                             .build()
                     )
             )

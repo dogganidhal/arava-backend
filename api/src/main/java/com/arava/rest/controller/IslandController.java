@@ -57,7 +57,9 @@ public class IslandController {
   public void updateIsland(@Valid @RequestBody IslandUpdateRequest request) {
     try {
       Island island = islandMerger.merge(
-              islandRepository.getOne(request.getId()),
+              islandRepository
+                      .findById(request.getId())
+                      .orElseThrow(ApiClientException.NOT_FOUND::getThrowable),
               islandUpdateMapper.deepMap(request)
       );
       islandRepository.save(island);

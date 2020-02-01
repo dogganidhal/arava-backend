@@ -1,6 +1,7 @@
 package com.arava.rest.controller;
 
 import com.arava.rest.dto.response.ErrorResponse;
+import com.arava.rest.exception.ApiClientException;
 import com.arava.rest.exception.ApiServerException;
 import com.arava.rest.exception.ApiThrowable;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Created by Nidhal Dogga
@@ -38,7 +41,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(
             ErrorResponse.builder()
                     .message(String.format("Value '%s' is not a valid value for field '%s.%s'",
-                            exception.getBindingResult().getFieldError().getRejectedValue(),
+                            Objects.requireNonNull(exception.getBindingResult().getFieldError()).getRejectedValue(),
                             exception.getBindingResult().getFieldError().getObjectName(),
                             exception.getBindingResult().getFieldError().getField()
                     ))
@@ -61,6 +64,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             ),
             new HttpHeaders(),
             exception.getStatus()
+    );
+  }
+
+  @ExceptionHandler
+  public ResponseEntity<ErrorResponse> handleEntityNotFoundExceptions(EntityNotFoundException exception, WebRequest request) {
+    log.error(exception.toString(), exception);
+    return new ResponseEntity<>(
+            ErrorResponse.fromApiException(
+                    ApiClientException.NOT_FOUND.getThrowable(),
+                    ((ServletWebRequest) request).getRequest().getServletPath()
+            ),
+            new HttpHeaders(),
+            ApiClientException.NOT_FOUND.getStatus()
     );
   }
 

@@ -2,10 +2,10 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- INSERT DEFAULT LANGUAGES
 
-INSERT INTO language ("id", "created", "disabled", "updated", "code", "name")
-VALUES ('zh_Hans', '2020-01-24', 'f', '2020-01-24', 'cn', '中文'),
-       ('en', '2020-01-24', 'f', '2020-01-24', 'en', 'English'),
-       ('fr', '2020-01-24', 'f', '2020-01-24', 'fr', 'Français')
+INSERT INTO language ("id", "created", "disabled", "updated", "name")
+VALUES ('zh_Hans', '2020-01-24', 'f', '2020-01-24', '中文'),
+       ('en', '2020-01-24', 'f', '2020-01-24', 'English'),
+       ('fr', '2020-01-24', 'f', '2020-01-24', 'Français')
 ON CONFLICT DO NOTHING;
 
 -- INSERT DEFAULT USER ROLES

@@ -31,14 +31,14 @@ public class WritePoiTypeMapper implements Mapper<PoiTypeWriteRequest, PoiType> 
   private Mapper<MediaWriteRequest, Media> mediaMapper;
 
   @Autowired
-  private Mapper<Map<String, String>, List<LocalizedResource>> localizedResourceMapper;
+  private ReverseMapper<List<LocalizedResource>, Map<String, String>> localizedResourceReverseMapper;
 
   @Override
   public PoiType deepMap(PoiTypeWriteRequest object) {
     PoiType type = PoiType.builder()
             .id(object.getId())
             .icon(mediaMapper.deepMap(object.getIcon()))
-            .name(localizedResourceMapper.deepMap(object.getName()))
+            .name(localizedResourceReverseMapper.reverseMap(object.getName()))
             .categories(object.getCategories().stream()
                     .map(poiCategoryMapper::deepMap)
                     .collect(Collectors.toList())

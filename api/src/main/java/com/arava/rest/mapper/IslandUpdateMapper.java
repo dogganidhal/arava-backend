@@ -5,6 +5,7 @@ import com.arava.persistence.entity.Media;
 import com.arava.persistence.repository.ArchipelagoRepository;
 import com.arava.rest.dto.request.IslandUpdateRequest;
 import com.arava.rest.dto.request.MediaWriteRequest;
+import com.arava.rest.exception.ApiClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,9 @@ public class IslandUpdateMapper implements Mapper<IslandUpdateRequest, Island> {
             .latitude(object.getLatitude())
             .longitude(object.getLongitude())
             .archipelago(object.getArchipelago() != null ?
-                    archipelagoRepository.getOne(object.getArchipelago().getId()) :
+                    archipelagoRepository
+                            .findById(object.getArchipelago().getId())
+                            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable) :
                     null
             )
             .image(object.getImage() != null ?

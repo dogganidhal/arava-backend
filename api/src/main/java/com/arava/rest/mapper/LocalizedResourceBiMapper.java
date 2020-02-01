@@ -1,11 +1,13 @@
 package com.arava.rest.mapper;
 
+import com.arava.persistence.entity.Language;
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.repository.LanguageRepository;
+import com.arava.rest.context.ContextResolver;
+import com.arava.rest.exception.ApiClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,31 +20,39 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class LocalizedResourceBiMapper
-        implements Mapper<Map<String, String>, List<LocalizedResource>>,
-        ReverseMapper<Map<String, String>, List<LocalizedResource>> {
+public class LocalizedResourceBiMapper implements Mapper<List<LocalizedResource>, String>,
+        ReverseMapper<List<LocalizedResource>, Map<String, String>> {
 
   @Autowired
   private LanguageRepository languageRepository;
 
+  @Autowired
+  private ContextResolver contextResolver;
+
   @Override
-  public List<LocalizedResource> deepMap(Map<String, String> object) {
-    return object.entrySet().stream()
-            .map(entry -> LocalizedResource.builder()
-                    .resource(entry.getValue())
-                    .language(languageRepository.getOne(entry.getKey()))
-                    .build()
-            )
-            .collect(Collectors.toList());
+  public String deepMap(List<LocalizedResource> object) {
+    Language contextLanguage = contextResolver.getLanguage();
+    return object.stream()
+            .filter(localizedResource -> localizedResource
+                    .getLanguage()
+                    .getId()
+                    .equals(contextLanguage.getId()))
+            .map(LocalizedResource::getResource)
+            .findFirst()
+            .orElse(null);
   }
 
   @Override
-  public Map<String, String> reverseMap(List<LocalizedResource> object) {
-    Map<String, String> map = new HashMap<>();
-    object.forEach(localizedResource -> map.put(
-            localizedResource.getLanguage().getCode(),
-            localizedResource.getResource()
-    ));
-    return map;
+  public List<LocalizedResource> reverseMap(Map<String, String> object) {
+    return object.entrySet().stream()
+            .map(entry -> LocalizedResource.builder()
+                    .language(languageRepository
+                            .findById(entry.getKey())
+                            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+                    )
+                    .resource(entry.getValue())
+                    .build()
+            )
+            .collect(Collectors.toList());
   }
 }

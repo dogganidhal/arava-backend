@@ -6,6 +6,7 @@ import com.arava.persistence.entity.PoiCategory;
 import com.arava.persistence.repository.PoiTypeRepository;
 import com.arava.rest.dto.request.MediaWriteRequest;
 import com.arava.rest.dto.request.PoiCategoryWriteRequest;
+import com.arava.rest.exception.ApiClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,15 +29,20 @@ public class WritePoiCategoryMapper implements Mapper<PoiCategoryWriteRequest, P
   private Mapper<MediaWriteRequest, Media> mediaMapper;
 
   @Autowired
-  private Mapper<Map<String, String>, List<LocalizedResource>> localizedResourceMapper;
+  private ReverseMapper<List<LocalizedResource>, Map<String, String>> localizedResourceReverseMapper;
 
   @Override
   public PoiCategory deepMap(PoiCategoryWriteRequest object) {
     return PoiCategory.builder()
             .id(object.getId())
-            .type(object.getTypeId() != null ?poiTypeRepository.getOne(object.getTypeId()) : null)
+            .type(object.getTypeId() != null ?
+                    poiTypeRepository
+                            .findById(object.getTypeId())
+                            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable):
+                    null
+            )
             .icon(mediaMapper.deepMap(object.getIcon()))
-            .name(localizedResourceMapper.deepMap(object.getName()))
+            .name(localizedResourceReverseMapper.reverseMap(object.getName()))
             .build();
   }
 

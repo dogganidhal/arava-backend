@@ -28,9 +28,6 @@ import javax.persistence.Entity;
 public class Language extends AbstractEntity {
 
   @Field(termVector = TermVector.YES)
-  private String code;
-
-  @Field(termVector = TermVector.YES)
   private String name;
 
 }

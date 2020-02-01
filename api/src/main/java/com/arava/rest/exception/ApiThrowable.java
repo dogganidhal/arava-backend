@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ApiThrowable extends Exception {
+public class ApiThrowable extends RuntimeException {
 
   private HttpStatus status;
   private String message;
