@@ -3,9 +3,10 @@ package com.arava.rest.mapper;
 import com.arava.persistence.entity.Island;
 import com.arava.persistence.entity.Media;
 import com.arava.persistence.repository.ArchipelagoRepository;
-import com.arava.rest.dto.request.IslandUpdateRequest;
-import com.arava.rest.dto.request.MediaWriteRequest;
-import com.arava.rest.exception.ApiClientException;
+import com.arava.server.dto.request.IslandUpdateRequest;
+import com.arava.server.dto.request.MediaWriteRequest;
+import com.arava.server.exception.ApiClientException;
+import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

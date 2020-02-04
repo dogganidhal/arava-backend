@@ -1,22 +1,18 @@
 package com.arava.rest.controller;
 
+import com.arava.persistence.entity.Archipelago;
 import com.arava.persistence.entity.Island;
-import com.arava.persistence.merger.EntityMerger;
+import com.arava.persistence.repository.ArchipelagoRepository;
 import com.arava.persistence.repository.IslandRepository;
-import com.arava.rest.annotation.Admin;
-import com.arava.rest.dto.IslandDto;
-import com.arava.rest.dto.request.IslandUpdateRequest;
-import com.arava.rest.exception.ApiClientException;
-import com.arava.rest.mapper.Mapper;
-import lombok.SneakyThrows;
+import com.arava.server.dto.ArchipelagoDto;
+import com.arava.server.dto.IslandDto;
+import com.arava.server.exception.ApiClientException;
+import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,13 +30,13 @@ public class IslandController {
   private IslandRepository islandRepository;
 
   @Autowired
+  private ArchipelagoRepository archipelagoRepository;
+
+  @Autowired
   private Mapper<Island, IslandDto> islandMapper;
 
   @Autowired
-  private Mapper<IslandUpdateRequest, Island> islandUpdateMapper;
-
-  @Autowired
-  private EntityMerger<Island> islandMerger;
+  private Mapper<Archipelago, ArchipelagoDto> archipelagoMapper;
 
   //region Island inspection
 
@@ -51,24 +47,25 @@ public class IslandController {
             .collect(Collectors.toList());
   }
 
-  @SneakyThrows
-  @Admin
-  @PutMapping("/island")
-  public void updateIsland(@Valid @RequestBody IslandUpdateRequest request) {
-    try {
-      Island island = islandMerger.merge(
-              islandRepository
-                      .findById(request.getId())
-                      .orElseThrow(ApiClientException.NOT_FOUND::getThrowable),
-              islandUpdateMapper.deepMap(request)
-      );
-      islandRepository.save(island);
-    } catch (ConstraintViolationException e) {
-      throw ApiClientException.VALIDATION_ERROR
-              .getThrowable();
-    }
+  @GetMapping("/island/{islandId}")
+  public IslandDto getIsland(@PathVariable("islandId") String islandId) {
+    return islandMapper.deepMap(islandRepository
+            .findById(islandId)
+            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+    );
   }
 
   //endregion
+
+  // region Archipelago inspection
+
+  @GetMapping("/archipelago")
+  public List<ArchipelagoDto> getArchipelagos() {
+    return archipelagoRepository.findAll().stream()
+            .map(archipelagoMapper::deepMap)
+            .collect(Collectors.toList());
+  }
+
+  // endregion
 
 }

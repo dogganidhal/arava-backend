@@ -4,6 +4,7 @@ import com.arava.persistence.entity.Favorite;
 import com.arava.persistence.entity.Poi;
 import com.arava.rest.dto.FavoriteDto;
 import com.arava.rest.dto.PoiDto;
+import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

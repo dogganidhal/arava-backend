@@ -1,7 +1,9 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.AppVersionConfiguration;
-import com.arava.rest.dto.AppConfigurationDto;
+import com.arava.server.dto.AppVersionConfigurationDto;
+import com.arava.server.mapper.Mapper;
+import com.arava.server.mapper.ReverseMapper;
 import org.springframework.stereotype.Component;
 
 
@@ -14,12 +16,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AppVersionConfigurationBiMapper
-        implements Mapper<AppVersionConfiguration, AppConfigurationDto.AppVersionConfiguration>,
-  ReverseMapper<AppVersionConfiguration, AppConfigurationDto.AppVersionConfiguration> {
+        implements Mapper<AppVersionConfiguration, AppVersionConfigurationDto>,
+        ReverseMapper<AppVersionConfiguration, AppVersionConfigurationDto> {
 
   @Override
-  public AppConfigurationDto.AppVersionConfiguration deepMap(AppVersionConfiguration object) {
-    return AppConfigurationDto.AppVersionConfiguration.builder()
+  public AppVersionConfigurationDto deepMap(AppVersionConfiguration object) {
+    return AppVersionConfigurationDto.builder()
             .minVersion(object.getMinVersion())
             .force(object.getForceUpdate())
             .maxDate(object.getMaxDate())
@@ -27,7 +29,7 @@ public class AppVersionConfigurationBiMapper
   }
 
   @Override
-  public AppVersionConfiguration reverseMap(AppConfigurationDto.AppVersionConfiguration object) {
+  public AppVersionConfiguration reverseMap(AppVersionConfigurationDto object) {
     return AppVersionConfiguration.builder()
             .minVersion(object.getMinVersion())
             .forceUpdate(object.getForce())

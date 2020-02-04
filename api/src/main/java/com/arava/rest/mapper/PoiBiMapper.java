@@ -1,9 +1,13 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.*;
-import com.arava.rest.dto.LatLng;
-import com.arava.rest.dto.MediaDto;
 import com.arava.rest.dto.PoiDto;
+import com.arava.server.dto.CommentDto;
+import com.arava.server.dto.LatLng;
+import com.arava.server.dto.MediaDto;
+import com.arava.server.dto.RatingsDto;
+import com.arava.server.mapper.Mapper;
+import com.arava.server.mapper.ReverseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,13 +28,13 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
   private Mapper<Media, MediaDto> mediaMapper;
 
   @Autowired
-  private Mapper<Comment, PoiDto.Comment> commentMapper;
+  private Mapper<Comment, CommentDto> commentMapper;
 
   @Autowired
-  private Mapper<PoiCategory, PoiDto.Category> categoryMapper;
+  private Mapper<PoiCategory, PoiDto.PoiCategory> categoryMapper;
 
   @Autowired
-  private Mapper<List<Rating>, PoiDto.Ratings> ratingsMapper;
+  private Mapper<List<Rating>, RatingsDto> ratingsMapper;
 
   @Autowired
   private Mapper<List<LocalizedResource>, String> localizedResourceMapper;

@@ -3,8 +3,10 @@ package com.arava.rest.mapper;
 import com.arava.persistence.entity.Language;
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.repository.LanguageRepository;
-import com.arava.rest.context.ContextResolver;
-import com.arava.rest.exception.ApiClientException;
+import com.arava.server.context.ContextResolver;
+import com.arava.server.exception.ApiClientException;
+import com.arava.server.mapper.Mapper;
+import com.arava.server.mapper.ReverseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

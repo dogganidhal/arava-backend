@@ -4,9 +4,11 @@ import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;
 import com.arava.persistence.entity.PoiCategory;
 import com.arava.persistence.entity.PoiType;
-import com.arava.rest.dto.request.MediaWriteRequest;
-import com.arava.rest.dto.request.PoiCategoryWriteRequest;
-import com.arava.rest.dto.request.PoiTypeWriteRequest;
+import com.arava.server.dto.request.MediaWriteRequest;
+import com.arava.server.dto.request.PoiCategoryWriteRequest;
+import com.arava.server.dto.request.PoiTypeWriteRequest;
+import com.arava.server.mapper.Mapper;
+import com.arava.server.mapper.ReverseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

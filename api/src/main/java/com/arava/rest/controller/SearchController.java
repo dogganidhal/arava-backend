@@ -2,11 +2,10 @@ package com.arava.rest.controller;
 
 import com.arava.indexer.manager.SearchIndexManager;
 import com.arava.persistence.entity.Poi;
-import com.arava.rest.annotation.Admin;
 import com.arava.rest.dto.PoiDto;
 import com.arava.rest.dto.request.SearchRequest;
 import com.arava.rest.dto.response.SearchResponse;
-import com.arava.rest.mapper.Mapper;
+import com.arava.server.mapper.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +29,6 @@ public class SearchController {
 
   @Autowired
   private Mapper<Poi, PoiDto> poiMapper;
-
-  @Admin
-  @PostMapping("/index")
-  public void reindexSearch() {
-    try {
-      searchIndexManager.reindexAll();
-    } catch (InterruptedException e) {
-      log.error(e.getLocalizedMessage(), e);
-    }
-  }
 
   @PostMapping
   public SearchResponse searchPois(@RequestBody SearchRequest request) {

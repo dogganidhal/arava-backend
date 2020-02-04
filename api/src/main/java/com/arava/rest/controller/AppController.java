@@ -2,21 +2,20 @@ package com.arava.rest.controller;
 
 import com.arava.persistence.entity.AppVersionConfiguration;
 import com.arava.persistence.entity.Archipelago;
-import com.arava.persistence.entity.PoiType;
 import com.arava.persistence.repository.AppVersionConfigurationRepository;
 import com.arava.persistence.repository.ArchipelagoRepository;
 import com.arava.persistence.repository.PoiTypeRepository;
-import com.arava.rest.annotation.Admin;
 import com.arava.rest.dto.AppConfigurationDto;
-import com.arava.rest.dto.ArchipelagoDto;
 import com.arava.rest.dto.PoiDto;
-import com.arava.rest.mapper.Mapper;
-import com.arava.rest.mapper.ReverseMapper;
+import com.arava.server.dto.AppVersionConfigurationDto;
+import com.arava.server.dto.ArchipelagoDto;
+import com.arava.server.mapper.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 /**
@@ -43,18 +42,15 @@ public class AppController {
   private Mapper<Archipelago, ArchipelagoDto> archipelagoMapper;
 
   @Autowired
-  private Mapper<PoiType, PoiDto.Type> poiTypeMapper;
+  private Mapper<com.arava.persistence.entity.PoiType, PoiDto.PoiType> poiTypeMapper;
 
   @Autowired
-  private Mapper<AppVersionConfiguration, AppConfigurationDto.AppVersionConfiguration> appVersionConfigurationMapper;
-
-  @Autowired
-  private ReverseMapper<AppVersionConfiguration, AppConfigurationDto.AppVersionConfiguration> appVersionConfigurationReverseMapper;
+  private Mapper<AppVersionConfiguration, AppVersionConfigurationDto> versionConfigurationMapper;
 
   @GetMapping("/configuration")
   public AppConfigurationDto getAppConfiguration() {
     return AppConfigurationDto.builder()
-            .versionConfiguration(appVersionConfigurationMapper.deepMap(
+            .versionConfiguration(versionConfigurationMapper.deepMap(
                     appVersionConfigurationRepository.getLatestRevision()
             ))
             .archipelagos(archipelagoRepository.findAll().stream()
@@ -66,12 +62,6 @@ public class AppController {
                     .collect(Collectors.toList())
             )
             .build();
-  }
-
-  @Admin
-  @PutMapping("/version")
-  public void updateVersionConfiguration(@Valid @RequestBody AppConfigurationDto.AppVersionConfiguration request) {
-    appVersionConfigurationRepository.save(appVersionConfigurationReverseMapper.reverseMap(request));
   }
 
 }

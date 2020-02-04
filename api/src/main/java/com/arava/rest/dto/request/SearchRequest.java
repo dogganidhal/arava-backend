@@ -1,7 +1,7 @@
 package com.arava.rest.dto.request;
 
 import com.arava.indexer.query.SearchQuery;
-import com.arava.rest.dto.LatLng;
+import com.arava.server.dto.LatLng;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

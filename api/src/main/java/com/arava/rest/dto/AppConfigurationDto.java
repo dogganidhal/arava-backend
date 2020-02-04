@@ -1,12 +1,12 @@
 package com.arava.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.arava.server.dto.AppVersionConfigurationDto;
+import com.arava.server.dto.ArchipelagoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -21,22 +21,8 @@ import java.util.List;
 @NoArgsConstructor
 public class AppConfigurationDto {
 
-  private AppVersionConfiguration versionConfiguration;
+  private AppVersionConfigurationDto versionConfiguration;
   private List<ArchipelagoDto> archipelagos;
-  private List<PoiDto.Type> poiTypes;
-
-  @Data
-  @Builder
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public static class AppVersionConfiguration {
-
-    private Integer minVersion;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private LocalDateTime maxDate;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Boolean force;
-
-  }
+  private List<PoiDto.PoiType> poiTypes;
 
 }

@@ -1,7 +1,8 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.PoiDetails;
-import com.arava.rest.dto.request.PoiWriteRequest;
+import com.arava.server.dto.request.PoiWriteRequest;
+import com.arava.server.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.sql.Time;

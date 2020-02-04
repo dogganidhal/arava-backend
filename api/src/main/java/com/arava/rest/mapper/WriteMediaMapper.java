@@ -1,7 +1,8 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.Media;
-import com.arava.rest.dto.request.MediaWriteRequest;
+import com.arava.server.dto.request.MediaWriteRequest;
+import com.arava.server.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 /**

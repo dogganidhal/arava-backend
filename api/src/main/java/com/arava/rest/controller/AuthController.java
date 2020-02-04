@@ -3,14 +3,14 @@ package com.arava.rest.controller;
 import com.arava.business.manager.AccessManager;
 import com.arava.persistence.entity.User;
 import com.arava.persistence.repository.UserRepository;
-import com.arava.rest.configuration.JwtTokenProvider;
-import com.arava.rest.configuration.UserPrincipal;
-import com.arava.rest.dto.request.LoginRequest;
-import com.arava.rest.dto.request.RefreshAuthRequest;
+import com.arava.server.jwt.JwtTokenProvider;
+import com.arava.server.jwt.UserPrincipal;
+import com.arava.server.dto.request.LoginRequest;
+import com.arava.server.dto.request.RefreshAuthRequest;
 import com.arava.rest.dto.request.SignUpRequest;
-import com.arava.rest.dto.response.JwtAuthenticationResponse;
-import com.arava.rest.exception.ApiClientException;
-import com.arava.rest.exception.ApiThrowable;
+import com.arava.server.dto.response.JwtAuthenticationResponse;
+import com.arava.server.exception.ApiClientException;
+import com.arava.server.exception.ApiThrowable;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,15 +96,14 @@ public class AuthController {
             .toUri();
 
     JwtAuthenticationResponse authenticationResponse = authenticate(
-            result.getEmail(),
-            signUpRequest.getPassword()
+            result.getEmail(), signUpRequest.getPassword()
     );
     return ResponseEntity.created(location).body(authenticationResponse);
   }
 
   @SneakyThrows
   @PostMapping("/refresh")
-  public JwtAuthenticationResponse refresh(@RequestBody RefreshAuthRequest request) {
+  public JwtAuthenticationResponse refresh(@Valid @RequestBody RefreshAuthRequest request) {
     String jwt = tokenProvider.refresh(request.getRefreshToken());
     return JwtAuthenticationResponse.builder()
             .accessToken(jwt)

@@ -6,9 +6,11 @@ import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiDetails;
 import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiCategoryRepository;
-import com.arava.rest.dto.request.MediaWriteRequest;
-import com.arava.rest.dto.request.PoiWriteRequest;
-import com.arava.rest.exception.ApiClientException;
+import com.arava.server.dto.request.MediaWriteRequest;
+import com.arava.server.dto.request.PoiWriteRequest;
+import com.arava.server.exception.ApiClientException;
+import com.arava.server.mapper.Mapper;
+import com.arava.server.mapper.ReverseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
