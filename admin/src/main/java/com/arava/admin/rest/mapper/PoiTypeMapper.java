@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class PoiCategoryMapper implements Mapper<com.arava.persistence.entity.PoiCategory, PoiDto.PoiCategory> {
+public class PoiTypeMapper implements Mapper<PoiType, PoiDto.PoiType> {
 
   @Autowired
   private Mapper<LocalizedResource, LocalizedResourceDto> localizedResourceMapper;
@@ -27,20 +27,15 @@ public class PoiCategoryMapper implements Mapper<com.arava.persistence.entity.Po
   @Autowired
   private Mapper<Media, MediaDto> mediaMapper;
 
-  @Autowired
-  private Mapper<PoiType, PoiDto.PoiType> poiTypeMapper;
-
   @Override
-  public PoiDto.PoiCategory deepMap(com.arava.persistence.entity.PoiCategory object) {
-    return PoiDto.PoiCategory.builder()
+  public PoiDto.PoiType deepMap(PoiType object) {
+    return PoiDto.PoiType.builder()
             .id(object.getId())
             .icon(mediaMapper.deepMap(object.getIcon()))
             .name(object.getName().stream()
                     .map(localizedResourceMapper::deepMap)
                     .collect(Collectors.toList())
             )
-            .type(poiTypeMapper.deepMap(object.getType()))
             .build();
   }
-
 }

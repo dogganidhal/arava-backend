@@ -2,8 +2,10 @@ package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;
-import com.arava.server.dto.MediaDto;
+import com.arava.persistence.entity.PoiCategory;
+import com.arava.persistence.entity.PoiType;
 import com.arava.rest.dto.PoiDto;
+import com.arava.server.dto.MediaDto;
 import com.arava.server.mapper.Mapper;
 import com.arava.server.mapper.ReverseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,10 @@ import java.util.List;
 
 
 @Component
-public class CategoryBiMapper implements Mapper<com.arava.persistence.entity.PoiCategory, PoiDto.PoiCategory>, ReverseMapper<com.arava.persistence.entity.PoiCategory, PoiDto.PoiCategory> {
+public class CategoryBiMapper implements Mapper<PoiCategory, PoiDto.PoiCategory>, ReverseMapper<PoiCategory, PoiDto.PoiCategory> {
 
   @Autowired
-  private Mapper<com.arava.persistence.entity.PoiType, PoiDto.PoiType> typeMapper;
+  private Mapper<PoiType, PoiDto.PoiType> typeMapper;
 
   @Autowired
   private Mapper<Media, MediaDto> mediaMapper;
@@ -31,7 +33,7 @@ public class CategoryBiMapper implements Mapper<com.arava.persistence.entity.Poi
   private Mapper<List<LocalizedResource>, String> localizedResourceMapper;
 
   @Override
-  public PoiDto.PoiCategory deepMap(com.arava.persistence.entity.PoiCategory object) {
+  public PoiDto.PoiCategory deepMap(PoiCategory object) {
     return PoiDto.PoiCategory.builder()
             .id(object.getId())
             .name(localizedResourceMapper.deepMap(object.getName()))
@@ -41,7 +43,7 @@ public class CategoryBiMapper implements Mapper<com.arava.persistence.entity.Poi
   }
 
   @Override
-  public com.arava.persistence.entity.PoiCategory reverseMap(PoiDto.PoiCategory object) {
+  public PoiCategory reverseMap(PoiDto.PoiCategory object) {
     return null;
   }
 

@@ -1,4 +1,4 @@
-package com.arava.rest.mapper;
+package com.arava.admin.rest.mapper;
 
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;

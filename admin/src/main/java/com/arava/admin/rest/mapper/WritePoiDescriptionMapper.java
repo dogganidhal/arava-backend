@@ -1,4 +1,4 @@
-package com.arava.rest.mapper;
+package com.arava.admin.rest.mapper;
 
 import com.arava.persistence.entity.PoiDetails;
 import com.arava.server.dto.request.PoiWriteRequest;

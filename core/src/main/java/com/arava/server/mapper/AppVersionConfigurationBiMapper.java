@@ -1,9 +1,7 @@
-package com.arava.rest.mapper;
+package com.arava.server.mapper;
 
 import com.arava.persistence.entity.AppVersionConfiguration;
 import com.arava.server.dto.AppVersionConfigurationDto;
-import com.arava.server.mapper.Mapper;
-import com.arava.server.mapper.ReverseMapper;
 import org.springframework.stereotype.Component;
 
 
