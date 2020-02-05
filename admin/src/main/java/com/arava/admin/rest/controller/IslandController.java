@@ -50,6 +50,7 @@ public class IslandController {
 
   //region Island inspection
 
+  @Admin
   @GetMapping("/island")
   public List<IslandDto> getIslands() {
     return islandRepository.findAll().stream()
@@ -57,6 +58,7 @@ public class IslandController {
             .collect(Collectors.toList());
   }
 
+  @Admin
   @GetMapping("/island/{islandId}")
   public IslandDto getIsland(@PathVariable("islandId") String islandId) {
     return islandMapper.deepMap(islandRepository
@@ -87,6 +89,7 @@ public class IslandController {
 
   // region Archipelago inspection
 
+  @Admin
   @GetMapping("/archipelago")
   public List<ArchipelagoDto> getArchipelagos() {
     return archipelagoRepository.findAll().stream()

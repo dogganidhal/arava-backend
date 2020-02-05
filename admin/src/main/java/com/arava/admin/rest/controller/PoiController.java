@@ -56,6 +56,7 @@ public class PoiController {
 
   //region Poi CRUD operations
 
+  @Admin
   @SneakyThrows
   @GetMapping
   public List<PoiDto> getAllPois() {
