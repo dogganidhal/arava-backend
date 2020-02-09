@@ -1,9 +1,6 @@
 package com.arava.rest.dto;
 
-import com.arava.server.dto.CommentDto;
-import com.arava.server.dto.LatLng;
-import com.arava.server.dto.MediaDto;
-import com.arava.server.dto.RatingsDto;
+import com.arava.server.dto.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
@@ -29,6 +26,7 @@ public class PoiDto {
   private String id;
   private String title;
   private String description;
+  private PoiDetailsDto details;
   private PoiCategory category;
   private LatLng coordinate;
   private String island;

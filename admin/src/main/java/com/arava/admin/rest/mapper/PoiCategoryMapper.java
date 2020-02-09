@@ -4,6 +4,7 @@ import com.arava.admin.rest.dto.LocalizedResourceDto;
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;
+import com.arava.persistence.entity.PoiCategory;
 import com.arava.persistence.entity.PoiType;
 import com.arava.server.dto.MediaDto;
 import com.arava.server.mapper.Mapper;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class PoiCategoryMapper implements Mapper<com.arava.persistence.entity.PoiCategory, PoiDto.PoiCategory> {
+public class PoiCategoryMapper implements Mapper<PoiCategory, PoiDto.PoiCategory> {
 
   @Autowired
   private Mapper<LocalizedResource, LocalizedResourceDto> localizedResourceMapper;

@@ -1,4 +1,4 @@
-package com.arava;
+package com.arava.server;
 
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;

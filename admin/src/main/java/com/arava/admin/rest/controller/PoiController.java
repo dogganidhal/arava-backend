@@ -49,7 +49,10 @@ public class PoiController {
   private Mapper<Poi, PoiDto> poiMapper;
 
   @Autowired
-  private Mapper<PoiCategoryWriteRequest, PoiCategory> poiCategoryMapper;
+  private Mapper<PoiCategoryWriteRequest, PoiCategory> poiCategoryWriteMapper;
+
+  @Autowired
+  private Mapper<PoiCategory, PoiDto.PoiCategory> poiCategoryMapper;
 
   @Autowired
   private Mapper<PoiTypeWriteRequest, PoiType> poiTypeMapper;
@@ -100,15 +103,23 @@ public class PoiController {
   @Admin
   @PostMapping("/category")
   public void createPoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
-    PoiCategory poiCategory = poiCategoryMapper.deepMap(request);
+    PoiCategory poiCategory = poiCategoryWriteMapper.deepMap(request);
     poiCategoryRepository.save(poiCategory);
   }
 
   @Admin
   @PutMapping("/category")
   public void updatePoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
-    PoiCategory poiCategory = poiCategoryMapper.deepMap(request);
+    PoiCategory poiCategory = poiCategoryWriteMapper.deepMap(request);
     poiCategoryRepository.save(poiCategory);
+  }
+
+  @Admin
+  @GetMapping("/category")
+  public List<PoiDto.PoiCategory> listPoiCategories() {
+    return poiCategoryRepository.findAll().stream()
+            .map(poiCategoryMapper::deepMap)
+            .collect(Collectors.toList());
   }
 
   @Admin

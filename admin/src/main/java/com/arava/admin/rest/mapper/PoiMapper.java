@@ -38,6 +38,9 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
   @Autowired
   private Mapper<List<Rating>, RatingsDto> ratingsMapper;
 
+  @Autowired
+  private Mapper<PoiDetails, PoiDetailsDto> poiDetailsMapper;
+
   @Override
   public PoiDto deepMap(Poi object) {
     return PoiDto.builder()
@@ -50,6 +53,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     .map(localizedResourceMapper::deepMap)
                     .collect(Collectors.toList())
             )
+            .details(poiDetailsMapper.deepMap(object.getDetails()))
             .category(poiCategoryMapper.deepMap(object.getCategory()))
             .comments(object.getComments().stream()
                     .map(commentMapper::deepMap)

@@ -23,7 +23,7 @@ public class IslandUpdateRequest {
   private String id;
   private String name;
   private MediaWriteRequest image;
-  private ArchipelagoUpdateRequest archipelago;
+  private String archipelagoId;
   private Double latitude;
   private Double longitude;
   private Double zoom;

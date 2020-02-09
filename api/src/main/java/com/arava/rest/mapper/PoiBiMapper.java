@@ -2,10 +2,7 @@ package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.*;
 import com.arava.rest.dto.PoiDto;
-import com.arava.server.dto.CommentDto;
-import com.arava.server.dto.LatLng;
-import com.arava.server.dto.MediaDto;
-import com.arava.server.dto.RatingsDto;
+import com.arava.server.dto.*;
 import com.arava.server.mapper.Mapper;
 import com.arava.server.mapper.ReverseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +36,16 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
   @Autowired
   private Mapper<List<LocalizedResource>, String> localizedResourceMapper;
 
+  @Autowired
+  private Mapper<PoiDetails, PoiDetailsDto> poiDetailsMapper;
+
   @Override
   public PoiDto deepMap(Poi object) {
       return PoiDto.builder()
             .id(object.getId())
             .title(localizedResourceMapper.deepMap(object.getTitle()))
             .description(localizedResourceMapper.deepMap(object.getDescription()))
+            .details(poiDetailsMapper.deepMap(object.getDetails()))
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())

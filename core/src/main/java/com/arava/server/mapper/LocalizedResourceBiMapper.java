@@ -36,7 +36,8 @@ public class LocalizedResourceBiMapper implements Mapper<List<LocalizedResource>
             .filter(localizedResource -> localizedResource
                     .getLanguage()
                     .getId()
-                    .equals(contextLanguage.getId()))
+                    .equals(contextLanguage.getId())
+            )
             .map(LocalizedResource::getResource)
             .findFirst()
             .orElse(null);

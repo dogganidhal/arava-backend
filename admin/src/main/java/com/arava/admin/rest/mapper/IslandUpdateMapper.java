@@ -32,9 +32,9 @@ public class IslandUpdateMapper implements Mapper<IslandUpdateRequest, Island> {
             .name(object.getName())
             .latitude(object.getLatitude())
             .longitude(object.getLongitude())
-            .archipelago(object.getArchipelago() != null ?
+            .archipelago(object.getArchipelagoId() != null ?
                     archipelagoRepository
-                            .findById(object.getArchipelago().getId())
+                            .findById(object.getArchipelagoId())
                             .orElseThrow(ApiClientException.NOT_FOUND::getThrowable) :
                     null
             )

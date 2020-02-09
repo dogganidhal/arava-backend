@@ -24,6 +24,7 @@ public class PoiDto {
   private String id;
   private List<LocalizedResourceDto> title;
   private List<LocalizedResourceDto> description;
+  private PoiDetailsDto details;
   private PoiCategory category;
   private LatLng coordinate;
   private IslandDto island;
