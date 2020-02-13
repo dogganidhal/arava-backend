@@ -4,7 +4,7 @@ import com.arava.admin.rest.dto.LocalizedResourceDto;
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;
-import com.arava.persistence.entity.PoiType;
+import com.arava.persistence.entity.PoiTheme;
 import com.arava.server.dto.MediaDto;
 import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class PoiTypeMapper implements Mapper<PoiType, PoiDto.PoiType> {
+public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
 
   @Autowired
   private Mapper<LocalizedResource, LocalizedResourceDto> localizedResourceMapper;
@@ -28,13 +28,17 @@ public class PoiTypeMapper implements Mapper<PoiType, PoiDto.PoiType> {
   private Mapper<Media, MediaDto> mediaMapper;
 
   @Override
-  public PoiDto.PoiType deepMap(PoiType object) {
-    return PoiDto.PoiType.builder()
+  public PoiDto.PoiTheme deepMap(PoiTheme object) {
+    return PoiDto.PoiTheme.builder()
             .id(object.getId())
             .icon(mediaMapper.deepMap(object.getIcon()))
             .name(object.getName().stream()
                     .map(localizedResourceMapper::deepMap)
                     .collect(Collectors.toList())
+            )
+            .parent(object.getParent() != null ?
+                    deepMap(object.getParent()) :
+                    null
             )
             .build();
   }

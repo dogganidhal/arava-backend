@@ -25,7 +25,7 @@ public class PoiDto {
   private List<LocalizedResourceDto> title;
   private List<LocalizedResourceDto> description;
   private PoiDetailsDto details;
-  private PoiCategory category;
+  private PoiTheme theme;
   private LatLng coordinate;
   private IslandDto island;
   private Boolean sponsored;
@@ -39,25 +39,14 @@ public class PoiDto {
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public static class PoiType {
-
-    private String id;
-    private List<LocalizedResourceDto> name;
-    private MediaDto icon;
-
-  }
-
-  @Data
-  @Builder
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public static class PoiCategory {
+  public static class PoiTheme {
 
     private String id;
     private List<LocalizedResourceDto> name;
     private MediaDto icon;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private PoiType type;
+    private PoiTheme parent;
+    private List<PoiTheme> subThemes;
 
   }
 

@@ -52,7 +52,7 @@ public class PoiWriteRequest {
   private Boolean thingsToDo = false;
 
   @NotNull
-  private String categoryId;
+  private String themeId;
 
   @Data
   @Builder

@@ -19,19 +19,20 @@ import java.util.List;
 
 /**
  * Created by Nidhal Dogga
- * Date : 14/01/2020 07:34
+ * Date : 14/01/2020 07:30
  * All rights reserved.
  */
 
+
 @Data
-@SuperBuilder
 @Entity
 @Indexed
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
 @EqualsAndHashCode(callSuper = true)
-public class PoiType extends AbstractEntity {
+public class PoiTheme extends AbstractEntity {
 
   @ContainedIn
   @IndexedEmbedded
@@ -41,8 +42,12 @@ public class PoiType extends AbstractEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private Media icon;
 
+  @IndexedEmbedded(depth = 3)
+  @ManyToOne(cascade = CascadeType.ALL)
   @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE })
+  private PoiTheme parent;
+
   @OneToMany(cascade = CascadeType.ALL)
-  private List<PoiCategory> categories;
+  private List<PoiTheme> subThemes;
 
 }

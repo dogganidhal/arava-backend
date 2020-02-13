@@ -2,9 +2,10 @@ package com.arava.rest.controller;
 
 import com.arava.persistence.entity.AppVersionConfiguration;
 import com.arava.persistence.entity.Archipelago;
+import com.arava.persistence.entity.PoiTheme;
 import com.arava.persistence.repository.AppVersionConfigurationRepository;
 import com.arava.persistence.repository.ArchipelagoRepository;
-import com.arava.persistence.repository.PoiTypeRepository;
+import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.rest.dto.AppConfigurationDto;
 import com.arava.rest.dto.PoiDto;
 import com.arava.server.dto.AppVersionConfigurationDto;
@@ -33,7 +34,7 @@ public class AppController {
   private ArchipelagoRepository archipelagoRepository;
 
   @Autowired
-  private PoiTypeRepository poiTypeRepository;
+  private PoiThemeRepository poiThemeRepository;
 
   @Autowired
   private AppVersionConfigurationRepository appVersionConfigurationRepository;
@@ -42,7 +43,7 @@ public class AppController {
   private Mapper<Archipelago, ArchipelagoDto> archipelagoMapper;
 
   @Autowired
-  private Mapper<com.arava.persistence.entity.PoiType, PoiDto.PoiType> poiTypeMapper;
+  private Mapper<PoiTheme, PoiDto.PoiTheme> poiThemeMapper;
 
   @Autowired
   private Mapper<AppVersionConfiguration, AppVersionConfigurationDto> versionConfigurationMapper;
@@ -57,8 +58,8 @@ public class AppController {
                     .map(archipelagoMapper::deepMap)
                     .collect(Collectors.toList())
             )
-            .poiTypes(poiTypeRepository.findAll().stream()
-                    .map(poiTypeMapper::deepMap)
+            .themes(poiThemeRepository.findAll().stream()
+                    .map(poiThemeMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .build();

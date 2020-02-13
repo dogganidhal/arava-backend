@@ -5,7 +5,7 @@ import com.arava.persistence.entity.Media;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiDetails;
 import com.arava.persistence.repository.IslandRepository;
-import com.arava.persistence.repository.PoiCategoryRepository;
+import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.server.dto.request.MediaWriteRequest;
 import com.arava.server.dto.request.PoiWriteRequest;
 import com.arava.server.exception.ApiClientException;
@@ -32,7 +32,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
   private IslandRepository islandRepository;
 
   @Autowired
-  private PoiCategoryRepository poiCategoryRepository;
+  private PoiThemeRepository poiThemeRepository;
 
   @Autowired
   private ReverseMapper<List<LocalizedResource>, Map<String, String>> localizedResourceReverseMapper;
@@ -53,8 +53,8 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
                     .findById(object.getIslandId())
                     .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
             )
-            .category(poiCategoryRepository
-                    .findById(object.getCategoryId())
+            .theme(poiThemeRepository
+                    .findById(object.getThemeId())
                     .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
             )
             .sponsored(object.getSponsored())

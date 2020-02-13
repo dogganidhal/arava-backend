@@ -6,13 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Nidhal Dogga
- * Date : 21/01/2020 22:53
+ * Date : 21/01/2020 08:28
  * All rights reserved.
  */
 
@@ -21,17 +20,14 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PoiTypeWriteRequest {
+public class PoiThemeWriteRequest {
 
   private String id;
-
+  private String parentId;
   @NotNull
   private Map<String, String> name;
-
   @NotNull
   private MediaWriteRequest icon;
-
-  @Builder.Default
-  private List<PoiCategoryWriteRequest> categories = new ArrayList<>();
+  private List<PoiThemeWriteRequest> subThemes;
 
 }

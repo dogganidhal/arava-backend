@@ -23,6 +23,6 @@ public class AppConfigurationDto {
 
   private AppVersionConfigurationDto versionConfiguration;
   private List<ArchipelagoDto> archipelagos;
-  private List<PoiDto.PoiType> poiTypes;
+  private List<PoiDto.PoiTheme> themes;
 
 }

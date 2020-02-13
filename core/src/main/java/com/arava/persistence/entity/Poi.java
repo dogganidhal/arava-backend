@@ -94,7 +94,7 @@ public class Poi {
   @ContainedIn
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
-  private PoiCategory category;
+  private PoiTheme theme;
 
   @ContainedIn
   @IndexedEmbedded

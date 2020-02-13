@@ -2,14 +2,11 @@ package com.arava.admin.rest.controller;
 
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.persistence.entity.Poi;
-import com.arava.persistence.entity.PoiCategory;
-import com.arava.persistence.entity.PoiType;
-import com.arava.persistence.repository.PoiCategoryRepository;
+import com.arava.persistence.entity.PoiTheme;
+import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.persistence.repository.PoiRepository;
-import com.arava.persistence.repository.PoiTypeRepository;
 import com.arava.server.annotation.Admin;
-import com.arava.server.dto.request.PoiCategoryWriteRequest;
-import com.arava.server.dto.request.PoiTypeWriteRequest;
+import com.arava.server.dto.request.PoiThemeWriteRequest;
 import com.arava.server.dto.request.PoiWriteRequest;
 import com.arava.server.exception.ApiClientException;
 import com.arava.server.mapper.Mapper;
@@ -37,10 +34,7 @@ public class PoiController {
   private PoiRepository poiRepository;
 
   @Autowired
-  private PoiCategoryRepository poiCategoryRepository;
-
-  @Autowired
-  private PoiTypeRepository poiTypeRepository;
+  private PoiThemeRepository poiThemeRepository;
 
   @Autowired
   private Mapper<PoiWriteRequest, Poi> writePoiMapper;
@@ -49,13 +43,10 @@ public class PoiController {
   private Mapper<Poi, PoiDto> poiMapper;
 
   @Autowired
-  private Mapper<PoiCategoryWriteRequest, PoiCategory> poiCategoryWriteMapper;
+  private Mapper<PoiThemeWriteRequest, PoiTheme> writePoiThemeMapper;
 
   @Autowired
-  private Mapper<PoiCategory, PoiDto.PoiCategory> poiCategoryMapper;
-
-  @Autowired
-  private Mapper<PoiTypeWriteRequest, PoiType> poiTypeMapper;
+  private Mapper<PoiTheme, PoiDto.PoiTheme> poiThemeMapper;
 
   //region Poi CRUD operations
 
@@ -101,39 +92,25 @@ public class PoiController {
   //region Poi type / category CRUD operations
 
   @Admin
-  @PostMapping("/category")
-  public void createPoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
-    PoiCategory poiCategory = poiCategoryWriteMapper.deepMap(request);
-    poiCategoryRepository.save(poiCategory);
+  @PostMapping("/theme")
+  public void createPoiCategory(@Valid @RequestBody PoiThemeWriteRequest request) {
+    PoiTheme poiCategory = writePoiThemeMapper.deepMap(request);
+    poiThemeRepository.save(poiCategory);
   }
 
   @Admin
-  @PutMapping("/category")
-  public void updatePoiCategory(@Valid @RequestBody PoiCategoryWriteRequest request) {
-    PoiCategory poiCategory = poiCategoryWriteMapper.deepMap(request);
-    poiCategoryRepository.save(poiCategory);
+  @PutMapping("/theme")
+  public void updatePoiCategory(@Valid @RequestBody PoiThemeWriteRequest request) {
+    PoiTheme poiCategory = writePoiThemeMapper.deepMap(request);
+    poiThemeRepository.save(poiCategory);
   }
 
   @Admin
-  @GetMapping("/category")
-  public List<PoiDto.PoiCategory> listPoiCategories() {
-    return poiCategoryRepository.findAll().stream()
-            .map(poiCategoryMapper::deepMap)
+  @GetMapping("/theme")
+  public List<PoiDto.PoiTheme> listPoiCategories() {
+    return poiThemeRepository.findAll().stream()
+            .map(poiThemeMapper::deepMap)
             .collect(Collectors.toList());
-  }
-
-  @Admin
-  @PostMapping("/type")
-  public void createPoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
-    PoiType poiType = poiTypeMapper.deepMap(request);
-    poiTypeRepository.save(poiType);
-  }
-
-  @Admin
-  @PutMapping("/type")
-  public void updatePoiType(@Valid @RequestBody PoiTypeWriteRequest request) {
-    PoiType poiType = poiTypeMapper.deepMap(request);
-    poiTypeRepository.save(poiType);
   }
 
   //endregion

@@ -22,8 +22,14 @@ public class PoiDetailsMapper implements Mapper<PoiDetails, PoiDetailsDto> {
             .facebookUrl(object.getFacebookUrl())
             .instagramAccount(object.getInstagramAccount())
             .website(object.getWebsite())
-            .closingHour(object.getClosingHour().toLocalTime())
-            .openingHour(object.getOpeningHour().toLocalTime())
+            .closingHour(object.getClosingHour() != null ?
+                    object.getClosingHour().toLocalTime() :
+                    null
+            )
+            .openingHour(object.getOpeningHour() != null ?
+                    object.getOpeningHour().toLocalTime() :
+                    null
+            )
             .build();
   }
 

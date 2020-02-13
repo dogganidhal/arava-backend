@@ -24,7 +24,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
   private Mapper<LocalizedResource, LocalizedResourceDto> localizedResourceMapper;
 
   @Autowired
-  private Mapper<PoiCategory, PoiDto.PoiCategory> poiCategoryMapper;
+  private Mapper<PoiTheme, PoiDto.PoiTheme> poiThemeMapper;
 
   @Autowired
   private Mapper<Comment, CommentDto> commentMapper;
@@ -54,7 +54,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     .collect(Collectors.toList())
             )
             .details(poiDetailsMapper.deepMap(object.getDetails()))
-            .category(poiCategoryMapper.deepMap(object.getCategory()))
+            .theme(poiThemeMapper.deepMap(object.getTheme()))
             .comments(object.getComments().stream()
                     .map(commentMapper::deepMap)
                     .collect(Collectors.toList())

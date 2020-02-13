@@ -4,7 +4,6 @@ import com.arava.persistence.entity.*;
 import com.arava.rest.dto.PoiDto;
 import com.arava.server.dto.*;
 import com.arava.server.mapper.Mapper;
-import com.arava.server.mapper.ReverseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiDto> {
+public class PoiBiMapper implements Mapper<Poi, PoiDto> {
 
   @Autowired
   private Mapper<Media, MediaDto> mediaMapper;
@@ -28,7 +27,7 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
   private Mapper<Comment, CommentDto> commentMapper;
 
   @Autowired
-  private Mapper<PoiCategory, PoiDto.PoiCategory> categoryMapper;
+  private Mapper<PoiTheme, PoiDto.PoiTheme> themeMapper;
 
   @Autowired
   private Mapper<List<Rating>, RatingsDto> ratingsMapper;
@@ -50,7 +49,7 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())
             .island(object.getIsland().getName())
-            .category(categoryMapper.deepMap(object.getCategory()))
+            .theme(themeMapper.deepMap(object.getTheme()))
             .coordinate(LatLng.builder()
                     .latitude(object.getLatitude())
                     .longitude(object.getLongitude())
@@ -66,11 +65,6 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto>, ReverseMapper<Poi, PoiD
             )
             .ratings(ratingsMapper.deepMap(object.getRatings()))
             .build();
-  }
-
-  @Override
-  public Poi reverseMap(PoiDto object) {
-    return null;
   }
 
 }

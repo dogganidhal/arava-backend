@@ -2,10 +2,10 @@ package com.arava.admin.rest.mapper;
 
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.entity.Media;
-import com.arava.persistence.entity.PoiCategory;
-import com.arava.persistence.repository.PoiTypeRepository;
+import com.arava.persistence.entity.PoiTheme;
+import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.server.dto.request.MediaWriteRequest;
-import com.arava.server.dto.request.PoiCategoryWriteRequest;
+import com.arava.server.dto.request.PoiThemeWriteRequest;
 import com.arava.server.exception.ApiClientException;
 import com.arava.server.mapper.Mapper;
 import com.arava.server.mapper.ReverseMapper;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Nidhal Dogga
@@ -22,10 +23,10 @@ import java.util.Map;
  */
 
 @Component
-public class WritePoiCategoryMapper implements Mapper<PoiCategoryWriteRequest, PoiCategory> {
+public class WritePoiThemeMapper implements Mapper<PoiThemeWriteRequest, PoiTheme> {
 
   @Autowired
-  private PoiTypeRepository poiTypeRepository;
+  private PoiThemeRepository poiTypeRepository;
 
   @Autowired
   private Mapper<MediaWriteRequest, Media> mediaMapper;
@@ -34,13 +35,19 @@ public class WritePoiCategoryMapper implements Mapper<PoiCategoryWriteRequest, P
   private ReverseMapper<List<LocalizedResource>, Map<String, String>> localizedResourceReverseMapper;
 
   @Override
-  public PoiCategory deepMap(PoiCategoryWriteRequest object) {
-    return PoiCategory.builder()
+  public PoiTheme deepMap(PoiThemeWriteRequest object) {
+    return PoiTheme.builder()
             .id(object.getId())
-            .type(object.getTypeId() != null ?
+            .parent(object.getParentId() != null ?
                     poiTypeRepository
-                            .findById(object.getTypeId())
+                            .findById(object.getParentId())
                             .orElseThrow(ApiClientException.NOT_FOUND::getThrowable):
+                    null
+            )
+            .subThemes(object.getSubThemes() != null ?
+                    object.getSubThemes().stream()
+                            .map(this::deepMap)
+                            .collect(Collectors.toList()) :
                     null
             )
             .icon(mediaMapper.deepMap(object.getIcon()))
