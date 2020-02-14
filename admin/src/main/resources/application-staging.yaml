@@ -1,4 +1,7 @@
 spring:
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
   datasource:
     driver-class-name: org.postgresql.Driver
     initialization-mode: always

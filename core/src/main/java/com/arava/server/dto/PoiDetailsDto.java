@@ -1,5 +1,7 @@
 package com.arava.server.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +28,9 @@ public class PoiDetailsDto {
   private String website;
   private String facebookUrl;
   private String instagramAccount;
+  @JsonSerialize(using = LocalTimeSerializer.class)
   private LocalTime openingHour;
+  @JsonSerialize(using = LocalTimeSerializer.class)
   private LocalTime closingHour;
 
 }

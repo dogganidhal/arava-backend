@@ -1,5 +1,7 @@
 package com.arava.server.exception;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
@@ -21,6 +23,7 @@ public class ApiThrowable extends RuntimeException {
 
   private HttpStatus status;
   private String message;
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
   private LocalDateTime timestamp;
 
 }

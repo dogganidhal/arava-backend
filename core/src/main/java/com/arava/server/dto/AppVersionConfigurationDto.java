@@ -2,6 +2,8 @@ package com.arava.server.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +25,9 @@ public class AppVersionConfigurationDto {
 
   private Integer minVersion;
   @JsonInclude(JsonInclude.Include.NON_NULL)
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
   private LocalDateTime maxDate;
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private Boolean force;
 

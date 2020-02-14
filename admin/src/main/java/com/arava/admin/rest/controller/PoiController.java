@@ -49,11 +49,20 @@ public class PoiController {
   private Mapper<PoiTheme, PoiDto.PoiTheme> poiThemeMapper;
 
   //region Poi CRUD operations
+  
+  @Admin
+  @GetMapping("/{poiId}")
+  public PoiDto getPoi(@PathVariable("poiId") String poiId) {
+    Poi poi = poiRepository
+            .findById(poiId)
+            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable);
+    return poiMapper.deepMap(poi);
+  }
 
   @Admin
   @SneakyThrows
   @GetMapping
-  public List<PoiDto> getAllPois() {
+  public List<PoiDto> listPois() {
     try {
       return poiRepository.findAll().stream()
               .map(poiMapper::deepMap)
@@ -111,6 +120,16 @@ public class PoiController {
     return poiThemeRepository.findAll().stream()
             .map(poiThemeMapper::deepMap)
             .collect(Collectors.toList());
+  }
+
+  @Admin
+  @GetMapping("/theme/{themeId}")
+  public PoiDto.PoiTheme getTheme(@PathVariable("themeId") String themeId) {
+    return poiThemeMapper.deepMap(
+            poiThemeRepository
+                    .findById(themeId)
+                    .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+    );
   }
 
   //endregion

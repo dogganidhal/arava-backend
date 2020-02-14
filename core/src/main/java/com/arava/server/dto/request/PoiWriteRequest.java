@@ -1,5 +1,7 @@
 package com.arava.server.dto.request;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,6 +51,9 @@ public class PoiWriteRequest {
   private Boolean sponsored = false;
 
   @Builder.Default
+  private Boolean featured = false;
+
+  @Builder.Default
   private Boolean thingsToDo = false;
 
   @NotNull
@@ -67,7 +72,9 @@ public class PoiWriteRequest {
     private String website;
     private String facebookUrl;
     private String instagramUrl;
+    @JsonSerialize(using = LocalTimeSerializer.class)
     private LocalTime openingHour;
+    @JsonSerialize(using = LocalTimeSerializer.class)
     private LocalTime closingHour;
 
   }

@@ -1,7 +1,8 @@
 package com.arava.server.dto.response;
 
 import com.arava.server.exception.ApiThrowable;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +25,8 @@ import java.time.LocalDateTime;
 public class ErrorResponse {
 
   private HttpStatus statusCode;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
   @Builder.Default
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
   private LocalDateTime timestamp = LocalDateTime.now();
   private String message;
   private Integer status;
