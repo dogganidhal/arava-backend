@@ -64,6 +64,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     .longitude(object.getLongitude())
                     .build()
             )
+            .draft(object.getDraft())
             .featured(object.getFeatured())
             .island(islandMapper.deepMap(object.getIsland()))
             .medias(object.getMedias().stream()

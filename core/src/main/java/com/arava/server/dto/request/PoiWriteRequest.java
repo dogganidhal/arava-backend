@@ -56,6 +56,9 @@ public class PoiWriteRequest {
   @Builder.Default
   private Boolean thingsToDo = false;
 
+  @Builder.Default
+  private Boolean draft = true;
+
   @NotNull
   private String themeId;
 

@@ -96,6 +96,12 @@ public class PoiController {
     poiRepository.save(poi);
   }
 
+  @Admin
+  @PostMapping("/{poiId}/toggle-draft")
+  public void toggleDraft(@PathVariable("poiId") String poiId) {
+    poiRepository.toggleDraft(poiId);
+  }
+
   //endregion
 
   //region Poi type / category CRUD operations

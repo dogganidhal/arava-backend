@@ -33,6 +33,7 @@ public class PoiDto {
   private Boolean sponsored;
   private Boolean featured;
   private Boolean thingsToDo;
+  private Boolean draft;
   private List<MediaDto> medias;
   private List<CommentDto> comments;
   private RatingsDto ratings;

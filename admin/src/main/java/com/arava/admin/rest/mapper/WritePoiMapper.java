@@ -57,6 +57,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
                     .findById(object.getThemeId())
                     .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
             )
+            .draft(object.getDraft())
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())

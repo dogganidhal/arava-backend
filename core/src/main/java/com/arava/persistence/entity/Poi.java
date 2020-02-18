@@ -77,6 +77,15 @@ public class Poi {
   @Builder.Default
   private Boolean featured = false;
 
+  /**
+   * Whether the poi is in draft or published state
+   */
+
+  @Field
+  @Column
+  @Builder.Default
+  private Boolean draft = false;
+
   @IndexedEmbedded
   @OneToOne(cascade = CascadeType.ALL)
   private PoiDetails details;

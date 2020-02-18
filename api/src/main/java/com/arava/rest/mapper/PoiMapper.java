@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class PoiBiMapper implements Mapper<Poi, PoiDto> {
+public class PoiMapper implements Mapper<Poi, PoiDto> {
 
   @Autowired
   private Mapper<Media, MediaDto> mediaMapper;
@@ -48,6 +48,7 @@ public class PoiBiMapper implements Mapper<Poi, PoiDto> {
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
             .thingsToDo(object.getThingsToDo())
+            .draft(object.getDraft())
             .island(object.getIsland().getName())
             .theme(themeMapper.deepMap(object.getTheme()))
             .coordinate(LatLng.builder()
