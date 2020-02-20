@@ -55,6 +55,10 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             )
             .details(poiDetailsMapper.deepMap(object.getDetails()))
             .theme(poiThemeMapper.deepMap(object.getTheme()))
+            .mainImage(object.getMainImage() != null ?
+                    mediaMapper.deepMap(object.getMainImage()) :
+                    null
+            )
             .comments(object.getComments().stream()
                     .map(commentMapper::deepMap)
                     .collect(Collectors.toList())

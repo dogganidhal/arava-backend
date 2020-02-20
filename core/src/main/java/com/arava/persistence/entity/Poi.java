@@ -14,6 +14,7 @@ import org.hibernate.search.annotations.*;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -104,6 +105,10 @@ public class Poi {
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
   private PoiTheme theme;
+
+  @NotNull
+  @OneToOne(cascade = CascadeType.ALL)
+  private Media mainImage;
 
   @ContainedIn
   @IndexedEmbedded

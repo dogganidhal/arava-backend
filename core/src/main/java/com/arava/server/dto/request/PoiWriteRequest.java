@@ -42,6 +42,9 @@ public class PoiWriteRequest {
   private Double longitude;
 
   @NotNull
+  private MediaWriteRequest mainImage;
+
+  @NotNull
   private List<MediaWriteRequest> medias;
 
   @NotNull
