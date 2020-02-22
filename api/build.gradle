@@ -2,28 +2,6 @@ plugins {
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'java'
     id 'idea'
-    id 'com.bmuschko.docker-remote-api' version '3.2.3'
-}
-
-docker {
-    registryCredentials {
-        username = project.findProperty('docker.username')
-        password = project.findProperty('docker.password')
-    }
-}
-
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
-
-task buildImage(type: DockerBuildImage) {
-    inputDir = rootDir
-    dockerFile = new File("${rootDir.path}/docker/api/Dockerfile")
-    tag = "registry.ndogga.com/arava/arava-api:latest"
-}
-
-task pushImage(type: DockerPushImage) {
-    dependsOn buildImage
-    conventionMapping.imageName = { buildImage.getTag() }
 }
 
 dependencies {

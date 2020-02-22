@@ -2,9 +2,7 @@ version: '3.1'
 
 services:
   arava-api:
-    build:
-      context: ..
-      dockerfile: docker/api/Dockerfile
+    image: artifactory.ndogga.com/docker/arava/arava-api
     restart: always
     ports:
     - 10100:8080
@@ -14,9 +12,7 @@ services:
       SPRING_DATASOURCE_USERNAME: arava-admin
       SPRING_DATASOURCE_PASSWORD: Admin@rava
   arava-admin-api:
-    build:
-      context: ..
-      dockerfile: docker/admin/Dockerfile
+    image: artifactory.ndogga.com/docker/arava/arava-admin-api
     restart: always
     ports:
       - 10104:8080
