@@ -6,9 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 
 import javax.persistence.Cacheable;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.Collection;
@@ -22,7 +23,7 @@ import java.util.Collection;
 @Data
 @SuperBuilder
 @Entity
-@Indexed
+@Embeddable
 @Cacheable
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +31,7 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = true)
 public class Archipelago extends AbstractEntity {
 
+  @GenericField
   private String name;
 
   @OneToMany(mappedBy = "archipelago")

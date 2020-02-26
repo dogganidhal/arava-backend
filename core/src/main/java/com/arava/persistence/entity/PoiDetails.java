@@ -6,13 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Time;
 
 /**
@@ -25,7 +21,7 @@ import java.sql.Time;
 @Data
 @SuperBuilder
 @Entity
-@Indexed
+@Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
@@ -35,15 +31,15 @@ public class PoiDetails extends AbstractEntity {
   @OneToOne(cascade = CascadeType.ALL)
   private Poi poi;
 
-  @Field
+  @GenericField
   @Column
   private String address;
 
-  @Field
+  @GenericField
   @Column
   private String phone;
 
-  @Field
+  @GenericField
   @Column
   private String email;
 
@@ -56,11 +52,9 @@ public class PoiDetails extends AbstractEntity {
   @Column(length = 1024)
   private String instagramAccount;
 
-  @Field
   @Column
   private Time openingHour;
 
-  @Field
   @Column
   private Time closingHour;
 

@@ -10,6 +10,7 @@ ext {
     springBootVersion = "2.2.2.RELEASE"
     lombokVersion = "1.18.10"
     postrgesVersion = "42.2.9"
+    hibernateSearchVersion = "6.0.0.Beta5"
 }
 
 

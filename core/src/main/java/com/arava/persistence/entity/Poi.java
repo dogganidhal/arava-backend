@@ -10,8 +10,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.search.annotations.*;
-import org.hibernate.search.bridge.builtin.BooleanBridge;
+import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
+import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.GeoPointBinding;
+import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.Latitude;
+import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.Longitude;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,14 +26,13 @@ import java.util.List;
 @Data
 @SuperBuilder
 @Indexed
-@Spatial(spatialMode = SpatialMode.HASH)
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
+@GeoPointBinding(fieldName = "coordinate")
 public class Poi {
 
   @Id
-  @SortableField
   @DocumentId
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -46,8 +48,7 @@ public class Poi {
 
   @Column
   @Builder.Default
-  @Field
-  @FieldBridge(impl = BooleanBridge.class)
+  @GenericField
   private Boolean disabled = false;
 
   /**
@@ -56,15 +57,14 @@ public class Poi {
 
   @Column
   @Builder.Default
-  @Field
-  @FieldBridge(impl = BooleanBridge.class)
+  @GenericField
   private Boolean thingsToDo = false;
 
   /**
    * Premium poi (paid subscription)
    */
 
-  @Field
+  @GenericField
   @Column
   @Builder.Default
   private Boolean sponsored = false;
@@ -73,7 +73,7 @@ public class Poi {
    * Poi to be displayed in photos tab
    */
 
-  @Field
+  @GenericField
   @Column
   @Builder.Default
   private Boolean featured = false;
@@ -82,26 +82,29 @@ public class Poi {
    * Whether the poi is in draft or published state
    */
 
-  @Field
+  @GenericField
   @Column
   @Builder.Default
   private Boolean draft = false;
 
+  @AssociationInverseSide(inversePath = @ObjectPath(
+          @PropertyValue(propertyName = "poi")
+  ))
   @IndexedEmbedded
   @OneToOne(cascade = CascadeType.ALL)
   private PoiDetails details;
 
-  @ContainedIn
+  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL)
   private List<LocalizedResource> title;
 
-  @ContainedIn
+  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL)
   private List<LocalizedResource> description;
 
-  @ContainedIn
+  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
   private PoiTheme theme;
@@ -110,7 +113,7 @@ public class Poi {
   @OneToOne(cascade = CascadeType.ALL)
   private Media mainImage;
 
-  @ContainedIn
+  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL)
   private List<Rating> ratings;
@@ -121,16 +124,17 @@ public class Poi {
   @OneToMany(cascade = CascadeType.ALL)
   private List<Comment> comments;
 
-  @Field
+  @GenericField
   @Column
   @Latitude
   private Double latitude;
 
-  @Field
+  @GenericField
   @Column
   @Longitude
   private Double longitude;
 
+  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
   private Island island;

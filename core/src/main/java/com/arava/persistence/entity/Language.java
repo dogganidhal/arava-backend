@@ -5,10 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.TermVector;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 
@@ -21,13 +19,12 @@ import javax.persistence.Entity;
 @Data
 @SuperBuilder
 @Entity
-@Indexed
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Language extends AbstractEntity {
 
-  @Field(termVector = TermVector.YES)
+  @Column
   private String name;
 
 }

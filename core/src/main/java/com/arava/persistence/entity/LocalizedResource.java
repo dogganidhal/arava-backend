@@ -5,15 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.TermVector;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by Nidhal Dogga
@@ -24,17 +21,15 @@ import javax.validation.constraints.NotNull;
 @Data
 @SuperBuilder
 @Entity
-@Indexed
+@Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class LocalizedResource extends AbstractEntity {
 
-  @NotNull
-  @Field(termVector = TermVector.YES)
+  @KeywordField
   private String resource;
 
-  @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
   private Language language;
 

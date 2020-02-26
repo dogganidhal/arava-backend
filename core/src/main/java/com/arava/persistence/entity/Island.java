@@ -7,15 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.TermVector;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
-import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by Nidhal Dogga
@@ -26,7 +21,7 @@ import javax.persistence.ManyToOne;
 @Data
 @SuperBuilder
 @Entity
-@Indexed
+@Embeddable
 @Cacheable
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,7 +30,7 @@ import javax.persistence.ManyToOne;
 @EqualsAndHashCode(callSuper = true)
 public class Island extends AbstractEntity {
 
-  @Field(termVector = TermVector.YES)
+  @GenericField
   private String name;
 
   private Double latitude;

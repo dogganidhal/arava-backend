@@ -27,9 +27,9 @@ public class SearchRequest {
 
   public SearchQuery searchQuery() {
     return SearchQuery.builder()
-            .title(title)
-            .category(category)
-            .island(island)
+            .query(title)
+            .themeId(category)
+            .islandId(island)
             .region(region != null ?
                     SearchQuery.Region.builder()
                             .centerLatitude(region.getCenter().getLatitude())

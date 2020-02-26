@@ -22,7 +22,8 @@ dependencies {
     compile 'commons-io:commons-io:2.6'
 
     compile "org.hibernate:hibernate-spatial:5.4.10.Final"
-    compile "org.hibernate:hibernate-search-orm:5.11.4.Final"
+    compile 'org.hibernate.search:hibernate-search-mapper-orm:6.0.0.Beta5'
+    compile 'org.hibernate.search:hibernate-search-backend-elasticsearch:6.0.0.Beta5'
 
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2'
 

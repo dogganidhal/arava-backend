@@ -13,22 +13,33 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
+    properties:
+      hibernate:
+        search:
+          default_backend: es
+          backends:
+            es:
+              type: elasticsearch
+              hosts: es.ndogga.com
+              protocol: https
+              username: elastic
+              password: changeme
+              index_defaults:
+                lifecycle:
+                  minimal_required_status: yellow
   main:
     allow-bean-definition-overriding: true
   application:
     name: Arava Admin Api
 jwt:
   secret: 268YXz7tkqYON3wpAfXFMIlDT8qmn4v01DvTllPIShKKizl7RV80W7SbTshpmPt
-  expiration: 3600
+  expiration: 604800
   token-type: "Bearer"
-hibernate:
-  search:
-    default:
-      directory_provider: filesystem
-      indexBase: /var/indexed_data/arava/default
+
 arava:
   search:
     max-similar-results: 20
+    indexer-thead-count: 10
 logging:
   file: logs/api.log
 server:

@@ -16,14 +16,14 @@ import org.springframework.data.domain.Sort;
 @Builder
 public class SearchQuery {
 
-  private String title;
+  private String query;
   private Region region;
-  private String island;
-  private String category;
+  private String islandId;
+  private String themeId;
   private QuerySort sort;
 
   public boolean isEmpty() {
-    return title == null && region == null && island == null && category == null;
+    return query == null && region == null && islandId == null && themeId == null;
   }
 
   @NoArgsConstructor

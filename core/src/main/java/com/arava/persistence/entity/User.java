@@ -3,8 +3,7 @@ package com.arava.persistence.entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 @Entity
-@Indexed
+@Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
@@ -29,15 +28,15 @@ import java.util.List;
 @Table(name="\"user\"")
 public class User extends AbstractEntity {
 
-  @Field
+  @GenericField
   @Column
   private String firstName;
 
-  @Field
+  @GenericField
   @Column
   private String lastName;
 
-  @Field
+  @GenericField
   @Column
   private String email;
 

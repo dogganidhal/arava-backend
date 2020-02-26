@@ -6,21 +6,32 @@ spring:
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
   jpa:
+    generate-ddl: true
     hibernate:
       ddl-auto: update
-    generate-ddl: true
+    properties:
+      hibernate:
+        search:
+          default_backend: es
+          backends:
+            es:
+              type: elasticsearch
+              hosts: es.ndogga.com
+              protocol: https
+              username: elastic
+              password: changeme
+              index_defaults:
+                lifecycle:
+                  minimal_required_status: yellow
   main:
     allow-bean-definition-overriding: true
 jwt:
   secret: ORM2XTeeOz2hRQXtGAyoERDwSfroZeaLoQw5axovlUVlP71mZ1GRgFsCt3sk7iR
   expiration: 3600
   token-type: "Bearer"
-hibernate:
-  search:
-    default:
-      indexmanager: elasticsearch
-      elasticsearch:
-        host: http://elasticsearch:9200
+
+
 arava:
   search:
     max-similar-results: 20
+    indexer-thead-count: 10

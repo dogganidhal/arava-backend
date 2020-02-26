@@ -7,14 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -26,7 +21,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Indexed
+@Embeddable
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,7 +29,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class PoiTheme extends AbstractEntity {
 
-  @ContainedIn
+  @IndexingDependency
   @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL)
   private List<LocalizedResource> name;
@@ -42,7 +37,8 @@ public class PoiTheme extends AbstractEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private Media icon;
 
-  @IndexedEmbedded(depth = 3)
+  @IndexingDependency
+  @IndexedEmbedded(maxDepth = 3)
   @ManyToOne(cascade = CascadeType.ALL)
   @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE })
   private PoiTheme parent;
