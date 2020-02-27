@@ -1,49 +1,6 @@
-
 spring:
-  jackson:
-    serialization:
-      write_dates_as_timestamps: false
-  datasource:
-    url: jdbc:postgresql://localhost:5432/arava
-    username: root
-    password: root
-    driver-class-name: org.postgresql.Driver
-    initialization-mode: always
-  jpa:
-    hibernate:
-      ddl-auto: update
-    generate-ddl: true
-    properties:
-      hibernate:
-        search:
-          default_backend: es
-          automatic_indexing:
-            synchronization:
-              strategy: sync
-          backends:
-            es:
-              type: elasticsearch
-              hosts: es.ndogga.com
-              protocol: https
-              username: elastic
-              password: changeme
-              index_defaults:
-                lifecycle:
-                  minimal_required_status: yellow
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: Arava Admin Api
-jwt:
-  secret: 268YXz7tkqYON3wpAfXFMIlDT8qmn4v01DvTllPIShKKizl7RV80W7SbTshpmPt
-  expiration: 604800
-  token-type: "Bearer"
+  profiles.include:
+    - core-local
 
-arava:
-  search:
-    max-similar-results: 20
-    indexer-thead-count: 10
-logging:
-  file: logs/api.log
 server:
   port: 8081

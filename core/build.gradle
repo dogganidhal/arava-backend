@@ -24,6 +24,10 @@ dependencies {
     compile "org.hibernate:hibernate-spatial:5.4.10.Final"
     compile 'org.hibernate.search:hibernate-search-mapper-orm:6.0.0.Beta5'
     compile 'org.hibernate.search:hibernate-search-backend-elasticsearch:6.0.0.Beta5'
+    compile 'org.hibernate.search:hibernate-search-backend-lucene:6.0.0.Beta5'
+
+    compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.6.0'
+    compile 'org.elasticsearch:elasticsearch:7.6.0'
 
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2'
 
