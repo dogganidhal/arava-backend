@@ -3,8 +3,8 @@ package com.arava.admin.rest.controller;
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiTheme;
-import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.persistence.repository.PoiRepository;
+import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.server.annotation.Admin;
 import com.arava.server.dto.request.PoiThemeWriteRequest;
 import com.arava.server.dto.request.PoiWriteRequest;
@@ -99,7 +99,11 @@ public class PoiController {
   @Admin
   @PostMapping("/{poiId}/toggle-draft")
   public void toggleDraft(@PathVariable("poiId") String poiId) {
-    poiRepository.toggleDraft(poiId);
+    Poi poi = poiRepository
+            .findById(poiId)
+            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable);
+    poi.setDraft(!poi.getDraft());
+    poiRepository.save(poi);
   }
 
   //endregion

@@ -35,7 +35,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
   private PoiThemeRepository poiThemeRepository;
 
   @Autowired
-  private ReverseMapper<List<LocalizedResource>, Map<String, String>> localizedResourceReverseMapper;
+  private ReverseMapper<List<LocalizedResource<Poi>>, Map<String, String>> localizedResourceReverseMapper;
 
   @Autowired
   private Mapper<MediaWriteRequest, Media> mediaMapper;

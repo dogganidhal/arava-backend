@@ -1,15 +1,9 @@
 package com.arava.persistence.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
 import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.GeoPointBinding;
 import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.Latitude;
@@ -17,6 +11,8 @@ import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.Longitude;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,15 +21,15 @@ import java.util.List;
 @Entity
 @Data
 @SuperBuilder
-@Indexed
+@Indexed(index = "com.arava.poi")
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
 @GeoPointBinding(fieldName = "coordinate")
-public class Poi {
+@EqualsAndHashCode(callSuper = true)
+public class Poi extends LocalizableEntity {
 
   @Id
-  @DocumentId
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
   private String id;
@@ -47,8 +43,8 @@ public class Poi {
   private LocalDateTime updated;
 
   @Column
-  @Builder.Default
   @GenericField
+  @ColumnDefault(value = "FALSE")
   private Boolean disabled = false;
 
   /**
@@ -94,15 +90,19 @@ public class Poi {
   @OneToOne(cascade = CascadeType.ALL)
   private PoiDetails details;
 
-  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
+  @AssociationInverseSide(inversePath = @ObjectPath(
+          @PropertyValue(propertyName = "owner")
+  ))
   @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL)
-  private List<LocalizedResource> title;
+  private List<LocalizedResource<Poi>> title;
 
-  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
+  @AssociationInverseSide(inversePath = @ObjectPath(
+          @PropertyValue(propertyName = "owner")
+  ))
   @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL)
-  private List<LocalizedResource> description;
+  private List<LocalizedResource<Poi>> description;
 
   @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded

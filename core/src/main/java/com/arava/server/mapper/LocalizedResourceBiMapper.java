@@ -1,5 +1,6 @@
 package com.arava.server.mapper;
 
+import com.arava.persistence.entity.AbstractEntity;
 import com.arava.persistence.entity.Language;
 import com.arava.persistence.entity.LocalizedResource;
 import com.arava.persistence.repository.LanguageRepository;
@@ -20,8 +21,8 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class LocalizedResourceBiMapper implements Mapper<List<LocalizedResource>, String>,
-        ReverseMapper<List<LocalizedResource>, Map<String, String>> {
+public class LocalizedResourceBiMapper<T extends AbstractEntity> implements Mapper<List<LocalizedResource<T>>, String>,
+        ReverseMapper<List<LocalizedResource<T>>, Map<String, String>> {
 
   @Autowired
   private LanguageRepository languageRepository;
@@ -30,7 +31,7 @@ public class LocalizedResourceBiMapper implements Mapper<List<LocalizedResource>
   private ContextResolver contextResolver;
 
   @Override
-  public String deepMap(List<LocalizedResource> object) {
+  public String deepMap(List<LocalizedResource<T>> object) {
     Language contextLanguage = contextResolver.getLanguage();
     return object.stream()
             .filter(localizedResource -> localizedResource
@@ -44,8 +45,9 @@ public class LocalizedResourceBiMapper implements Mapper<List<LocalizedResource>
   }
 
   @Override
-  public List<LocalizedResource> reverseMap(Map<String, String> object) {
-    return object.entrySet().stream()
+  @SuppressWarnings("unchecked")
+  public List<LocalizedResource<T>> reverseMap(Map<String, String> object) {
+    return (List<LocalizedResource<T>>) object.entrySet().stream()
             .map(entry -> LocalizedResource.builder()
                     .language(languageRepository
                             .findById(entry.getKey())

@@ -25,12 +25,15 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class LocalizedResource extends AbstractEntity {
+public class LocalizedResource<T extends AbstractEntity> extends AbstractEntity {
 
   @KeywordField
   private String resource;
 
   @ManyToOne(cascade = CascadeType.ALL)
   private Language language;
+
+  @ManyToOne(targetEntity = LocalizableEntity.class)
+  private T owner;
 
 }

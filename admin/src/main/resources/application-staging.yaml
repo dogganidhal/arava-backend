@@ -13,6 +13,9 @@ spring:
       hibernate:
         search:
           default_backend: es
+          automatic_indexing:
+            synchronization:
+              strategy: sync
           backends:
             es:
               type: elasticsearch

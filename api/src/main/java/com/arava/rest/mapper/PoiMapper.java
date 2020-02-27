@@ -33,7 +33,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
   private Mapper<List<Rating>, RatingsDto> ratingsMapper;
 
   @Autowired
-  private Mapper<List<LocalizedResource>, String> localizedResourceMapper;
+  private Mapper<List<LocalizedResource<Poi>>, String> localizedResourceMapper;
 
   @Autowired
   private Mapper<PoiDetails, PoiDetailsDto> poiDetailsMapper;

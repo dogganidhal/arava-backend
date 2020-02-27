@@ -26,7 +26,7 @@ public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
   private Mapper<Media, MediaDto> mediaMapper;
 
   @Autowired
-  private Mapper<List<LocalizedResource>, String> localizedResourceMapper;
+  private Mapper<List<LocalizedResource<PoiTheme>>, String> localizedResourceMapper;
 
   @Override
   public PoiDto.PoiTheme deepMap(PoiTheme object) {

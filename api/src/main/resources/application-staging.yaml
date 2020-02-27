@@ -13,6 +13,9 @@ spring:
       hibernate:
         search:
           default_backend: es
+          automatic_indexing:
+            synchronization:
+              strategy: sync
           backends:
             es:
               type: elasticsearch
@@ -25,11 +28,11 @@ spring:
                   minimal_required_status: yellow
   main:
     allow-bean-definition-overriding: true
+
 jwt:
   secret: ORM2XTeeOz2hRQXtGAyoERDwSfroZeaLoQw5axovlUVlP71mZ1GRgFsCt3sk7iR
   expiration: 3600
   token-type: "Bearer"
-
 
 arava:
   search:
