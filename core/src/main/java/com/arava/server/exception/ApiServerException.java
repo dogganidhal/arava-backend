@@ -24,6 +24,10 @@ public enum ApiServerException implements ApiException {
       return "Server is having some trouble, please come back later";
     }
 
+    @Override
+    public ErrorCode getErrorCode() {
+      return ErrorCode.GENERAL_INTERNAL_SERVER_ERROR;
+    }
   };
 
   @Override
@@ -36,6 +40,7 @@ public enum ApiServerException implements ApiException {
     return ApiThrowable.builder()
             .message(getMessage())
             .status(getStatus())
+            .errorCode(getErrorCode())
             .timestamp(getTimestamp())
             .build();
   }

@@ -43,7 +43,7 @@ public class PoiController {
               .map(poiMapper::deepMap)
               .collect(Collectors.toList());
     } catch (EntityNotFoundException e) {
-      throw ApiClientException.NOT_FOUND
+      throw ApiClientException.POI_NOT_FOUND
               .getThrowable();
     }
   }
@@ -53,7 +53,7 @@ public class PoiController {
   public PoiDto getPoi(@PathVariable("poiId") String poiId) {
     return poiMapper.deepMap(poiRepository
             .findById(poiId)
-            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+            .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable)
     );
   }
 

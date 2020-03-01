@@ -15,7 +15,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -43,6 +42,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                             exception.getBindingResult().getFieldError().getObjectName(),
                             exception.getBindingResult().getFieldError().getField()
                     ))
+                    .errorCode(ErrorCode.GENERAL_VALIDATION_ERROR.name())
                     .timestamp(LocalDateTime.now())
                     .statusCode(HttpStatus.BAD_REQUEST)
                     .path(((ServletWebRequest) request).getRequest().getServletPath())
@@ -66,20 +66,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler
-  public ResponseEntity<ErrorResponse> handleEntityNotFoundExceptions(EntityNotFoundException exception, WebRequest request) {
-    log.error(exception.toString(), exception);
-    return new ResponseEntity<>(
-            ErrorResponse.fromApiException(
-                    ApiClientException.NOT_FOUND.getThrowable(),
-                    ((ServletWebRequest) request).getRequest().getServletPath()
-            ),
-            new HttpHeaders(),
-            ApiClientException.NOT_FOUND.getStatus()
-    );
-  }
-
-  @ExceptionHandler
-  public ResponseEntity<ErrorResponse> handleEntityNotFoundExceptions(AuthenticationCredentialsNotFoundException exception, WebRequest request) {
+  public ResponseEntity<ErrorResponse> handleEntityNotFoundExceptions(
+          AuthenticationCredentialsNotFoundException exception, WebRequest request) {
     log.error(exception.toString(), exception);
     return new ResponseEntity<>(
             ErrorResponse.fromApiException(

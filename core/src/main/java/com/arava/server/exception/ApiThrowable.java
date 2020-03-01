@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 public class ApiThrowable extends RuntimeException {
 
+  private ErrorCode errorCode;
   private HttpStatus status;
   private String message;
   @JsonSerialize(using = LocalDateTimeSerializer.class)

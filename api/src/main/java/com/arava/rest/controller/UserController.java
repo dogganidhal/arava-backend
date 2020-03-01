@@ -3,7 +3,10 @@ package com.arava.rest.controller;
 import com.arava.business.manager.AccessManager;
 import com.arava.business.manager.FavoriteManager;
 import com.arava.persistence.entity.Favorite;
+import com.arava.persistence.entity.User;
 import com.arava.persistence.repository.FavoriteRepository;
+import com.arava.persistence.repository.UserRepository;
+import com.arava.rest.dto.UserDto;
 import com.arava.server.annotation.Authenticated;
 import com.arava.server.jwt.UserPrincipal;
 import com.arava.rest.dto.FavoriteDto;
@@ -29,10 +32,16 @@ import java.util.stream.Collectors;
 public class UserController {
 
   @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
   private FavoriteRepository favoriteRepository;
 
   @Autowired
   private FavoriteManager favoriteManager;
+
+  @Autowired
+  private Mapper<User, UserDto> userMapper;
 
   @Autowired
   private Mapper<Favorite, FavoriteDto> favoriteMapper;
@@ -74,6 +83,12 @@ public class UserController {
       throw ApiClientException.UNAUTHORIZED
               .getThrowable();
     }
+  }
+
+  @Authenticated
+  @GetMapping
+  public UserDto getUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+    return userMapper.deepMap(userRepository.findByEmail(userPrincipal.getUsername()));
   }
 
 }

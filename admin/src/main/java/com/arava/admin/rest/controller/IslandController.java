@@ -63,7 +63,7 @@ public class IslandController {
   public IslandDto getIsland(@PathVariable("islandId") String islandId) {
     return islandMapper.deepMap(islandRepository
             .findById(islandId)
-            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+            .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable)
     );
   }
 
@@ -75,12 +75,12 @@ public class IslandController {
       Island island = islandMerger.merge(
               islandRepository
                       .findById(request.getId())
-                      .orElseThrow(ApiClientException.NOT_FOUND::getThrowable),
+                      .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable),
               islandUpdateMapper.deepMap(request)
       );
       islandRepository.save(island);
     } catch (ConstraintViolationException e) {
-      throw ApiClientException.VALIDATION_ERROR
+      throw ApiClientException.ISLAND_VALIDATION_FAILED
               .getThrowable();
     }
   }

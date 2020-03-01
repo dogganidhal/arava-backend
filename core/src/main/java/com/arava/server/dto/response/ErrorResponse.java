@@ -28,6 +28,7 @@ public class ErrorResponse {
   @Builder.Default
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   private LocalDateTime timestamp = LocalDateTime.now();
+  private String errorCode;
   private String message;
   private Integer status;
   private String path;
@@ -38,6 +39,7 @@ public class ErrorResponse {
             .statusCode(exception.getStatus())
             .timestamp(exception.getTimestamp())
             .message(exception.getMessage())
+            .errorCode(exception.getErrorCode().name())
             .path(path)
             .build();
   }

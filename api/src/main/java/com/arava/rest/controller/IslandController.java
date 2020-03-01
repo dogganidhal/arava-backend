@@ -51,7 +51,7 @@ public class IslandController {
   public IslandDto getIsland(@PathVariable("islandId") String islandId) {
     return islandMapper.deepMap(islandRepository
             .findById(islandId)
-            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+            .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable)
     );
   }
 

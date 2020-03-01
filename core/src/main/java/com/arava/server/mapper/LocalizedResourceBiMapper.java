@@ -51,7 +51,7 @@ public class LocalizedResourceBiMapper<T extends AbstractEntity> implements Mapp
             .map(entry -> LocalizedResource.builder()
                     .language(languageRepository
                             .findById(entry.getKey())
-                            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+                            .orElseThrow(ApiClientException.RESOURCE_NOT_FOUND::getThrowable)
                     )
                     .resource(entry.getValue())
                     .build()

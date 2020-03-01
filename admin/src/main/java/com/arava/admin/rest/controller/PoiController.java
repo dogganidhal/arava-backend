@@ -55,7 +55,7 @@ public class PoiController {
   public PoiDto getPoi(@PathVariable("poiId") String poiId) {
     Poi poi = poiRepository
             .findById(poiId)
-            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable);
+            .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable);
     return poiMapper.deepMap(poi);
   }
 
@@ -68,7 +68,7 @@ public class PoiController {
               .map(poiMapper::deepMap)
               .collect(Collectors.toList());
     } catch (EntityNotFoundException e) {
-      throw ApiClientException.NOT_FOUND
+      throw ApiClientException.POI_NOT_FOUND
               .getThrowable();
     }
   }
@@ -91,7 +91,7 @@ public class PoiController {
   public void deletePoi(@PathVariable("poiId") String poiId) {
     Poi poi = poiRepository
             .findById(poiId)
-            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable);
+            .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable);
     poi.setDisabled(true);
     poiRepository.save(poi);
   }
@@ -101,7 +101,7 @@ public class PoiController {
   public void toggleDraft(@PathVariable("poiId") String poiId) {
     Poi poi = poiRepository
             .findById(poiId)
-            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable);
+            .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable);
     poi.setDraft(!poi.getDraft());
     poiRepository.save(poi);
   }
@@ -138,7 +138,7 @@ public class PoiController {
     return poiThemeMapper.deepMap(
             poiThemeRepository
                     .findById(themeId)
-                    .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+                    .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable)
     );
   }
 

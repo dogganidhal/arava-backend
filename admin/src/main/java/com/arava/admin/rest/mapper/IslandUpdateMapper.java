@@ -35,7 +35,7 @@ public class IslandUpdateMapper implements Mapper<IslandUpdateRequest, Island> {
             .archipelago(object.getArchipelagoId() != null ?
                     archipelagoRepository
                             .findById(object.getArchipelagoId())
-                            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable) :
+                            .orElseThrow(ApiClientException.ARCHIPELAGO_NOT_FOUND::getThrowable) :
                     null
             )
             .image(object.getImage() != null ?

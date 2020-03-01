@@ -51,11 +51,11 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .longitude(object.getLongitude())
             .island(islandRepository
                     .findById(object.getIslandId())
-                    .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+                    .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable)
             )
             .theme(poiThemeRepository
                     .findById(object.getThemeId())
-                    .orElseThrow(ApiClientException.NOT_FOUND::getThrowable)
+                    .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable)
             )
             .mainImage(mediaMapper.deepMap(object.getMainImage()))
             .draft(object.getDraft())

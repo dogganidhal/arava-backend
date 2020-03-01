@@ -52,7 +52,7 @@ public class JwtTokenProvider {
   public String refresh(String refreshToken) throws ApiThrowable {
     Optional<RefreshToken> token = refreshTokenRepository.findById(refreshToken);
     if (!token.isPresent()) {
-      throw ApiClientException.BAD_CREDENTIALS
+      throw ApiClientException.MISSING_CREDENTIALS
               .getThrowable();
     }
     return generateForUser(token.get().getUser().getEmail());

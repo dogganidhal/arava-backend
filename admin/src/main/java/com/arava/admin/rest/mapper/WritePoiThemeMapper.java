@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class WritePoiThemeMapper implements Mapper<PoiThemeWriteRequest, PoiTheme> {
 
   @Autowired
-  private PoiThemeRepository poiTypeRepository;
+  private PoiThemeRepository poiThemeRepository;
 
   @Autowired
   private Mapper<MediaWriteRequest, Media> mediaMapper;
@@ -39,9 +39,9 @@ public class WritePoiThemeMapper implements Mapper<PoiThemeWriteRequest, PoiThem
     return PoiTheme.builder()
             .id(object.getId())
             .parent(object.getParentId() != null ?
-                    poiTypeRepository
+                    poiThemeRepository
                             .findById(object.getParentId())
-                            .orElseThrow(ApiClientException.NOT_FOUND::getThrowable):
+                            .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable):
                     null
             )
             .subThemes(object.getSubThemes() != null ?

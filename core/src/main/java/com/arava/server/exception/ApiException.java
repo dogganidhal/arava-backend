@@ -13,9 +13,12 @@ import java.time.LocalDateTime;
 
 public interface ApiException {
 
+  ErrorCode getErrorCode();
   HttpStatus getStatus();
   LocalDateTime getTimestamp();
-  String getMessage();
   ApiThrowable getThrowable();
+  default String getMessage() {
+    return "Undocumented error";
+  }
 
 }
