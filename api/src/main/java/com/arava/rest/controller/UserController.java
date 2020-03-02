@@ -6,11 +6,12 @@ import com.arava.persistence.entity.Favorite;
 import com.arava.persistence.entity.User;
 import com.arava.persistence.repository.FavoriteRepository;
 import com.arava.persistence.repository.UserRepository;
+import com.arava.rest.dto.FavoriteDto;
 import com.arava.rest.dto.UserDto;
 import com.arava.server.annotation.Authenticated;
-import com.arava.server.jwt.UserPrincipal;
-import com.arava.rest.dto.FavoriteDto;
+import com.arava.server.dto.request.UpdateProfileRequest;
 import com.arava.server.exception.ApiClientException;
+import com.arava.server.jwt.UserPrincipal;
 import com.arava.server.mapper.Mapper;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,12 @@ public class UserController {
   @GetMapping
   public UserDto getUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
     return userMapper.deepMap(userRepository.findByEmail(userPrincipal.getUsername()));
+  }
+
+  @Authenticated
+  @PutMapping
+  public void getUser(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid UpdateProfileRequest request) {
+    accessManager.updateUserProfile(userPrincipal.getId(), request);
   }
 
 }
