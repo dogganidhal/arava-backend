@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   arava-api:
-    image: artifactory.ndogga.com/docker/arava/arava-api:latest
+    image: docker.artifactory.ndogga.com/arava/arava-api:latest
     restart: always
     ports:
       - 10100:8080
@@ -14,7 +14,7 @@ services:
       ELASTICSEARCH_PASSWORD:
       JWT_SECRET:
   arava-admin-api:
-    image: artifactory.ndogga.com/docker/arava/arava-admin-api:latest
+    image: docker.artifactory.ndogga.com/arava/arava-admin-api:latest
     restart: always
     ports:
       - 10104:8080
@@ -26,7 +26,7 @@ services:
       ELASTICSEARCH_PASSWORD:
       JWT_SECRET:
   arava-admin:
-    image: artifactory.ndogga.com/docker/arava/arava-admin:latest
+    image: docker.artifactory.ndogga.com/arava/arava-admin:latest
     restart: always
     ports:
       - 10103:5000

@@ -74,12 +74,15 @@ public class AccessManagerImpl implements AccessManager {
       throw ApiClientException.BAD_CREDENTIALS
               .getThrowable();
     }
-    if (request.getEmail() != null && userRepository.existsByEmail(request.getEmail())) {
+    boolean emailExistsElsewhere = request.getEmail() != null &&
+            !request.getEmail().equals(oldUser.getEmail()) &&
+            userRepository.existsByEmail(request.getEmail());
+    if (emailExistsElsewhere) {
       throw ApiClientException.USER_EXISTS
               .getThrowable();
     }
     User userDiff = User.builder()
-            .passwordHash(request.getPassword() != null ?
+            .passwordHash(request.getPassword() != null && !request.getPassword().isEmpty() ?
                     passwordEncoder.encode(request.getPassword()) :
                     null
             )
