@@ -1,12 +1,12 @@
 package com.arava.persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.AssociationInverseSide;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -46,6 +46,7 @@ public class PoiTheme extends LocalizableEntity {
 
   @Column
   @ColumnDefault(value = "FALSE")
+  @Builder.Default
   private Boolean disabled = false;
 
   @AssociationInverseSide(inversePath = @ObjectPath(

@@ -112,21 +112,21 @@ public class PoiController {
 
   @Admin
   @PostMapping("/theme")
-  public void createPoiCategory(@Valid @RequestBody PoiThemeWriteRequest request) {
+  public void createPoiTheme(@Valid @RequestBody PoiThemeWriteRequest request) {
     PoiTheme poiCategory = writePoiThemeMapper.deepMap(request);
     poiThemeRepository.save(poiCategory);
   }
 
   @Admin
   @PutMapping("/theme")
-  public void updatePoiCategory(@Valid @RequestBody PoiThemeWriteRequest request) {
+  public void updatePoiTheme(@Valid @RequestBody PoiThemeWriteRequest request) {
     PoiTheme poiCategory = writePoiThemeMapper.deepMap(request);
     poiThemeRepository.save(poiCategory);
   }
 
   @Admin
   @GetMapping("/theme")
-  public List<PoiDto.PoiTheme> listPoiCategories() {
+  public List<PoiDto.PoiTheme> listPoiThemes() {
     return poiThemeRepository.findAll().stream()
             .map(poiThemeMapper::deepMap)
             .collect(Collectors.toList());
@@ -140,6 +140,16 @@ public class PoiController {
                     .findById(themeId)
                     .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable)
     );
+  }
+
+  @Admin
+  @DeleteMapping("/theme/{themeId}")
+  public void deleteTheme(@PathVariable("themeId") String themeId) {
+    PoiTheme theme = poiThemeRepository
+            .findById(themeId)
+            .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable);
+    theme.setDisabled(true);
+    poiThemeRepository.save(theme);
   }
 
   //endregion

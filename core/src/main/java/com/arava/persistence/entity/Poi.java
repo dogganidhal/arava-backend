@@ -45,6 +45,7 @@ public class Poi extends LocalizableEntity {
   @Column
   @GenericField
   @ColumnDefault(value = "FALSE")
+  @Builder.Default
   private Boolean disabled = false;
 
   /**
