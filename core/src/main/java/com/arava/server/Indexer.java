@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManagerFactory;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by Nidhal Dogga
@@ -25,10 +24,9 @@ public class Indexer implements CommandLineRunner {
   @Override
   public void run(String... args) {
     log.info("Starting indexer");
-    CompletableFuture<?> future = Search.session(entityManagerFactory.createEntityManager())
+    Search.session(entityManagerFactory.createEntityManager())
             .massIndexer()
-            .start();
-    future
+            .start()
             .thenRun((() -> log.info("Indexer started successfully")))
             .exceptionally(exception -> {
               log.error("Indexer crashed with exception {}", exception.getLocalizedMessage());

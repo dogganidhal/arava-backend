@@ -3,6 +3,7 @@ spring:
   jackson:
     serialization:
       write_dates_as_timestamps: false
+    default-property-inclusion: non_null
   datasource:
     url: jdbc:postgresql://localhost:5432/arava
     username: root
@@ -32,14 +33,14 @@ spring:
                   minimal_required_status: yellow
   main:
     allow-bean-definition-overriding: true
-  application:
-    name: Arava Admin Api
 jwt:
   expiration: 604800
   token-type: "Bearer"
 
 arava:
   log-to-elasticsearch: true
+  themes:
+    things-to-do-theme-id: dfb4053f-e4ad-47a8-b2f1-321d92b3329c
   search:
     max-similar-results: 20
     indexer-thead-count: 10

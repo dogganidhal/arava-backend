@@ -57,9 +57,6 @@ public class PoiWriteRequest {
   private Boolean featured = false;
 
   @Builder.Default
-  private Boolean thingsToDo = false;
-
-  @Builder.Default
   private Boolean draft = true;
 
   @NotNull

@@ -1,0 +1,6 @@
+spring:
+  profiles.include:
+    - core-local-es
+
+server:
+  port: 8081

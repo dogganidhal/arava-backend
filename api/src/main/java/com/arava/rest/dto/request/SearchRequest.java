@@ -21,14 +21,14 @@ public class SearchRequest {
 
   private String title;
   private String island;
-  private String category;
+  private String themeId;
   private Region region;
   private SearchSort sort;
 
   public SearchQuery searchQuery() {
     return SearchQuery.builder()
             .query(title)
-            .themeId(category)
+            .themeId(themeId)
             .islandId(island)
             .region(region != null ?
                     SearchQuery.Region.builder()

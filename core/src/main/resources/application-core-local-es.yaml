@@ -5,6 +5,9 @@ spring:
       write_dates_as_timestamps: false
     default-property-inclusion: non_null
   datasource:
+    url: jdbc:postgresql://localhost:5432/arava
+    username: root
+    password: root
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
   jpa:
@@ -21,21 +24,18 @@ spring:
           backends:
             es:
               type: elasticsearch
-              hosts: es.ndogga.com
-              protocol: https
-              username: elastic
-              password: ${elasticsearch.password}
               index_defaults:
                 lifecycle:
                   minimal_required_status: yellow
   main:
     allow-bean-definition-overriding: true
 jwt:
+  secret: 268YXz7tkqYON3wpAfXFMIlDT8qmn4v01DvTllPIShKKizl7RV80W7SbTshpmPt
   expiration: 604800
   token-type: "Bearer"
 
 arava:
-  log-to-elasticsearch: true
+  log-to-elasticsearch: false
   themes:
     things-to-do-theme-id: dfb4053f-e4ad-47a8-b2f1-321d92b3329c
   search:
@@ -45,7 +45,6 @@ logging:
   file: logs/api.log
 
 elasticsearch:
-  host: es.ndogga.com
-  port: 443
-  protocol: https
-  username: elastic
+  host: localhost
+  port: 9200
+  protocol: http

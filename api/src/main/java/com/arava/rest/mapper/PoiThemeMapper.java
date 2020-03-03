@@ -33,7 +33,10 @@ public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
     return PoiDto.PoiTheme.builder()
             .id(object.getId())
             .name(localizedResourceMapper.deepMap(object.getName()))
-            .icon(mediaMapper.deepMap(object.getIcon()))
+            .icon(object.getIcon() != null ?
+                    mediaMapper.deepMap(object.getIcon()) :
+                    null
+            )
             .parent(object.getParent() != null ?
                     deepMap(object.getParent()) :
                     null

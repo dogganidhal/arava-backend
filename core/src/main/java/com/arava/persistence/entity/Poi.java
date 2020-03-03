@@ -48,15 +48,6 @@ public class Poi extends LocalizableEntity {
   private Boolean disabled = false;
 
   /**
-   * Will be the default search result filter
-   */
-
-  @Column
-  @Builder.Default
-  @GenericField
-  private Boolean thingsToDo = false;
-
-  /**
    * Premium poi (paid subscription)
    */
 

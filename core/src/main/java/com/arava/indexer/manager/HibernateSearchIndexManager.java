@@ -44,6 +44,9 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
   @Value("${arava.search.indexer-thead-count}")
   private Integer indexerThreadCount;
 
+  @Value("${arava.themes.things-to-do-theme-id}")
+  private String thingsToDoThemeId;
+
   @Override
   public void reindexAll() throws InterruptedException {
     Search.session(entityManager)
@@ -99,8 +102,8 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
     if (query.isEmpty()) {
       predicate
               .must(factory.match()
-                      .field("thingsToDo")
-                      .matching(true)
+                      .field("theme.id")
+                      .matching(thingsToDoThemeId)
               );
     }
 

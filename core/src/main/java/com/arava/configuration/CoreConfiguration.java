@@ -34,10 +34,10 @@ public class CoreConfiguration {
   @Value("${elasticsearch.protocol}")
   public String esProtocol;
 
-  @Value("${elasticsearch.username}")
+  @Value("${elasticsearch.username:}")
   public String esUsername;
 
-  @Value("${elasticsearch.password}")
+  @Value("${elasticsearch.password:}")
   public String esPassword;
 
   @Bean

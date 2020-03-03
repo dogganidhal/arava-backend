@@ -77,7 +77,6 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             )
             .ratings(ratingsMapper.deepMap(object.getRatings()))
             .sponsored(object.getSponsored())
-            .thingsToDo(object.getThingsToDo())
             .build();
   }
 

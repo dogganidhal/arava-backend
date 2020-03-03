@@ -61,7 +61,6 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .draft(object.getDraft())
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
-            .thingsToDo(object.getThingsToDo())
             .details(detailsMapper.deepMap(object.getDetails()))
             .title(localizedResourceReverseMapper.reverseMap(object.getTitle()))
             .description(localizedResourceReverseMapper.reverseMap(object.getDescription()))
