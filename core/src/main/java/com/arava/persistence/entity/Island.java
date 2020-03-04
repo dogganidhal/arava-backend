@@ -2,15 +2,16 @@ package com.arava.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SelectBeforeUpdate;
+import org.hibernate.annotations.*;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Created by Nidhal Dogga
@@ -21,14 +22,29 @@ import javax.persistence.*;
 @Data
 @SuperBuilder
 @Entity
-@Embeddable
 @Cacheable
 @AllArgsConstructor
 @NoArgsConstructor
 @SelectBeforeUpdate
 @DynamicUpdate
-@EqualsAndHashCode(callSuper = true)
-public class Island extends AbstractEntity {
+public class Island {
+
+  @Id
+  @GenericField
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+  private String id;
+
+  @CreationTimestamp
+  @Column
+  private LocalDateTime created;
+
+  @UpdateTimestamp
+  @Column
+  private LocalDateTime updated;
+
+  @Column
+  private Boolean disabled = false;
 
   @GenericField
   private String name;
