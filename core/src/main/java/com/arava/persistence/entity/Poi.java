@@ -10,10 +10,9 @@ import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.Latitude;
 import org.hibernate.search.mapper.pojo.bridge.builtin.annotation.Longitude;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
-import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,46 +33,50 @@ public class Poi extends LocalizableEntity {
   @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
   private String id;
 
-  @CreationTimestamp
   @Column
+  @CreationTimestamp
   private LocalDateTime created;
 
-  @UpdateTimestamp
   @Column
+  @UpdateTimestamp
   private LocalDateTime updated;
 
   @Column
   @GenericField
-  @ColumnDefault(value = "FALSE")
   @Builder.Default
+  @ColumnDefault(value = "FALSE")
   private Boolean disabled = false;
 
   /**
    * Premium poi (paid subscription)
    */
 
-  @GenericField
+
   @Column
+  @GenericField
   @Builder.Default
+  @ColumnDefault(value = "FALSE")
   private Boolean sponsored = false;
 
   /**
    * Poi to be displayed in photos tab
    */
 
-  @GenericField
   @Column
+  @GenericField
   @Builder.Default
+  @ColumnDefault(value = "FALSE")
   private Boolean featured = false;
 
   /**
    * Whether the poi is in draft or published state
    */
 
-  @GenericField
   @Column
+  @GenericField
   @Builder.Default
-  private Boolean draft = false;
+  @ColumnDefault(value = "TRUE")
+  private Boolean draft = true;
 
   @AssociationInverseSide(inversePath = @ObjectPath(
           @PropertyValue(propertyName = "poi")
@@ -101,7 +104,6 @@ public class Poi extends LocalizableEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private PoiTheme theme;
 
-  @NotNull
   @OneToOne(cascade = CascadeType.ALL)
   private Media mainImage;
 
@@ -121,14 +123,14 @@ public class Poi extends LocalizableEntity {
   @Latitude
   private Double latitude;
 
-  @GenericField
   @Column
   @Longitude
+  @GenericField
   private Double longitude;
 
-  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
+  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   private Island island;
 
 }

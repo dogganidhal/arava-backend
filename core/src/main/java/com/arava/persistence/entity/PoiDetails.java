@@ -9,7 +9,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 
 import javax.persistence.*;
-import java.sql.Time;
 
 /**
  * Created by Nidhal Dogga
@@ -53,9 +52,6 @@ public class PoiDetails extends AbstractEntity {
   private String instagramAccount;
 
   @Column
-  private Time openingHour;
-
-  @Column
-  private Time closingHour;
+  private String openingHours;
 
 }

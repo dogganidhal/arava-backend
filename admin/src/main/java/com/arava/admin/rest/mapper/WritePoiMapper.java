@@ -57,13 +57,19 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
                     .findById(object.getThemeId())
                     .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable)
             )
-            .mainImage(mediaMapper.deepMap(object.getMainImage()))
+            .mainImage(object.getMainImage() != null ?
+                    mediaMapper.deepMap(object.getMainImage()) :
+                    null
+            )
             .draft(object.getDraft())
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
             .details(detailsMapper.deepMap(object.getDetails()))
             .title(localizedResourceReverseMapper.reverseMap(object.getTitle()))
-            .description(localizedResourceReverseMapper.reverseMap(object.getDescription()))
+            .description(object.getDescription() != null ?
+                    localizedResourceReverseMapper.reverseMap(object.getDescription()) :
+                    null
+            )
             .medias(object.getMedias().stream()
                     .map(mediaMapper::deepMap)
                     .collect(Collectors.toList())

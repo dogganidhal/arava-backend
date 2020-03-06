@@ -7,6 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,7 +35,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleMethodArgumentNotValid(
           MethodArgumentNotValidException exception, HttpHeaders headers,
           HttpStatus status, WebRequest request) {
-    log.info(exception.toString(), exception);
     return new ResponseEntity<>(
             ErrorResponse.builder()
                     .message(String.format("Value '%s' is not a valid value for field '%s.%s'",
@@ -54,7 +54,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler
   public ResponseEntity<ErrorResponse> handleApiException(ApiThrowable exception, WebRequest request) {
-    log.info(exception.toString(), exception);
     return new ResponseEntity<>(
             ErrorResponse.fromApiException(
                     exception,
@@ -68,7 +67,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler
   public ResponseEntity<ErrorResponse> handleEntityNotFoundExceptions(
           AuthenticationCredentialsNotFoundException exception, WebRequest request) {
-    log.error(exception.toString(), exception);
+    return new ResponseEntity<>(
+            ErrorResponse.fromApiException(
+                    ApiClientException.UNAUTHORIZED.getThrowable(),
+                    ((ServletWebRequest) request).getRequest().getServletPath()
+            ),
+            new HttpHeaders(),
+            ApiClientException.UNAUTHORIZED.getStatus()
+    );
+  }
+
+  @ExceptionHandler
+  public ResponseEntity<ErrorResponse> handleAccessDeniedException(
+          AccessDeniedException exception, WebRequest request) {
     return new ResponseEntity<>(
             ErrorResponse.fromApiException(
                     ApiClientException.UNAUTHORIZED.getThrowable(),

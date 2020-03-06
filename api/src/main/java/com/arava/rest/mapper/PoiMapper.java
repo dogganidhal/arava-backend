@@ -50,7 +50,10 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             .draft(object.getDraft())
             .island(object.getIsland().getName())
             .theme(themeMapper.deepMap(object.getTheme()))
-            .mainImage(mediaMapper.deepMap(object.getMainImage()))
+            .mainImage(object.getMainImage() != null ?
+                    mediaMapper.deepMap(object.getMainImage()) :
+                    null
+            )
             .coordinate(LatLng.builder()
                     .latitude(object.getLatitude())
                     .longitude(object.getLongitude())

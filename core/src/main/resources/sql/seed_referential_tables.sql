@@ -21,28 +21,6 @@ INSERT INTO app_version_configuration ("id", "created", "min_version")
 VALUES ('dd3d4622-832d-4766-9efb-dba1d95f1ef9', NOW(), 1)
 ON CONFLICT DO NOTHING;
 
--- INSERT DEFAULT THEMES
-
-INSERT INTO poi_theme ("id", "created", "updated", "icon_id", "parent_id")
-VALUES ('dfb4053f-e4ad-47a8-b2f1-321d92b3329c', NOW(), NOW(), NULL, NULL)
-ON CONFLICT DO NOTHING;
-
-INSERT INTO localized_resource (id, created, disabled, updated, resource, language_id)
-VALUES
-       ('e8defcc8-d4ec-4c3c-8369-b41a1815e9d5', NOW(), FALSE, NOW(), 'Things to do', 'en'),
-       ('f942ad1b-c344-4c67-b62f-e128b12f8a69', NOW(), FALSE, NOW(), 'Choses à faire', 'fr'),
-       ('62b97939-23d0-4027-b13b-024165d4da54', NOW(), FALSE, NOW(), '要做的事情', 'zh_Hans')
-ON CONFLICT DO NOTHING;
-
-INSERT INTO poi_theme_name (poi_theme_id, name_id)
-VALUES
-       ('dfb4053f-e4ad-47a8-b2f1-321d92b3329c', 'e8defcc8-d4ec-4c3c-8369-b41a1815e9d5'),
-       ('dfb4053f-e4ad-47a8-b2f1-321d92b3329c', 'f942ad1b-c344-4c67-b62f-e128b12f8a69'),
-       ('dfb4053f-e4ad-47a8-b2f1-321d92b3329c', '62b97939-23d0-4027-b13b-024165d4da54')
-ON CONFLICT DO NOTHING;
-
-
-
 -- INSERT DEFAULT ARCHIPELAGOS
 
 INSERT INTO archipelago (id, name)

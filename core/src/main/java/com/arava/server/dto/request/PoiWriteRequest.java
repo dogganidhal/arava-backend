@@ -1,14 +1,11 @@
 package com.arava.server.dto.request;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +29,6 @@ public class PoiWriteRequest {
   @NotNull
   private Map<String, String> title;
 
-  @NotNull
   private Map<String, String> description;
 
   @NotNull
@@ -41,7 +37,6 @@ public class PoiWriteRequest {
   @NotNull
   private Double longitude;
 
-  @NotNull
   private MediaWriteRequest mainImage;
 
   @NotNull
@@ -75,10 +70,7 @@ public class PoiWriteRequest {
     private String website;
     private String facebookUrl;
     private String instagramUrl;
-    @JsonSerialize(using = LocalTimeSerializer.class)
-    private LocalTime openingHour;
-    @JsonSerialize(using = LocalTimeSerializer.class)
-    private LocalTime closingHour;
+    private String openingHours;
 
   }
 

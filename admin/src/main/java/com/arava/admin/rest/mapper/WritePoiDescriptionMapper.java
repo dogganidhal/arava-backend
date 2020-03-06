@@ -5,8 +5,6 @@ import com.arava.server.dto.request.PoiWriteRequest;
 import com.arava.server.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.sql.Time;
-
 /**
  * Created by Nidhal Dogga
  * Date : 20/01/2020 22:31
@@ -27,8 +25,7 @@ public class WritePoiDescriptionMapper implements Mapper<PoiWriteRequest.Details
             .facebookUrl(object.getFacebookUrl())
             .instagramAccount(object.getInstagramUrl())
             .phone(object.getPhone())
-            .openingHour(object.getOpeningHour() != null ? Time.valueOf(object.getOpeningHour()) : null)
-            .closingHour(object.getClosingHour() != null ? Time.valueOf(object.getClosingHour()) : null)
+            .openingHours(object.getOpeningHours())
             .build();
   }
 
