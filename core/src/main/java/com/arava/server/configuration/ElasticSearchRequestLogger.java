@@ -1,4 +1,4 @@
-package com.arava.rest.configuration;
+package com.arava.server.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -10,6 +10,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,6 +28,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Created by Nidhal Dogga
@@ -37,7 +39,10 @@ import java.util.UUID;
 @Slf4j
 @ConditionalOnProperty(value = "arava.log-to-elasticsearch", havingValue = "true")
 @Component
-public class ElasticSearchLogger extends OncePerRequestFilter implements ActionListener<IndexResponse> {
+public class ElasticSearchRequestLogger extends OncePerRequestFilter implements ActionListener<IndexResponse> {
+
+  @Value("${spring.application.name}")
+  private String applicationName;
 
   @Autowired
   private RestHighLevelClient esClient;
@@ -57,6 +62,7 @@ public class ElasticSearchLogger extends OncePerRequestFilter implements ActionL
     IndexRequest indexRequest = new IndexRequest("com.arava.web");
     indexRequest.id(UUID.randomUUID().toString());
     Map<String, Object> requestMap = new HashMap<String, Object>() {{
+      put("Application", applicationName);
       put("URL", request.getRequestURL());
       put("Method", request.getMethod());
       put("Timestamp", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
@@ -70,8 +76,10 @@ public class ElasticSearchLogger extends OncePerRequestFilter implements ActionL
                         putAll(previous);
                       }})
       );
+      put("IP", request.getRemoteAddr());
+      put("Request", request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
       put("Status", response.getStatus());
-      put("Elapsed", String.format("%d ms", Duration.between(begin, end).toMillis()));
+      put("Elapsed", Duration.between(begin, end).toMillis());
       if (request.getHeader("User-Agent") != null) {
         put("User-Agent", request.getHeader("User-Agent"));
       }

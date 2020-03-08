@@ -65,4 +65,9 @@ public class AppController {
             .build();
   }
 
+  @GetMapping("/exception")
+  public void crashingEndpoint() {
+    throw new RuntimeException();
+  }
+
 }
