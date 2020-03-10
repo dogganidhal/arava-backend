@@ -13,9 +13,7 @@ import com.arava.server.dto.ArchipelagoDto;
 import com.arava.server.mapper.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
@@ -66,7 +64,12 @@ public class AppController {
   }
 
   @GetMapping("/exception")
-  public void crashingEndpoint() {
+  public void crashingGetEndpoint() {
+    throw new RuntimeException();
+  }
+
+  @PostMapping("/exception")
+  public void crashingPostEndpoint(@RequestBody Object body) {
     throw new RuntimeException();
   }
 
