@@ -1,6 +1,7 @@
 package com.arava.persistence.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -44,6 +45,7 @@ public class Island {
   private LocalDateTime updated;
 
   @Column
+  @Builder.Default
   private Boolean disabled = false;
 
   @GenericField

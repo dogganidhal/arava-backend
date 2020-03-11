@@ -91,7 +91,7 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
                     .matching(false)
             );
 
-    if (query.isEmpty() || query.getSponsored()) {
+    if (query.isEmpty() || query.isSponsored()) {
       predicate
               .must(factory.match()
                       .field("sponsored")
@@ -133,9 +133,11 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
     }
 
     if (query.getThemeIds() != null && !query.getThemeIds().isEmpty()) {
-      predicate
-              .must(factory.id()
-                      .matchingAny(query.getThemeIds())
+      query.getThemeIds()
+                .forEach(themeId -> predicate.should(factory.match()
+                              .field("theme.id")
+                              .matching(themeId)
+                      )
               );
     }
 

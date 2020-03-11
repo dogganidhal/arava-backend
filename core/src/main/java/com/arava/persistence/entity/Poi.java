@@ -29,6 +29,8 @@ import java.util.List;
 public class Poi extends LocalizableEntity {
 
   @Id
+  @DocumentId
+  @NaturalId
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
   private String id;

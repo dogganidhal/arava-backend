@@ -43,7 +43,11 @@ arava:
     max-similar-results: 20
     indexer-thead-count: 10
 logging:
-  file: logs/api.log
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: TRACE
 
 elasticsearch:
   host: es.ndogga.com

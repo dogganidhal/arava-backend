@@ -12,10 +12,10 @@ import java.util.List;
  */
 
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SearchQuery {
 
   private String query;
@@ -23,16 +23,18 @@ public class SearchQuery {
   private String islandId;
   private List<String> themeIds;
   private QuerySort sort;
-  private Boolean sponsored = false;
+  @Getter
+  @Builder.Default
+  private boolean sponsored = false;
 
   public boolean isEmpty() {
-    return query == null && region == null && islandId == null && (themeIds == null || themeIds.isEmpty()) && sponsored == null;
+    return query == null && region == null && islandId == null && (themeIds == null || themeIds.isEmpty());
   }
 
-  @NoArgsConstructor
-  @AllArgsConstructor
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class Region {
 
     private Double centerLatitude;
@@ -43,10 +45,10 @@ public class SearchQuery {
 
   }
 
-  @NoArgsConstructor
-  @AllArgsConstructor
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class QuerySort {
 
     private String field;

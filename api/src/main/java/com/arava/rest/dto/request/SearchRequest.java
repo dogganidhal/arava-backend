@@ -25,7 +25,10 @@ public class SearchRequest {
   private List<String> themeIds;
   private Region region;
   private SearchSort sort;
-  private Boolean sponsored;
+  @Getter
+  @Setter
+  @Builder.Default
+  private boolean sponsored = false;
 
   public SearchQuery searchQuery() {
     return SearchQuery.builder()
