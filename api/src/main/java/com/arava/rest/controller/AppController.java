@@ -63,14 +63,4 @@ public class AppController {
             .build();
   }
 
-  @GetMapping("/exception")
-  public void crashingGetEndpoint() {
-    throw new RuntimeException();
-  }
-
-  @PostMapping("/exception")
-  public void crashingPostEndpoint(@RequestBody Object body) {
-    throw new RuntimeException();
-  }
-
 }

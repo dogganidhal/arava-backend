@@ -67,7 +67,7 @@ public class PoiTheme extends LocalizableEntity {
   @AssociationInverseSide(inversePath = @ObjectPath(
           @PropertyValue(propertyName = "parent")
   ))
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent")
   private List<PoiTheme> subThemes;
 
 }

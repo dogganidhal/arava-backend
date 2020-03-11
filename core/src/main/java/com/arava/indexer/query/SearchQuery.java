@@ -3,6 +3,8 @@ package com.arava.indexer.query;
 import lombok.*;
 import org.springframework.data.domain.Sort;
 
+import java.util.List;
+
 /**
  * Created by Nidhal Dogga
  * Date : 16/01/2020 22:06
@@ -19,11 +21,12 @@ public class SearchQuery {
   private String query;
   private Region region;
   private String islandId;
-  private String themeId;
+  private List<String> themeIds;
   private QuerySort sort;
+  private Boolean sponsored = false;
 
   public boolean isEmpty() {
-    return query == null && region == null && islandId == null && themeId == null;
+    return query == null && region == null && islandId == null && (themeIds == null || themeIds.isEmpty()) && sponsored == null;
   }
 
   @NoArgsConstructor

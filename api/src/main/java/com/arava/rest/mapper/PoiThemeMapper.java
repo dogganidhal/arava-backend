@@ -42,10 +42,21 @@ public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
                     null
             )
             .subThemes(object.getSubThemes().stream()
-                    .map(this::deepMap)
+                    .map(this::partialMap)
                     .collect(Collectors.toList())
             )
             .build();
   }
 
+  @Override
+  public PoiDto.PoiTheme partialMap(PoiTheme object) {
+    return PoiDto.PoiTheme.builder()
+            .id(object.getId())
+            .name(localizedResourceMapper.deepMap(object.getName()))
+            .icon(object.getIcon() != null ?
+                    mediaMapper.deepMap(object.getIcon()) :
+                    null
+            )
+            .build();
+  }
 }

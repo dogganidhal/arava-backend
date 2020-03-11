@@ -5,6 +5,7 @@ import com.arava.server.dto.LatLng;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by Nidhal Dogga
@@ -21,15 +22,17 @@ public class SearchRequest {
 
   private String title;
   private String island;
-  private String themeId;
+  private List<String> themeIds;
   private Region region;
   private SearchSort sort;
+  private Boolean sponsored;
 
   public SearchQuery searchQuery() {
     return SearchQuery.builder()
             .query(title)
-            .themeId(themeId)
+            .themeIds(themeIds)
             .islandId(island)
+            .sponsored(sponsored)
             .region(region != null ?
                     SearchQuery.Region.builder()
                             .centerLatitude(region.getCenter().getLatitude())
