@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by Nidhal Dogga
@@ -28,6 +25,7 @@ import javax.persistence.ManyToOne;
 public class LocalizedResource<T extends AbstractEntity> extends AbstractEntity {
 
   @KeywordField
+  @Column(length = 16384)
   private String resource;
 
   @ManyToOne(cascade = CascadeType.ALL)

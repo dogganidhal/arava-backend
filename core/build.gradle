@@ -30,6 +30,7 @@ dependencies {
     compile 'org.elasticsearch:elasticsearch:7.6.0'
 
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2'
+    compile "com.github.rholder:guava-retrying:1.0.6"
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"

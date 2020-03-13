@@ -1,8 +1,11 @@
 package com.arava.indexer.manager;
 
+import com.arava.business.manager.RetryPolicy;
 import com.arava.indexer.query.SearchQuery;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.repository.PoiRepository;
+import com.arava.server.exception.ApiServerException;
+import com.github.rholder.retry.RetryException;
 import org.hibernate.search.engine.search.predicate.dsl.BooleanPredicateClausesStep;
 import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
 import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
@@ -18,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Nidhal Dogga
@@ -54,12 +58,18 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
 
   @Override
   public List<Poi> searchPois(SearchQuery searchQuery) {
-    return Search
-            .session(entityManager)
-            .search(Poi.class)
-            .where(predicate -> buildPredicate(searchQuery, predicate))
-            .sort(SearchSortFactory::score)
-            .fetchAllHits();
+    try {
+      return RetryPolicy.<List<Poi>>defaultRetryer().call(() -> Search
+              .session(entityManager)
+              .search(Poi.class)
+              .where(predicate -> buildPredicate(searchQuery, predicate))
+              .sort(SearchSortFactory::score)
+              .fetchAllHits()
+      );
+    } catch (ExecutionException | RetryException e) {
+      throw ApiServerException.INTERNAL_SERVER_ERROR
+              .getThrowable();
+    }
   }
 
   @Override
