@@ -69,7 +69,7 @@ public class PoiWriteRequest {
     private String email;
     private String website;
     private String facebookUrl;
-    private String instagramUrl;
+    private String instagramAccount;
     private String openingHours;
 
   }

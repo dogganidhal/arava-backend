@@ -23,7 +23,7 @@ public class WritePoiDescriptionMapper implements Mapper<PoiWriteRequest.Details
             .email(object.getEmail())
             .website(object.getWebsite())
             .facebookUrl(object.getFacebookUrl())
-            .instagramAccount(object.getInstagramUrl())
+            .instagramAccount(object.getInstagramAccount())
             .phone(object.getPhone())
             .openingHours(object.getOpeningHours())
             .build();
