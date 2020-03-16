@@ -120,7 +120,7 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
               );
     }
 
-    if (query.getQuery() != null) {
+    if (query.getQuery() != null && !query.getQuery().isEmpty()) {
       predicate
               .should(factory.match()
                       .field("title.resource")
@@ -143,12 +143,16 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
     }
 
     if (query.getThemeIds() != null && !query.getThemeIds().isEmpty()) {
-      query.getThemeIds()
-                .forEach(themeId -> predicate.should(factory.match()
-                              .field("theme.id")
-                              .matching(themeId)
-                      )
-              );
+        predicate.must(
+                query.getThemeIds().stream()
+                        .reduce(factory.bool().minimumShouldMatchNumber(1),
+                                (predicateStep, themeId) -> predicateStep.should(factory.match()
+                                        .field("theme.id")
+                                        .matching(themeId)
+                                ),
+                                (BooleanPredicateClausesStep<?> lhs, BooleanPredicateClausesStep<?> rhs) -> rhs.should(lhs)
+                        )
+        );
     }
 
     return predicate;

@@ -24,6 +24,10 @@ spring:
           backends:
             es:
               type: elasticsearch
+              indexwriter:
+                infostream: true
+              log:
+                json_pretty_printing: true
               index_defaults:
                 lifecycle:
                   minimal_required_status: yellow
@@ -42,6 +46,10 @@ arava:
 logging:
   level:
     org:
+      hibernate:
+        search:
+          elasticsearch:
+            request: TRACE
       springframework:
         jdbc:
           core: TRACE
