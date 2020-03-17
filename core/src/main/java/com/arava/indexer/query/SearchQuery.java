@@ -1,5 +1,6 @@
 package com.arava.indexer.query;
 
+import com.arava.server.dto.LatLng;
 import lombok.*;
 import org.springframework.data.domain.Sort;
 
@@ -37,11 +38,8 @@ public class SearchQuery {
   @AllArgsConstructor
   public static class Region {
 
-    private Double centerLatitude;
-
-    private Double centerLongitude;
-
-    private Double distance;
+    private LatLng southWest;
+    private LatLng northEast;
 
   }
 

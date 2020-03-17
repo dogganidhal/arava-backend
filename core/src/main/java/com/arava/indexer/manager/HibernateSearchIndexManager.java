@@ -10,7 +10,6 @@ import org.hibernate.search.engine.search.predicate.dsl.BooleanPredicateClausesS
 import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
 import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.sort.dsl.SearchSortFactory;
-import org.hibernate.search.engine.spatial.GeoPoint;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,9 +113,12 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
               .must(factory.spatial()
                       .within()
                       .field("coordinate")
-                      .circle(GeoPoint.of(query.getRegion().getCenterLatitude(),
-                              query.getRegion().getCenterLongitude()
-                      ), query.getRegion().getDistance())
+                      .boundingBox(
+                              query.getRegion().getNorthEast().getLatitude(),
+                              query.getRegion().getSouthWest().getLongitude(),
+                              query.getRegion().getSouthWest().getLatitude(),
+                              query.getRegion().getNorthEast().getLongitude()
+                      )
               );
     }
 

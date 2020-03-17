@@ -38,9 +38,8 @@ public class SearchRequest {
             .sponsored(sponsored)
             .region(region != null ?
                     SearchQuery.Region.builder()
-                            .centerLatitude(region.getCenter().getLatitude())
-                            .centerLongitude(region.getCenter().getLongitude())
-                            .distance(region.getDistance())
+                            .southWest(region.getSouthWest())
+                            .northEast(region.getNorthEast())
                             .build() :
                     null
             )
@@ -61,10 +60,10 @@ public class SearchRequest {
   public static class Region {
 
     @NotNull
-    private LatLng center;
+    private LatLng southWest;
 
     @NotNull
-    private Double distance;
+    private LatLng northEast;
 
   }
 

@@ -56,7 +56,7 @@ public class AppController {
                     .map(archipelagoMapper::deepMap)
                     .collect(Collectors.toList())
             )
-            .themes(poiThemeRepository.findAll().stream()
+            .themes(poiThemeRepository.findAllHavingPois().stream()
                     .map(poiThemeMapper::deepMap)
                     .collect(Collectors.toList())
             )
