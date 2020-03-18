@@ -24,7 +24,10 @@ public class CommentAuthorMapper implements Mapper<User, CommentAuthorDto> {
     return CommentAuthorDto.builder()
             .id(object.getId())
             .fullName(String.format("%s %s", object.getFirstName(), object.getLastName()))
-            .avatar(mediaMapper.deepMap(object.getAvatar()))
+            .avatar(object.getAvatar() != null ?
+                    mediaMapper.deepMap(object.getAvatar()) :
+                    null
+            )
             .build();
   }
 

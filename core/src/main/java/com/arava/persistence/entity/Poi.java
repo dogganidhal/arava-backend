@@ -111,13 +111,13 @@ public class Poi extends LocalizableEntity {
 
   @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poi")
   private List<Rating> ratings;
 
   @OneToMany(cascade = CascadeType.ALL)
   private List<Media> medias;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poi")
   private List<Comment> comments;
 
   @GenericField

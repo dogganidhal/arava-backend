@@ -16,12 +16,12 @@ import java.util.Arrays;
 public class CacheManager extends SimpleCacheManager {
 
   public static final String appVersionConfigurationCache = "appVersionConfiguration";
-  public static final String allPoiTypesCache = "allPoiTypes";
+  public static final String allPoiThemesCache = "allPoiThemes";
 
   public CacheManager() {
     setCaches(Arrays.asList(
             new ConcurrentMapCache(appVersionConfigurationCache),
-            new ConcurrentMapCache(allPoiTypesCache)
+            new ConcurrentMapCache(allPoiThemesCache)
     ));
   }
 
