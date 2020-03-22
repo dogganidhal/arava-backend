@@ -2,9 +2,9 @@ package com.arava.persistence.repository;
 
 import com.arava.persistence.entity.Favorite;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Nidhal Dogga
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, String> {
 
+  @Query("SELECT f FROM Favorite f WHERE f.disabled = FALSE OR f.disabled IS NULL")
   List<Favorite> findByUserId(String userId);
-  Optional<Favorite> findByUserIdAndPoiId(String userId, String poiId);
 
 }

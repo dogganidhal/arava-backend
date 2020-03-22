@@ -59,19 +59,29 @@ public class FavoriteManagerImpl implements FavoriteManager {
             .orElseThrow(() -> new EntityNotFoundException(
                     String.format("No user with id '%s' exists", userId)
             ));
-    List<Favorite> favorites = poiIds.parallelStream()
-            .map(poiId -> favoriteRepository
-                    .findByUserIdAndPoiId(userId, poiId)
-                    .orElseGet(() -> Favorite.builder()
-                            .user(user)
-                            .poi(poiRepository
-                                    .findById(poiId)
-                                    .orElseThrow(() -> new EntityNotFoundException(
-                                            String.format("No poi with id '%s' exists", poiId)
-                                    ))
-                            )
-                            .build()
+    List<Favorite> existingFavorites = favoriteRepository
+            .findByUserId(user.getId()).stream()
+            .map(favorite -> Favorite.builder()
+                    .id(favorite.getId())
+                    .poi(favorite.getPoi())
+                    .user(favorite.getUser())
+                    .created(favorite.getCreated())
+                    .updated(favorite.getUpdated())
+                    .disabled(true)
+                    .build()
+            )
+            .collect(Collectors.toList());
+    favoriteRepository.saveAll(existingFavorites);
+    List<Favorite> favorites = poiIds.stream()
+            .map(poiId -> Favorite.builder()
+                    .user(user)
+                    .poi(poiRepository
+                            .findById(poiId)
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                    String.format("No poi with id '%s' exists", poiId)
+                            ))
                     )
+                    .build()
             )
             .collect(Collectors.toList());
     favoriteRepository.saveAll(favorites);

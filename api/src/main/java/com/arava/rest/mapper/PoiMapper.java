@@ -47,7 +47,6 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             .details(poiDetailsMapper.deepMap(object.getDetails()))
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())
-            .draft(object.getDraft())
             .island(object.getIsland().getName())
             .theme(themeMapper.deepMap(object.getTheme()))
             .mainImage(object.getMainImage() != null ?

@@ -2,8 +2,11 @@ package com.arava.rest.controller;
 
 import com.arava.persistence.entity.Archipelago;
 import com.arava.persistence.entity.Island;
+import com.arava.persistence.entity.Poi;
 import com.arava.persistence.repository.ArchipelagoRepository;
 import com.arava.persistence.repository.IslandRepository;
+import com.arava.persistence.repository.PoiRepository;
+import com.arava.rest.dto.PoiDto;
 import com.arava.server.dto.ArchipelagoDto;
 import com.arava.server.dto.IslandDto;
 import com.arava.server.exception.ApiClientException;
@@ -33,10 +36,16 @@ public class IslandController {
   private ArchipelagoRepository archipelagoRepository;
 
   @Autowired
+  private PoiRepository poiRepository;
+
+  @Autowired
   private Mapper<Island, IslandDto> islandMapper;
 
   @Autowired
   private Mapper<Archipelago, ArchipelagoDto> archipelagoMapper;
+
+  @Autowired
+  private Mapper<Poi, PoiDto> poiMapper;
 
   //region Island inspection
 
@@ -53,6 +62,13 @@ public class IslandController {
             .findById(islandId)
             .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable)
     );
+  }
+
+  @GetMapping("/island/{islandId}/sponsored")
+  public List<PoiDto> getSponsoredInIsland(@PathVariable("islandId") String islandId) {
+    return poiRepository.findByIslandIdAndSponsored(islandId, true).stream()
+            .map(poiMapper::deepMap)
+            .collect(Collectors.toList());
   }
 
   //endregion
