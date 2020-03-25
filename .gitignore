@@ -4,6 +4,7 @@ build/
 !**/src/main/**
 !**/src/test/**
 logs
+scripts/copy_staging_db.sh
 
 ### STS ###
 .apt_generated

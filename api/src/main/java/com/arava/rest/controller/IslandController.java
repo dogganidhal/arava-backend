@@ -66,7 +66,7 @@ public class IslandController {
 
   @GetMapping("/island/{islandId}/sponsored")
   public List<PoiDto> getSponsoredInIsland(@PathVariable("islandId") String islandId) {
-    return poiRepository.findByIslandIdAndSponsored(islandId, true).stream()
+    return poiRepository.findSponsoredInIsland(islandId).stream()
             .map(poiMapper::deepMap)
             .collect(Collectors.toList());
   }

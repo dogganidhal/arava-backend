@@ -18,7 +18,12 @@ public interface PoiRepository extends JpaRepository<Poi, String> {
   @Query("SELECT p FROM Poi p WHERE p.disabled = false OR p.disabled IS NULL")
   List<Poi> findAll();
 
-  @Query
-  List<Poi> findByIslandIdAndSponsored(String islandId, Boolean sponsored);
+  @Query("SELECT p FROM Poi p " +
+          "WHERE p.disabled = FALSE " +
+          "AND p.draft = FALSE " +
+          "AND p.sponsored = TRUE " +
+          "AND p.island.id = ?1"
+  )
+  List<Poi> findSponsoredInIsland(String islandId);
 
 }

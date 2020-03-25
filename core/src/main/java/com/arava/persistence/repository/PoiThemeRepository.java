@@ -18,7 +18,7 @@ public interface PoiThemeRepository extends JpaRepository<PoiTheme, String> {
   @Query("SELECT t FROM PoiTheme t WHERE t.disabled = FALSE OR t.disabled IS NULL")
   List<PoiTheme> findAll();
 
-  @Query("SELECT DISTINCT t FROM PoiTheme t JOIN Poi p ON p.theme.id = t.id")
+  @Query("SELECT DISTINCT t FROM PoiTheme t JOIN Poi p ON p.theme.id = t.id WHERE p.draft = FALSE")
   List<PoiTheme> findAllHavingPois();
 
 }
