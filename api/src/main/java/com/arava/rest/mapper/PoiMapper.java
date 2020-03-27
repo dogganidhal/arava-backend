@@ -1,8 +1,12 @@
 package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.*;
+import com.arava.rest.dto.CommentDto;
 import com.arava.rest.dto.PoiDto;
-import com.arava.server.dto.*;
+import com.arava.server.dto.LatLng;
+import com.arava.server.dto.MediaDto;
+import com.arava.server.dto.PoiDetailsDto;
+import com.arava.server.dto.RatingsDto;
 import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,6 +63,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     .build()
             )
             .comments(object.getComments().stream()
+                    .filter(comment -> CommentStatus.APPROVED.equals(comment.getStatus()))
                     .map(commentMapper::deepMap)
                     .collect(Collectors.toList())
             )

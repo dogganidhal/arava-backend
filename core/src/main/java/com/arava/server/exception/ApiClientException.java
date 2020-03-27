@@ -135,6 +135,22 @@ public enum ApiClientException implements ApiException {
       return ErrorCode.POI_NOT_FOUND;
     }
   },
+  COMMENT_NOT_FOUND {
+    @Override
+    public HttpStatus getStatus() {
+      return HttpStatus.NOT_FOUND;
+    }
+
+    @Override
+    public String getMessage() {
+      return "No entity with specified id was found";
+    }
+
+    @Override
+    public ErrorCode getErrorCode() {
+      return ErrorCode.COMMENT_NOT_FOUND;
+    }
+  },
   THEME_NOT_FOUND {
     @Override
     public HttpStatus getStatus() {

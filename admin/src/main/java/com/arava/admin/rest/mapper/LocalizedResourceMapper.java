@@ -15,13 +15,13 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class LocalizedResourceMapper implements Mapper<LocalizedResource, LocalizedResourceDto> {
+public class LocalizedResourceMapper implements Mapper<LocalizedResource<?>, LocalizedResourceDto> {
 
   @Autowired
   private Mapper<Language, LanguageDto> languageMapper;
 
   @Override
-  public LocalizedResourceDto deepMap(LocalizedResource object) {
+  public LocalizedResourceDto deepMap(LocalizedResource<?> object) {
     return LocalizedResourceDto.builder()
             .resource(object.getResource())
             .language(languageMapper.deepMap(object.getLanguage()))

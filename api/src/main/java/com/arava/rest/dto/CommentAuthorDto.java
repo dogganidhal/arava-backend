@@ -1,5 +1,6 @@
-package com.arava.server.dto;
+package com.arava.rest.dto;
 
+import com.arava.server.dto.MediaDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,10 +1,7 @@
 package com.arava.business.manager.impl;
 
 import com.arava.business.manager.ContentManager;
-import com.arava.persistence.entity.Comment;
-import com.arava.persistence.entity.Poi;
-import com.arava.persistence.entity.Rating;
-import com.arava.persistence.entity.User;
+import com.arava.persistence.entity.*;
 import com.arava.persistence.repository.CommentRepository;
 import com.arava.persistence.repository.PoiRepository;
 import com.arava.persistence.repository.RatingRepository;
@@ -48,6 +45,26 @@ public class ContentManagerImpl implements ContentManager {
             .build();
     commentRepository.save(comment);
     ratingRepository.save(rating);
+  }
+
+  @Override
+  public void approveComment(String commentId) {
+    Comment comment = commentRepository
+            .findById(commentId)
+            .orElseThrow(ApiClientException.COMMENT_NOT_FOUND::getThrowable);
+    comment.setStatus(CommentStatus.APPROVED);
+    commentRepository.save(comment);
+    // TODO: Insert any logic after approving the comment, ex : notify the user
+  }
+
+  @Override
+  public void declineComment(String commentId) {
+    Comment comment = commentRepository
+            .findById(commentId)
+            .orElseThrow(ApiClientException.COMMENT_NOT_FOUND::getThrowable);
+    comment.setStatus(CommentStatus.DECLINED);
+    commentRepository.save(comment);
+    // TODO: Insert any logic after refusing the comment, ex : notify the user
   }
 
 }

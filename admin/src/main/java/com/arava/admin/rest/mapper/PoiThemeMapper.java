@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
 
   @Autowired
-  private Mapper<LocalizedResource, LocalizedResourceDto> localizedResourceMapper;
+  private Mapper<LocalizedResource<?>, LocalizedResourceDto> localizedResourceMapper;
 
   @Autowired
   private Mapper<Media, MediaDto> mediaMapper;

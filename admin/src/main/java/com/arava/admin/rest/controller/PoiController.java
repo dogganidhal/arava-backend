@@ -1,7 +1,9 @@
 package com.arava.admin.rest.controller;
 
+import com.arava.admin.rest.dto.CommentDto;
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.admin.rest.manager.PoiManager;
+import com.arava.persistence.entity.Comment;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiTheme;
 import com.arava.persistence.repository.PoiRepository;

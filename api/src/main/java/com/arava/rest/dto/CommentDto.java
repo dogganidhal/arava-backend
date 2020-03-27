@@ -1,4 +1,4 @@
-package com.arava.server.dto;
+package com.arava.rest.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;

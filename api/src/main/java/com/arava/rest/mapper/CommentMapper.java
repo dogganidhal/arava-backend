@@ -1,9 +1,10 @@
-package com.arava.server.mapper;
+package com.arava.rest.mapper;
 
 import com.arava.persistence.entity.Comment;
 import com.arava.persistence.entity.User;
-import com.arava.server.dto.CommentAuthorDto;
-import com.arava.server.dto.CommentDto;
+import com.arava.rest.dto.CommentDto;
+import com.arava.rest.dto.CommentAuthorDto;
+import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

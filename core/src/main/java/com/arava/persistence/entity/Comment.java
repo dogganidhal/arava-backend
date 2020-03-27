@@ -1,13 +1,9 @@
 package com.arava.persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 /**
  * Created by Nidhal Dogga
@@ -30,7 +26,12 @@ public class Comment extends AbstractEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private Poi poi;
 
-  @Column
+  @Column(length = 16384)
   private String content;
+
+  @Column
+  @Builder.Default
+  @Enumerated(EnumType.STRING)
+  private CommentStatus status = CommentStatus.UNKNOWN;
 
 }
