@@ -34,6 +34,7 @@ public class PoiDto {
   private MediaDto mainImage;
   private List<MediaDto> medias;
   private List<CommentDto> comments;
+  private UserDto owner;
   private RatingsDto ratings;
 
   @Data

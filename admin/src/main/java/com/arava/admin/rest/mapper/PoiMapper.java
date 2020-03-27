@@ -2,6 +2,7 @@ package com.arava.admin.rest.mapper;
 
 import com.arava.admin.rest.dto.LocalizedResourceDto;
 import com.arava.admin.rest.dto.PoiDto;
+import com.arava.admin.rest.dto.UserDto;
 import com.arava.persistence.entity.*;
 import com.arava.server.dto.*;
 import com.arava.server.mapper.Mapper;
@@ -41,6 +42,9 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
   @Autowired
   private Mapper<PoiDetails, PoiDetailsDto> poiDetailsMapper;
 
+  @Autowired
+  private Mapper<User, UserDto> userMapper;
+
   @Override
   public PoiDto deepMap(Poi object) {
     return PoiDto.builder()
@@ -48,6 +52,10 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             .title(object.getTitle().stream()
                     .map(localizedResourceMapper::deepMap)
                     .collect(Collectors.toList())
+            )
+            .owner(object.getOwner() != null ?
+                    userMapper.deepMap(object.getOwner()) :
+                    null
             )
             .description(object.getDescription().stream()
                     .map(localizedResourceMapper::deepMap)

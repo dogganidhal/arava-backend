@@ -14,17 +14,14 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
+  @Override
+  @Query("SELECT u FROM User u WHERE u.disabled = FALSE OR u.disabled IS NULL")
+  List<User> findAll();
+
   @Query("SELECT u FROM User u WHERE u.email = ?1")
   User findByEmail(String email);
 
   @Query("SELECT count(u) > 0 FROM User u WHERE u.email = ?1")
   Boolean existsByEmail(String email);
-
-  @Query("SELECT u FROM User u " +
-          "WHERE LOWER(u.firstName) LIKE %?1% " +
-          "OR LOWER(u.lastName) LIKE %?1% " +
-          "OR LOWER(u.email) LIKE %?1%"
-  )
-  List<User> queryUsers(String query);
 
 }
