@@ -1,20 +1,23 @@
 package com.arava.admin.rest.controller;
 
 import com.arava.admin.rest.dto.PoiDto;
+import com.arava.admin.rest.manager.PoiManager;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiTheme;
 import com.arava.persistence.repository.PoiRepository;
 import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.server.annotation.Admin;
+import com.arava.server.annotation.Authenticated;
 import com.arava.server.dto.request.PoiThemeWriteRequest;
 import com.arava.server.dto.request.PoiWriteRequest;
 import com.arava.server.exception.ApiClientException;
+import com.arava.server.jwt.UserPrincipal;
 import com.arava.server.mapper.Mapper;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,6 +51,9 @@ public class PoiController {
   @Autowired
   private Mapper<PoiTheme, PoiDto.PoiTheme> poiThemeMapper;
 
+  @Autowired
+  private PoiManager poiManager;
+
   //region Poi CRUD operations
   
   @Admin
@@ -59,18 +65,13 @@ public class PoiController {
     return poiMapper.deepMap(poi);
   }
 
-  @Admin
+  @Authenticated
   @SneakyThrows
   @GetMapping
-  public List<PoiDto> listPois() {
-    try {
-      return poiRepository.findAll().stream()
-              .map(poiMapper::deepMap)
-              .collect(Collectors.toList());
-    } catch (EntityNotFoundException e) {
-      throw ApiClientException.POI_NOT_FOUND
-              .getThrowable();
-    }
+  public List<PoiDto> listPois(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+    return poiManager.listPois(userPrincipal).stream()
+            .map(poiMapper::deepMap)
+            .collect(Collectors.toList());
   }
 
   @Admin
@@ -79,10 +80,12 @@ public class PoiController {
     poiRepository.save(writePoiMapper.deepMap(request));
   }
 
-  @Admin
+  @Authenticated
   @PutMapping
-  public void updatePoi(@Valid @RequestBody PoiWriteRequest request) {
-    poiRepository.save(writePoiMapper.deepMap(request));
+  public void updatePoi(
+          @AuthenticationPrincipal UserPrincipal userPrincipal,
+          @Valid @RequestBody PoiWriteRequest request) {
+    poiManager.editPoi(userPrincipal, request);
   }
 
   @Admin

@@ -22,5 +22,6 @@ public class JwtAuthenticationResponse {
   private String tokenType;
   private String refreshToken;
   private Long expiresIn;
+  private Boolean isAdmin;
 
 }

@@ -6,6 +6,7 @@ import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiDetails;
 import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiThemeRepository;
+import com.arava.persistence.repository.UserRepository;
 import com.arava.server.dto.request.MediaWriteRequest;
 import com.arava.server.dto.request.PoiWriteRequest;
 import com.arava.server.exception.ApiClientException;
@@ -35,6 +36,9 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
   private PoiThemeRepository poiThemeRepository;
 
   @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
   private ReverseMapper<List<LocalizedResource<Poi>>, Map<String, String>> localizedResourceReverseMapper;
 
   @Autowired
@@ -49,6 +53,10 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .id(object.getId())
             .latitude(object.getLatitude())
             .longitude(object.getLongitude())
+            .owner(userRepository
+                    .findById(object.getOwnerId())
+                    .orElseThrow(ApiClientException.USER_NOT_FOUND::getThrowable)
+            )
             .island(islandRepository
                     .findById(object.getIslandId())
                     .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable)

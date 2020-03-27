@@ -106,6 +106,9 @@ public class Poi extends LocalizableEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private PoiTheme theme;
 
+  @ManyToOne(cascade = CascadeType.ALL)
+  private User owner;
+
   @OneToOne(cascade = CascadeType.ALL)
   private Media mainImage;
 

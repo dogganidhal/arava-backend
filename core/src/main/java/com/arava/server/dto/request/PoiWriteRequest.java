@@ -45,17 +45,16 @@ public class PoiWriteRequest {
   @NotNull
   private String islandId;
 
-  @Builder.Default
-  private Boolean sponsored = false;
-
-  @Builder.Default
-  private Boolean featured = false;
+  private Boolean sponsored;
+  private Boolean featured;
 
   @Builder.Default
   private Boolean draft = true;
 
   @NotNull
   private String themeId;
+
+  private String ownerId;
 
   @Data
   @Builder

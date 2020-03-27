@@ -104,13 +104,7 @@ public class AuthController {
   @SneakyThrows
   @PostMapping("/refresh")
   public JwtAuthenticationResponse refresh(@Valid @RequestBody RefreshAuthRequest request) {
-    String jwt = tokenProvider.refresh(request.getRefreshToken());
-    return JwtAuthenticationResponse.builder()
-            .accessToken(jwt)
-            .tokenType(tokenType)
-            .expiresIn(jwtExpiration)
-            .refreshToken(request.getRefreshToken())
-            .build();
+    return tokenProvider.refresh(request.getRefreshToken());
   }
 
   private JwtAuthenticationResponse authenticate(String email, String password) {

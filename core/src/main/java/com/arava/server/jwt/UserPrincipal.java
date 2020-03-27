@@ -63,4 +63,10 @@ public class UserPrincipal implements UserDetails {
     return true;
   }
 
+  public boolean isAdmin() {
+    return getAuthorities()
+            .stream()
+            .anyMatch(a -> a.getAuthority().toLowerCase().contains("admin"));
+  }
+
 }

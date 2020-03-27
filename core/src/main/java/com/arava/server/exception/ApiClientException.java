@@ -71,6 +71,22 @@ public enum ApiClientException implements ApiException {
       return ErrorCode.AUTH_USER_EXISTS;
     }
   },
+  USER_NOT_FOUND {
+    @Override
+    public HttpStatus getStatus() {
+      return HttpStatus.NOT_FOUND;
+    }
+
+    @Override
+    public String getMessage() {
+      return "User not found";
+    }
+
+    @Override
+    public ErrorCode getErrorCode() {
+      return ErrorCode.POI_USER_NOT_FOUND;
+    }
+  },
   ISLAND_NOT_FOUND {
     @Override
     public HttpStatus getStatus() {

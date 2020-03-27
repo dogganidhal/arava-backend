@@ -2,6 +2,7 @@ package com.arava.server.jwt;
 
 import com.arava.persistence.entity.RefreshToken;
 import com.arava.persistence.repository.RefreshTokenRepository;
+import com.arava.server.dto.response.JwtAuthenticationResponse;
 import com.arava.server.exception.ApiClientException;
 import com.arava.server.exception.ApiThrowable;
 import io.jsonwebtoken.*;
@@ -27,8 +28,11 @@ public class JwtTokenProvider {
   @Value("${jwt.secret}")
   private String jwtSecret;
 
+  @Value("${jwt.token-type}")
+  private String tokenType;
+
   @Value("${jwt.expiration}")
-  private int jwtExpiration;
+  private Long jwtExpiration;
 
   @Autowired
   private RefreshTokenRepository refreshTokenRepository;
@@ -49,13 +53,21 @@ public class JwtTokenProvider {
     return claims.getSubject();
   }
 
-  public String refresh(String refreshToken) throws ApiThrowable {
+  public JwtAuthenticationResponse refresh(String refreshToken) throws ApiThrowable {
     Optional<RefreshToken> token = refreshTokenRepository.findById(refreshToken);
     if (!token.isPresent()) {
       throw ApiClientException.MISSING_CREDENTIALS
               .getThrowable();
     }
-    return generateForUser(token.get().getUser().getEmail());
+    return JwtAuthenticationResponse.builder()
+            .accessToken(generateForUser(token.get().getUser().getEmail()))
+            .tokenType(tokenType)
+            .expiresIn(jwtExpiration)
+            .refreshToken(refreshToken)
+            .isAdmin(token.get().getUser().getRoles().stream()
+                    .anyMatch(role -> role.getName().toLowerCase().contains("admin"))
+            )
+            .build();
   }
 
   public boolean validateToken(String authToken) {

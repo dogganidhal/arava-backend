@@ -62,13 +62,7 @@ public class AuthController {
   @SneakyThrows
   @PostMapping("/refresh")
   public JwtAuthenticationResponse refresh(@Valid @RequestBody RefreshAuthRequest request) {
-    String jwt = tokenProvider.refresh(request.getRefreshToken());
-    return JwtAuthenticationResponse.builder()
-            .accessToken(jwt)
-            .tokenType(tokenType)
-            .expiresIn(jwtExpiration)
-            .refreshToken(request.getRefreshToken())
-            .build();
+    return tokenProvider.refresh(request.getRefreshToken());
   }
 
   private JwtAuthenticationResponse authenticate(String email, String password) {
@@ -78,11 +72,6 @@ public class AuthController {
 
     boolean hasAdminAuthority = authentication.getAuthorities().stream()
             .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
-
-    if (!hasAdminAuthority) {
-      throw ApiClientException.UNAUTHORIZED
-              .getThrowable();
-    }
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -96,6 +85,7 @@ public class AuthController {
             .tokenType(tokenType)
             .expiresIn(jwtExpiration)
             .refreshToken(refreshToken)
+            .isAdmin(hasAdminAuthority)
             .build();
   }
 
