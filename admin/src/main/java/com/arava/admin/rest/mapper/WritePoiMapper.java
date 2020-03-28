@@ -53,17 +53,23 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .id(object.getId())
             .latitude(object.getLatitude())
             .longitude(object.getLongitude())
-            .owner(userRepository
-                    .findById(object.getOwnerId())
-                    .orElseThrow(ApiClientException.USER_NOT_FOUND::getThrowable)
+            .owner(object.getOwnerId() != null ?
+                    userRepository
+                            .findById(object.getOwnerId())
+                            .orElseThrow(ApiClientException.USER_NOT_FOUND::getThrowable) :
+                    null
             )
-            .island(islandRepository
-                    .findById(object.getIslandId())
-                    .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable)
+            .island(object.getIslandId() != null ?
+                    islandRepository
+                            .findById(object.getIslandId())
+                            .orElseThrow(ApiClientException.ISLAND_NOT_FOUND::getThrowable) :
+                    null
             )
-            .theme(poiThemeRepository
-                    .findById(object.getThemeId())
-                    .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable)
+            .theme(object.getThemeId() != null ?
+                    poiThemeRepository
+                            .findById(object.getThemeId())
+                            .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable):
+                    null
             )
             .mainImage(object.getMainImage() != null ?
                     mediaMapper.deepMap(object.getMainImage()) :

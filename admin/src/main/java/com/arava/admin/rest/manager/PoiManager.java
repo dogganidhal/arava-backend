@@ -13,8 +13,9 @@ import java.util.List;
  */
 
 public interface PoiManager {
-
+  Poi getById(UserPrincipal userPrincipal, String id);
+  void toggleDraft(UserPrincipal userPrincipal, String id);
   List<Poi> listPois(UserPrincipal userPrincipal);
   void editPoi(UserPrincipal userPrincipal, PoiWriteRequest request);
-
+  void deletePoi(UserPrincipal userPrincipal, String id);
 }

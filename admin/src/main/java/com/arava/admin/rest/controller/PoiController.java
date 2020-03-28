@@ -1,9 +1,7 @@
 package com.arava.admin.rest.controller;
 
-import com.arava.admin.rest.dto.CommentDto;
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.admin.rest.manager.PoiManager;
-import com.arava.persistence.entity.Comment;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiTheme;
 import com.arava.persistence.repository.PoiRepository;
@@ -58,12 +56,12 @@ public class PoiController {
 
   //region Poi CRUD operations
   
-  @Admin
+  @Authenticated
   @GetMapping("/{poiId}")
-  public PoiDto getPoi(@PathVariable("poiId") String poiId) {
-    Poi poi = poiRepository
-            .findById(poiId)
-            .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable);
+  public PoiDto getPoi(
+          @AuthenticationPrincipal UserPrincipal userPrincipal,
+          @PathVariable("poiId") String poiId) {
+    Poi poi = poiManager.getById(userPrincipal, poiId);
     return poiMapper.deepMap(poi);
   }
 
@@ -90,25 +88,21 @@ public class PoiController {
     poiManager.editPoi(userPrincipal, request);
   }
 
-  @Admin
+  @Authenticated
   @SneakyThrows
   @DeleteMapping("/{poiId}")
-  public void deletePoi(@PathVariable("poiId") String poiId) {
-    Poi poi = poiRepository
-            .findById(poiId)
-            .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable);
-    poi.setDisabled(true);
-    poiRepository.save(poi);
+  public void deletePoi(
+          @AuthenticationPrincipal UserPrincipal userPrincipal,
+          @PathVariable("poiId") String poiId) {
+    poiManager.deletePoi(userPrincipal, poiId);
   }
 
-  @Admin
+  @Authenticated
   @PostMapping("/{poiId}/toggle-draft")
-  public void toggleDraft(@PathVariable("poiId") String poiId) {
-    Poi poi = poiRepository
-            .findById(poiId)
-            .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable);
-    poi.setDraft(!poi.getDraft());
-    poiRepository.save(poi);
+  public void toggleDraft(
+          @AuthenticationPrincipal UserPrincipal userPrincipal,
+          @PathVariable("poiId") String poiId) {
+    poiManager.toggleDraft(userPrincipal, poiId);
   }
 
   //endregion

@@ -42,8 +42,9 @@ public class PoiWriteRequest {
   @NotNull
   private List<MediaWriteRequest> medias;
 
-  @NotNull
   private String islandId;
+  private String themeId;
+  private String ownerId;
 
   private Boolean sponsored;
   private Boolean featured;
@@ -51,10 +52,6 @@ public class PoiWriteRequest {
   @Builder.Default
   private Boolean draft = true;
 
-  @NotNull
-  private String themeId;
-
-  private String ownerId;
 
   @Data
   @Builder
