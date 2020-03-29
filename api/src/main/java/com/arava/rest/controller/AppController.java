@@ -5,6 +5,7 @@ import com.arava.persistence.entity.Archipelago;
 import com.arava.persistence.entity.PoiTheme;
 import com.arava.persistence.repository.AppVersionConfigurationRepository;
 import com.arava.persistence.repository.ArchipelagoRepository;
+import com.arava.persistence.repository.IslandRepository;
 import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.rest.dto.AppConfigurationDto;
 import com.arava.rest.dto.PoiDto;
@@ -35,6 +36,9 @@ public class AppController {
   private PoiThemeRepository poiThemeRepository;
 
   @Autowired
+  private IslandRepository islandRepository;
+
+  @Autowired
   private AppVersionConfigurationRepository appVersionConfigurationRepository;
 
   @Autowired
@@ -53,6 +57,19 @@ public class AppController {
                     appVersionConfigurationRepository.getLatestRevision()
             ))
             .archipelagos(archipelagoRepository.findAll().stream()
+                    .map(archipelago -> Archipelago.builder()
+                            .id(archipelago.getId())
+                            .name(archipelago.getName())
+                            .created(archipelago.getCreated())
+                            .disabled(archipelago.getDisabled())
+                            .updated(archipelago.getUpdated())
+                            .islands(archipelago.getIslands().stream()
+                                    .filter(island -> islandRepository.countActivePois(island.getId()) > 0)
+                                    .collect(Collectors.toList())
+                            )
+                            .build()
+                    )
+                    .filter(archipelago -> !archipelago.getIslands().isEmpty())
                     .map(archipelagoMapper::deepMap)
                     .collect(Collectors.toList())
             )
