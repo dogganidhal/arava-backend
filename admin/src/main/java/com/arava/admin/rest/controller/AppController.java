@@ -34,7 +34,8 @@ public class AppController {
   @Admin
   @PutMapping("/version")
   public void updateVersionConfiguration(@Valid @RequestBody AppVersionConfigurationDto request) {
-    AppVersionConfiguration versionConfiguration = appVersionConfigurationReverseMapper.reverseMap(request);
+    AppVersionConfiguration versionConfiguration = appVersionConfigurationReverseMapper
+            .reverseMap(request);
     appVersionConfigurationRepository.save(versionConfiguration);
   }
 

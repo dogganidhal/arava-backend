@@ -100,7 +100,7 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
                     .matching(false)
             );
 
-    if (query.isEmpty() || query.isSponsored()) {
+    if (query.isSponsored() && (query.getThemeIds() == null || query.getThemeIds().isEmpty())) {
       predicate
               .must(factory.match()
                       .field("sponsored")
@@ -145,16 +145,21 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
     }
 
     if (query.getThemeIds() != null && !query.getThemeIds().isEmpty()) {
-        predicate.must(
-                query.getThemeIds().stream()
-                        .reduce(factory.bool().minimumShouldMatchNumber(1),
-                                (predicateStep, themeId) -> predicateStep.should(factory.match()
-                                        .field("theme.id")
-                                        .matching(themeId)
-                                ),
-                                (BooleanPredicateClausesStep<?> lhs, BooleanPredicateClausesStep<?> rhs) -> rhs.should(lhs)
-                        )
+      BooleanPredicateClausesStep<?> themesPredicate = query.getThemeIds().stream()
+              .reduce(factory.bool().minimumShouldMatchNumber(0),
+                      (predicateStep, themeId) -> predicateStep.should(factory.match()
+                              .field("theme.id")
+                              .matching(themeId)
+                      ),
+                      (BooleanPredicateClausesStep<?> lhs, BooleanPredicateClausesStep<?> rhs) -> rhs.should(lhs)
+              );
+      if (query.isSponsored()) {
+        themesPredicate.should(factory.match()
+                .field("sponsored")
+                .matching(true)
         );
+      }
+      predicate.must(themesPredicate);
     }
 
     return predicate;

@@ -28,10 +28,6 @@ public class SearchQuery {
   @Builder.Default
   private boolean sponsored = false;
 
-  public boolean isEmpty() {
-    return query == null && region == null && islandId == null && (themeIds == null || themeIds.isEmpty());
-  }
-
   @Data
   @Builder
   @NoArgsConstructor
