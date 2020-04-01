@@ -50,6 +50,14 @@ public class WritePoiThemeMapper implements Mapper<PoiThemeWriteRequest, PoiThem
                             .collect(Collectors.toList()) :
                     null
             )
+            .marker(object.getMarker() != null ?
+                    mediaMapper.deepMap(object.getMarker()) :
+                    null
+            )
+            .sponsoredMarker(object.getSponsoredMarker() != null ?
+                    mediaMapper.deepMap(object.getSponsoredMarker()) :
+                    null
+            )
             .icon(mediaMapper.deepMap(object.getIcon()))
             .name(localizedResourceReverseMapper.reverseMap(object.getName()))
             .build();

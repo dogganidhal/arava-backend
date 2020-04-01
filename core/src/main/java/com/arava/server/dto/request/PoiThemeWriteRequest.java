@@ -28,6 +28,8 @@ public class PoiThemeWriteRequest {
   private Map<String, String> name;
   @NotNull
   private MediaWriteRequest icon;
+  private MediaWriteRequest marker;
+  private MediaWriteRequest sponsoredMarker;
   private List<PoiThemeWriteRequest> subThemes;
 
 }

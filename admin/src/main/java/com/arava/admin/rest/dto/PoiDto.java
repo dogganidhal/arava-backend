@@ -46,6 +46,8 @@ public class PoiDto {
     private String id;
     private List<LocalizedResourceDto> name;
     private MediaDto icon;
+    private MediaDto marker;
+    private MediaDto sponsoredMarker;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private PoiTheme parent;
     private List<PoiTheme> subThemes;

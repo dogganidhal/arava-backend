@@ -56,6 +56,12 @@ public class PoiTheme extends LocalizableEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private Media icon;
 
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Media marker;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Media sponsoredMarker;
+
   @AssociationInverseSide(inversePath = @ObjectPath(
           @PropertyValue(propertyName = "subThemes")
   ))
