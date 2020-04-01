@@ -35,7 +35,7 @@ public class SearchRequest {
             .query(title)
             .themeIds(themeIds)
             .islandId(island)
-            .sponsored(sponsored)
+            .featured(sponsored)
             .region(region != null ?
                     SearchQuery.Region.builder()
                             .southWest(region.getSouthWest())

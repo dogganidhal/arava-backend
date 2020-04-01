@@ -71,6 +71,13 @@ public class IslandController {
             .collect(Collectors.toList());
   }
 
+  @GetMapping("/island/{islandId}/activities")
+  public List<PoiDto> getActivitiesInIsland(@PathVariable("islandId") String islandId) {
+    return poiRepository.findActivitiesInIsland(islandId).stream()
+            .map(poiMapper::deepMap)
+            .collect(Collectors.toList());
+  }
+
   //endregion
 
   // region Archipelago inspection

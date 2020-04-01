@@ -45,30 +45,41 @@ public class Poi extends LocalizableEntity {
 
   @Column
   @GenericField
-  @Builder.Default
+  @Getter
   @ColumnDefault(value = "FALSE")
-  private Boolean disabled = false;
+  @Builder.Default
+  private boolean disabled = false;
 
   /**
-   * Premium poi (paid subscription)
-   */
-
-
-  @Column
-  @GenericField
-  @Builder.Default
-  @ColumnDefault(value = "FALSE")
-  private Boolean sponsored = false;
-
-  /**
-   * Poi to be displayed in photos tab
+   * "À la une" poi (paid subscription level 1)
    */
 
   @Column
-  @GenericField
-  @Builder.Default
+  @Getter
   @ColumnDefault(value = "FALSE")
-  private Boolean featured = false;
+  @Builder.Default
+  private boolean sponsored = false;
+
+  /**
+   * "Activité" poi (paid subscription level 2)
+   */
+
+  @Column
+  @Getter
+  @ColumnDefault(value = "FALSE")
+  @Builder.Default
+  private boolean activity = false;
+
+  /**
+   * Poi marked "choses à faire"
+   */
+
+  @Column
+  @GenericField
+  @Getter
+  @ColumnDefault(value = "FALSE")
+  @Builder.Default
+  private boolean featured = false;
 
   /**
    * Whether the poi is in draft or published state
@@ -76,9 +87,10 @@ public class Poi extends LocalizableEntity {
 
   @Column
   @GenericField
-  @Builder.Default
+  @Getter
   @ColumnDefault(value = "TRUE")
-  private Boolean draft = true;
+  @Builder.Default
+  private boolean draft = true;
 
   @AssociationInverseSide(inversePath = @ObjectPath(
           @PropertyValue(propertyName = "poi")

@@ -32,6 +32,7 @@ public class PoiDto {
   private String island;
   private Boolean sponsored;
   private Boolean featured;
+  private Boolean activity;
   private MediaDto mainImage;
   private List<MediaDto> medias;
   private List<CommentDto> comments;

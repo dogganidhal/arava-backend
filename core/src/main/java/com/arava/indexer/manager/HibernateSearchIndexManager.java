@@ -100,10 +100,10 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
                     .matching(false)
             );
 
-    if (query.isSponsored() && (query.getThemeIds() == null || query.getThemeIds().isEmpty())) {
+    if (query.isFeatured() && (query.getThemeIds() == null || query.getThemeIds().isEmpty())) {
       predicate
               .must(factory.match()
-                      .field("sponsored")
+                      .field("featured")
                       .matching(true)
               );
     }
@@ -153,7 +153,7 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
                       ),
                       (BooleanPredicateClausesStep<?> lhs, BooleanPredicateClausesStep<?> rhs) -> rhs.should(lhs)
               );
-      if (query.isSponsored()) {
+      if (query.isFeatured()) {
         themesPredicate.should(factory.match()
                 .field("sponsored")
                 .matching(true)

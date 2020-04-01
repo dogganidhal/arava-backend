@@ -50,7 +50,7 @@ public class PoiManagerImpl implements PoiManager {
 
     assertAuthorized(userPrincipal, poi);
 
-    poi.setDraft(!poi.getDraft());
+    poi.setDraft(!poi.isDraft());
     poiRepository.save(poi);
   }
 

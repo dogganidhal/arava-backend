@@ -82,5 +82,4 @@ public class PoiController {
     contentManager.addComment(poiId, user, request);
   }
 
-
 }

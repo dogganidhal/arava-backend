@@ -26,7 +26,7 @@ public class SearchQuery {
   private QuerySort sort;
   @Getter
   @Builder.Default
-  private boolean sponsored = false;
+  private boolean featured = false;
 
   @Data
   @Builder

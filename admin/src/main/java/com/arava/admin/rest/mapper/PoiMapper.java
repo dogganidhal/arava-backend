@@ -77,15 +77,16 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     .longitude(object.getLongitude())
                     .build()
             )
-            .draft(object.getDraft())
-            .featured(object.getFeatured())
+            .draft(object.isDraft())
+            .featured(object.isFeatured())
             .island(islandMapper.deepMap(object.getIsland()))
             .medias(object.getMedias().stream()
                     .map(mediaMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .ratings(ratingsMapper.deepMap(object.getRatings()))
-            .sponsored(object.getSponsored())
+            .sponsored(object.isSponsored())
+            .activity(object.isActivity())
             .build();
   }
 
@@ -116,15 +117,16 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     .longitude(object.getLongitude())
                     .build()
             )
-            .draft(object.getDraft())
-            .featured(object.getFeatured())
+            .draft(object.isDraft())
+            .featured(object.isFeatured())
             .island(islandMapper.deepMap(object.getIsland()))
             .medias(object.getMedias().stream()
                     .map(mediaMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .ratings(ratingsMapper.deepMap(object.getRatings()))
-            .sponsored(object.getSponsored())
+            .sponsored(object.isSponsored())
+            .activity(object.isActivity())
             .build();
   }
 

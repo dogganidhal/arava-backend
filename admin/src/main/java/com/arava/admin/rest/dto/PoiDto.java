@@ -30,6 +30,7 @@ public class PoiDto {
   private IslandDto island;
   private Boolean sponsored;
   private Boolean featured;
+  private Boolean activity;
   private Boolean draft;
   private MediaDto mainImage;
   private List<MediaDto> medias;
