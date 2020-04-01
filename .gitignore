@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 build/
+*bin/
 !**/src/main/**
 !**/src/test/**
 logs
