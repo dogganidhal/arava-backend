@@ -15,7 +15,7 @@ import java.util.List;
 public interface PoiThemeRepository extends JpaRepository<PoiTheme, String> {
 
   @Override
-  @Query("SELECT t FROM PoiTheme t WHERE t.disabled = FALSE OR t.disabled IS NULL")
+  @Query("SELECT t FROM PoiTheme t WHERE t.disabled = FALSE")
   List<PoiTheme> findAll();
 
   @Query("SELECT DISTINCT t FROM PoiTheme t JOIN Poi p ON p.theme.id = t.id WHERE p.draft = FALSE")
