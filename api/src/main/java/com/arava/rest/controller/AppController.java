@@ -14,8 +14,12 @@ import com.arava.server.dto.ArchipelagoDto;
 import com.arava.server.mapper.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -74,10 +78,33 @@ public class AppController {
                     .collect(Collectors.toList())
             )
             .themes(poiThemeRepository.findAllHavingPois().stream()
+                    .reduce(
+                            new ArrayList<PoiTheme>(),
+                            (accumulator, theme) -> {
+                              ArrayList<PoiTheme> themeList = new ArrayList<>(accumulator);
+                              appendThemeHierarchy(themeList, theme);
+                              return themeList;
+                            },
+                            (rhs, lhs) -> {
+                              ArrayList<PoiTheme> themeList = new ArrayList<>(lhs);
+                              themeList.addAll(rhs);
+                              return themeList;
+                            }
+                    )
+                    .stream()
                     .map(poiThemeMapper::deepMap)
                     .collect(Collectors.toList())
             )
             .build();
+  }
+
+  private void appendThemeHierarchy(List<PoiTheme> themes, PoiTheme theme) {
+    if (themes.stream().noneMatch(t -> t.getId().equals(theme.getId()))) {
+      themes.add(theme);
+    }
+    if (theme.getParent() != null) {
+      appendThemeHierarchy(themes, theme.getParent());
+    }
   }
 
 }

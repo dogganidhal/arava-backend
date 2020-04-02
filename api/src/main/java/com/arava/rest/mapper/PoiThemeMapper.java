@@ -67,4 +67,5 @@ public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
             )
             .build();
   }
+
 }

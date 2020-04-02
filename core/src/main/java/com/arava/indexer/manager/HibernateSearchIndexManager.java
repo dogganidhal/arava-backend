@@ -146,7 +146,7 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
 
     if (query.getThemeIds() != null && !query.getThemeIds().isEmpty()) {
       BooleanPredicateClausesStep<?> themesPredicate = query.getThemeIds().stream()
-              .reduce(factory.bool().minimumShouldMatchNumber(0),
+              .reduce(factory.bool(),
                       (predicateStep, themeId) -> predicateStep.should(factory.match()
                               .field("theme.id")
                               .matching(themeId)
@@ -155,7 +155,7 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
               );
       if (query.isFeatured()) {
         themesPredicate.should(factory.match()
-                .field("sponsored")
+                .field("featured")
                 .matching(true)
         );
       }

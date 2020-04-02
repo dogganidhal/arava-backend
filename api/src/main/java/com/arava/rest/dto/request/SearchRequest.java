@@ -28,14 +28,14 @@ public class SearchRequest {
   @Getter
   @Setter
   @Builder.Default
-  private boolean sponsored = false;
+  private boolean featured = false;
 
   public SearchQuery searchQuery() {
     return SearchQuery.builder()
             .query(title)
             .themeIds(themeIds)
             .islandId(island)
-            .featured(sponsored)
+            .featured(featured)
             .region(region != null ?
                     SearchQuery.Region.builder()
                             .southWest(region.getSouthWest())
