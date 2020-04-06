@@ -65,6 +65,10 @@ public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
                     mediaMapper.deepMap(object.getIcon()) :
                     null
             )
+            .subThemes(object.getSubThemes().stream()
+                    .map(this::partialMap)
+                    .collect(Collectors.toList())
+            )
             .build();
   }
 

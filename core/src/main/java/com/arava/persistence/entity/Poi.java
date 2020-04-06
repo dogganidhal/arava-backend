@@ -113,9 +113,9 @@ public class Poi extends LocalizableEntity {
   @OneToMany(cascade = CascadeType.ALL)
   private List<LocalizedResource<Poi>> description;
 
-  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
+  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
   private PoiTheme theme;
 
   @ManyToOne(cascade = CascadeType.ALL)
@@ -124,8 +124,6 @@ public class Poi extends LocalizableEntity {
   @OneToOne(cascade = CascadeType.ALL)
   private Media mainImage;
 
-  @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
-  @IndexedEmbedded
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "poi")
   private List<Rating> ratings;
 
@@ -135,9 +133,9 @@ public class Poi extends LocalizableEntity {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "poi")
   private List<Comment> comments;
 
-  @GenericField
   @Column
   @Latitude
+  @GenericField
   private Double latitude;
 
   @Column
