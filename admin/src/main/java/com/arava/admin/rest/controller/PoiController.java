@@ -2,15 +2,14 @@ package com.arava.admin.rest.controller;
 
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.admin.rest.manager.PoiManager;
+import com.arava.admin.rest.manager.PoiThemeManager;
 import com.arava.persistence.entity.Poi;
 import com.arava.persistence.entity.PoiTheme;
 import com.arava.persistence.repository.PoiRepository;
-import com.arava.persistence.repository.PoiThemeRepository;
 import com.arava.server.annotation.Admin;
 import com.arava.server.annotation.Authenticated;
 import com.arava.server.dto.request.PoiThemeWriteRequest;
 import com.arava.server.dto.request.PoiWriteRequest;
-import com.arava.server.exception.ApiClientException;
 import com.arava.server.jwt.UserPrincipal;
 import com.arava.server.mapper.Mapper;
 import lombok.SneakyThrows;
@@ -37,22 +36,19 @@ public class PoiController {
   private PoiRepository poiRepository;
 
   @Autowired
-  private PoiThemeRepository poiThemeRepository;
-
-  @Autowired
   private Mapper<PoiWriteRequest, Poi> writePoiMapper;
 
   @Autowired
   private Mapper<Poi, PoiDto> poiMapper;
 
   @Autowired
-  private Mapper<PoiThemeWriteRequest, PoiTheme> writePoiThemeMapper;
-
-  @Autowired
   private Mapper<PoiTheme, PoiDto.PoiTheme> poiThemeMapper;
 
   @Autowired
   private PoiManager poiManager;
+
+  @Autowired
+  private PoiThemeManager poiThemeManager;
 
   //region Poi CRUD operations
   
@@ -112,21 +108,19 @@ public class PoiController {
   @Admin
   @PostMapping("/theme")
   public void createPoiTheme(@Valid @RequestBody PoiThemeWriteRequest request) {
-    PoiTheme poiCategory = writePoiThemeMapper.deepMap(request);
-    poiThemeRepository.save(poiCategory);
+    poiThemeManager.createPoiTheme(request);
   }
 
   @Admin
   @PutMapping("/theme")
   public void updatePoiTheme(@Valid @RequestBody PoiThemeWriteRequest request) {
-    PoiTheme poiCategory = writePoiThemeMapper.deepMap(request);
-    poiThemeRepository.save(poiCategory);
+    poiThemeManager.editPoiTheme(request);
   }
 
   @Admin
   @GetMapping("/theme")
   public List<PoiDto.PoiTheme> listPoiThemes() {
-    return poiThemeRepository.findAll().stream()
+    return poiThemeManager.listPoiThemes().stream()
             .map(poiThemeMapper::deepMap)
             .collect(Collectors.toList());
   }
@@ -134,21 +128,13 @@ public class PoiController {
   @Admin
   @GetMapping("/theme/{themeId}")
   public PoiDto.PoiTheme getTheme(@PathVariable("themeId") String themeId) {
-    return poiThemeMapper.deepMap(
-            poiThemeRepository
-                    .findById(themeId)
-                    .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable)
-    );
+    return poiThemeMapper.deepMap(poiThemeManager.getById(themeId));
   }
 
   @Admin
   @DeleteMapping("/theme/{themeId}")
   public void deleteTheme(@PathVariable("themeId") String themeId) {
-    PoiTheme theme = poiThemeRepository
-            .findById(themeId)
-            .orElseThrow(ApiClientException.THEME_NOT_FOUND::getThrowable);
-    theme.setDisabled(true);
-    poiThemeRepository.save(theme);
+    poiThemeManager.deletePoiTheme(themeId);
   }
 
   //endregion

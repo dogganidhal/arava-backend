@@ -52,6 +52,7 @@ public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
                     null
             )
             .subThemes(object.getSubThemes().stream()
+                    .filter(subTheme -> !subTheme.getDisabled())
                     .map(this::partialMap)
                     .collect(Collectors.toList())
             )
@@ -79,6 +80,7 @@ public class PoiThemeMapper implements Mapper<PoiTheme, PoiDto.PoiTheme> {
                     null
             )
             .subThemes(object.getSubThemes().stream()
+                    .filter(subTheme -> !subTheme.getDisabled())
                     .map(this::partialMap)
                     .collect(Collectors.toList())
             )
