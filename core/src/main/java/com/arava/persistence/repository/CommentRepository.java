@@ -14,7 +14,10 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, String> {
 
-  @Query("SELECT c FROM Comment c WHERE c.status = 'UNKNOWN' OR c.status IS NULL")
+  @Query("SELECT c FROM Comment c WHERE c.status = 'UNKNOWN' OR c.status IS NULL AND c.disabled = FALSE")
   List<Comment> findPendingComments();
+
+  @Query("SELECT c FROM Comment c WHERE c.status = 'APPROVED' AND c.disabled = FALSE")
+  List<Comment> findArchiveComments();
 
 }

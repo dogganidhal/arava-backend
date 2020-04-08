@@ -13,4 +13,5 @@ public interface ContentManager {
   void addComment(String poiId, User user, RateCommentRequest request);
   void approveComment(String commentId);
   void declineComment(String commentId);
+  void deleteComment(String commentId);
 }

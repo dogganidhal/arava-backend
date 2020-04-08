@@ -67,4 +67,13 @@ public class ContentManagerImpl implements ContentManager {
     // TODO: Insert any logic after refusing the comment, ex : notify the user
   }
 
+  @Override
+  public void deleteComment(String commentId) {
+    Comment comment = commentRepository
+            .findById(commentId)
+            .orElseThrow(ApiClientException.COMMENT_NOT_FOUND::getThrowable);
+    comment.setDisabled(true);
+    commentRepository.save(comment);
+  }
+
 }

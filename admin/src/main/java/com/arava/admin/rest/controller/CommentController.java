@@ -41,6 +41,20 @@ public class CommentController {
   }
 
   @Admin
+  @GetMapping("/archive")
+  public List<CommentDto> listArchiveComments() {
+    return commentRepository.findArchiveComments().stream()
+            .map(commentMapper::deepMap)
+            .collect(Collectors.toList());
+  }
+
+  @Admin
+  @DeleteMapping("/{commentId}")
+  public void deleteComment(@PathVariable("commentId") String commentId) {
+    contentManager.deleteComment(commentId);
+  }
+
+  @Admin
   @PutMapping("/{commentId}/approve")
   public void approveComment(@PathVariable("commentId") String commentId) {
     contentManager.approveComment(commentId);

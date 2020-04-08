@@ -65,6 +65,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             )
             .comments(object.getComments().stream()
                     .filter(comment -> CommentStatus.APPROVED.equals(comment.getStatus()))
+                    .filter(comment -> !comment.getDisabled())
                     .map(commentMapper::deepMap)
                     .collect(Collectors.toList())
             )
