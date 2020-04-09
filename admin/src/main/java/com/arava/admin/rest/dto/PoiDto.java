@@ -34,7 +34,7 @@ public class PoiDto {
   private Boolean draft;
   private MediaDto mainImage;
   private List<MediaDto> medias;
-  private List<CommentDto> comments;
+  private List<RatingDto> comments;
   private UserDto owner;
   private RatingsDto ratings;
 

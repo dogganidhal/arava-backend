@@ -28,7 +28,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
   private Mapper<Media, MediaDto> mediaMapper;
 
   @Autowired
-  private Mapper<Comment, CommentDto> commentMapper;
+  private Mapper<Rating, CommentDto> commentMapper;
 
   @Autowired
   private Mapper<PoiTheme, PoiDto.PoiTheme> themeMapper;
@@ -63,9 +63,10 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     .longitude(object.getLongitude())
                     .build()
             )
-            .comments(object.getComments().stream()
-                    .filter(comment -> CommentStatus.APPROVED.equals(comment.getStatus()))
-                    .filter(comment -> !comment.getDisabled())
+            .comments(object.getRatings().stream()
+                    .filter(comment -> !comment.isDisabled() &&
+                            RatingStatus.APPROVED.equals(comment.getStatus())
+                    )
                     .map(commentMapper::deepMap)
                     .collect(Collectors.toList())
             )

@@ -2,7 +2,6 @@ package com.arava.business.manager.impl;
 
 import com.arava.business.manager.ContentManager;
 import com.arava.persistence.entity.*;
-import com.arava.persistence.repository.CommentRepository;
 import com.arava.persistence.repository.PoiRepository;
 import com.arava.persistence.repository.RatingRepository;
 import com.arava.server.dto.request.RateCommentRequest;
@@ -23,13 +22,10 @@ public class ContentManagerImpl implements ContentManager {
   private PoiRepository poiRepository;
 
   @Autowired
-  private CommentRepository commentRepository;
-
-  @Autowired
   private RatingRepository ratingRepository;
 
   @Override
-  public void addComment(String poiId, User user, RateCommentRequest request) {
+  public void addRating(String poiId, User user, RateCommentRequest request) {
     Poi poi = poiRepository
             .findById(poiId)
             .orElseThrow(ApiClientException.POI_NOT_FOUND::getThrowable);
@@ -37,43 +33,38 @@ public class ContentManagerImpl implements ContentManager {
             .author(user)
             .poi(poi)
             .score(request.getRating())
+            .comment(request.getComment())
             .build();
-    Comment comment = Comment.builder()
-            .author(user)
-            .poi(poi)
-            .content(request.getComment())
-            .build();
-    commentRepository.save(comment);
     ratingRepository.save(rating);
   }
 
   @Override
-  public void approveComment(String commentId) {
-    Comment comment = commentRepository
+  public void approveRating(String commentId) {
+    Rating comment = ratingRepository
             .findById(commentId)
             .orElseThrow(ApiClientException.COMMENT_NOT_FOUND::getThrowable);
-    comment.setStatus(CommentStatus.APPROVED);
-    commentRepository.save(comment);
+    comment.setStatus(RatingStatus.APPROVED);
+    ratingRepository.save(comment);
     // TODO: Insert any logic after approving the comment, ex : notify the user
   }
 
   @Override
-  public void declineComment(String commentId) {
-    Comment comment = commentRepository
+  public void declineRating(String commentId) {
+    Rating comment = ratingRepository
             .findById(commentId)
             .orElseThrow(ApiClientException.COMMENT_NOT_FOUND::getThrowable);
-    comment.setStatus(CommentStatus.DECLINED);
-    commentRepository.save(comment);
+    comment.setStatus(RatingStatus.DECLINED);
+    ratingRepository.save(comment);
     // TODO: Insert any logic after refusing the comment, ex : notify the user
   }
 
   @Override
-  public void deleteComment(String commentId) {
-    Comment comment = commentRepository
+  public void deleteRating(String commentId) {
+    Rating comment = ratingRepository
             .findById(commentId)
             .orElseThrow(ApiClientException.COMMENT_NOT_FOUND::getThrowable);
     comment.setDisabled(true);
-    commentRepository.save(comment);
+    ratingRepository.save(comment);
   }
 
 }

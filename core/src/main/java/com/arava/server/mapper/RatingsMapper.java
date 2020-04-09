@@ -20,6 +20,7 @@ public class RatingsMapper implements Mapper<List<Rating>, RatingsDto> {
   public RatingsDto deepMap(List<Rating> objects) {
     return RatingsDto.builder()
             .averageScore(objects.stream()
+                    .filter(rating -> rating.getScore() != null)
                     .reduce((lhs, rhs) -> Rating.builder()
                             .score((lhs.getScore() + rhs.getScore()) / 2)
                             .build()

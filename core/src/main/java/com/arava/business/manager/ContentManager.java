@@ -10,8 +10,8 @@ import com.arava.server.dto.request.RateCommentRequest;
  */
 
 public interface ContentManager {
-  void addComment(String poiId, User user, RateCommentRequest request);
-  void approveComment(String commentId);
-  void declineComment(String commentId);
-  void deleteComment(String commentId);
+  void addRating(String poiId, User user, RateCommentRequest request);
+  void approveRating(String commentId);
+  void declineRating(String commentId);
+  void deleteRating(String commentId);
 }

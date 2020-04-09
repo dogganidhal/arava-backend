@@ -27,5 +27,6 @@ public class CommentDto {
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   private LocalDateTime date;
   private CommentAuthorDto author;
+  private Double score;
 
 }

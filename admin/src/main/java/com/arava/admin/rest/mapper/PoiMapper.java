@@ -1,6 +1,6 @@
 package com.arava.admin.rest.mapper;
 
-import com.arava.admin.rest.dto.CommentDto;
+import com.arava.admin.rest.dto.RatingDto;
 import com.arava.admin.rest.dto.LocalizedResourceDto;
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.admin.rest.dto.UserDto;
@@ -29,7 +29,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
   private Mapper<PoiTheme, PoiDto.PoiTheme> poiThemeMapper;
 
   @Autowired
-  private Mapper<Comment, CommentDto> commentMapper;
+  private Mapper<Rating, RatingDto> commentMapper;
 
   @Autowired
   private Mapper<Island, IslandDto> islandMapper;
@@ -68,7 +68,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
                     mediaMapper.deepMap(object.getMainImage()) :
                     null
             )
-            .comments(object.getComments().stream()
+            .comments(object.getRatings().stream()
                     .map(commentMapper::deepMap)
                     .collect(Collectors.toList())
             )

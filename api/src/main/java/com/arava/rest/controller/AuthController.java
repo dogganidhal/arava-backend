@@ -82,8 +82,8 @@ public class AuthController {
 
     User user = User.builder()
             .email(signUpRequest.getEmail())
-            .firstName(signUpRequest.getFirstName())
-            .lastName(signUpRequest.getLastName())
+            .firstName(signUpRequest.getFirstName().trim())
+            .lastName(signUpRequest.getLastName().trim())
             .passwordHash(passwordEncoder.encode(signUpRequest.getPassword()))
             .build();
 

@@ -65,7 +65,7 @@ public class AppController {
                             .id(archipelago.getId())
                             .name(archipelago.getName())
                             .created(archipelago.getCreated())
-                            .disabled(archipelago.getDisabled())
+                            .disabled(archipelago.isDisabled())
                             .updated(archipelago.getUpdated())
                             .islands(archipelago.getIslands().stream()
                                     .filter(island -> islandRepository.countActivePois(island.getId()) > 0)

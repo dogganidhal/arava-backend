@@ -2,6 +2,7 @@ package com.arava.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,7 +42,8 @@ public abstract class AbstractEntity {
   @Column
   private LocalDateTime updated;
 
+  @Getter
   @Column
-  private Boolean disabled = false;
+  private boolean disabled = false;
 
 }

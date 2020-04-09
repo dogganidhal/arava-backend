@@ -1,10 +1,10 @@
 package com.arava.admin.rest.mapper;
 
-import com.arava.admin.rest.dto.CommentDto;
+import com.arava.admin.rest.dto.RatingDto;
 import com.arava.admin.rest.dto.PoiDto;
 import com.arava.admin.rest.dto.UserDto;
-import com.arava.persistence.entity.Comment;
 import com.arava.persistence.entity.Poi;
+import com.arava.persistence.entity.Rating;
 import com.arava.persistence.entity.User;
 import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class CommentMapper implements Mapper<Comment, CommentDto> {
+public class CommentMapper implements Mapper<Rating, RatingDto> {
 
   @Autowired
   private Mapper<User, UserDto> userMapper;
@@ -26,16 +26,17 @@ public class CommentMapper implements Mapper<Comment, CommentDto> {
   private Mapper<Poi, PoiDto> poiMapper;
 
   @Override
-  public CommentDto deepMap(Comment object) {
-    return CommentDto.builder()
+  public RatingDto deepMap(Rating object) {
+    return RatingDto.builder()
             .id(object.getId())
             .author(userMapper.deepMap(object.getAuthor()))
-            .content(object.getContent())
+            .comment(object.getComment())
+            .score(object.getScore())
             .dateTime(object.getCreated())
             .poi(poiMapper.partialMap(object.getPoi())) // Avoid overflow
             .status(object.getStatus() != null ?
-                    CommentDto.Status.values()[object.getStatus().ordinal()] :
-                    CommentDto.Status.UNKNOWN
+                    RatingDto.Status.values()[object.getStatus().ordinal()] :
+                    RatingDto.Status.UNKNOWN
             )
             .build();
   }

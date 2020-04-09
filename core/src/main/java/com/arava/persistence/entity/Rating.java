@@ -1,9 +1,6 @@
 package com.arava.persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
@@ -26,8 +23,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public class Rating extends AbstractEntity {
 
-  @GenericField
   @Column
+  @GenericField
   private Double score;
 
   @ManyToOne(cascade = CascadeType.ALL)
@@ -36,5 +33,13 @@ public class Rating extends AbstractEntity {
   @IndexedEmbedded
   @ManyToOne(cascade = CascadeType.ALL)
   private User author;
+
+  @Column(length = 16384)
+  private String comment;
+
+  @Column
+  @Builder.Default
+  @Enumerated(EnumType.STRING)
+  private RatingStatus status = RatingStatus.UNKNOWN;
 
 }

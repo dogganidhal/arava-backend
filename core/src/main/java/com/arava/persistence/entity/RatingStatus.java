@@ -6,7 +6,7 @@ package com.arava.persistence.entity;
  * All rights reserved.
  */
 
-public enum CommentStatus {
+public enum RatingStatus {
   APPROVED,
   DECLINED,
   UNKNOWN

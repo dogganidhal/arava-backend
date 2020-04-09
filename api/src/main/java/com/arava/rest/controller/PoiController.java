@@ -79,7 +79,7 @@ public class PoiController {
     User user = userRepository
             .findById(userPrincipal.getId())
             .orElseThrow(ApiServerException.INTERNAL_SERVER_ERROR::getThrowable);
-    contentManager.addComment(poiId, user, request);
+    contentManager.addRating(poiId, user, request);
   }
 
 }

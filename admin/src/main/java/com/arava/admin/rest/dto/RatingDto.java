@@ -17,14 +17,15 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
+public class RatingDto {
 
   private String id;
   private UserDto author;
   private PoiDto poi;
-  private String content;
+  private String comment;
   private LocalDateTime dateTime;
   private Status status;
+  private Double score;
 
   public enum Status {
     APPROVED,

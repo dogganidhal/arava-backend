@@ -1,9 +1,9 @@
 package com.arava.admin.rest.controller;
 
-import com.arava.admin.rest.dto.CommentDto;
+import com.arava.admin.rest.dto.RatingDto;
 import com.arava.business.manager.ContentManager;
-import com.arava.persistence.entity.Comment;
-import com.arava.persistence.repository.CommentRepository;
+import com.arava.persistence.entity.Rating;
+import com.arava.persistence.repository.RatingRepository;
 import com.arava.server.annotation.Admin;
 import com.arava.server.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,46 +24,46 @@ import java.util.stream.Collectors;
 public class CommentController {
 
   @Autowired
-  private CommentRepository commentRepository;
+  private RatingRepository ratingRepository;
 
   @Autowired
-  private Mapper<Comment, CommentDto> commentMapper;
+  private Mapper<Rating, RatingDto> ratingMapper;
 
   @Autowired
   private ContentManager contentManager;
 
   @Admin
   @GetMapping("/pending")
-  public List<CommentDto> listUnapprovedComments() {
-    return commentRepository.findPendingComments().stream()
-            .map(commentMapper::deepMap)
+  public List<RatingDto> listUnapprovedRatings() {
+    return ratingRepository.findPendingRatings().stream()
+            .map(ratingMapper::deepMap)
             .collect(Collectors.toList());
   }
 
   @Admin
   @GetMapping("/archive")
-  public List<CommentDto> listArchiveComments() {
-    return commentRepository.findArchiveComments().stream()
-            .map(commentMapper::deepMap)
+  public List<RatingDto> listArchiveRatings() {
+    return ratingRepository.findArchiveRatings().stream()
+            .map(ratingMapper::deepMap)
             .collect(Collectors.toList());
   }
 
   @Admin
-  @DeleteMapping("/{commentId}")
-  public void deleteComment(@PathVariable("commentId") String commentId) {
-    contentManager.deleteComment(commentId);
+  @DeleteMapping("/{ratingId}")
+  public void deleteRating(@PathVariable("ratingId") String commentId) {
+    contentManager.deleteRating(commentId);
   }
 
   @Admin
-  @PutMapping("/{commentId}/approve")
-  public void approveComment(@PathVariable("commentId") String commentId) {
-    contentManager.approveComment(commentId);
+  @PutMapping("/{ratingId}/approve")
+  public void approveRating(@PathVariable("ratingId") String ratingId) {
+    contentManager.approveRating(ratingId);
   }
 
   @Admin
-  @PutMapping("/{commentId}/decline")
-  public void declineComment(@PathVariable("commentId") String commentId) {
-    contentManager.declineComment(commentId);
+  @PutMapping("/{ratingId}/decline")
+  public void declineRating(@PathVariable("ratingId") String ratingId) {
+    contentManager.declineRating(ratingId);
   }
 
 }

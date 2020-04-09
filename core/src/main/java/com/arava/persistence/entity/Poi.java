@@ -130,9 +130,6 @@ public class Poi extends LocalizableEntity {
   @OneToMany(cascade = CascadeType.ALL)
   private List<Media> medias;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poi")
-  private List<Comment> comments;
-
   @Column
   @Latitude
   @GenericField

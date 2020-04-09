@@ -94,7 +94,7 @@ public class UserController {
 
   @Authenticated
   @PutMapping
-  public void getUser(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid UpdateProfileRequest request) {
+  public void updateUser(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid UpdateProfileRequest request) {
     accessManager.updateUserProfile(userPrincipal.getId(), request);
   }
 
