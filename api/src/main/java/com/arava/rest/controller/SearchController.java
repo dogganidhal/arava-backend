@@ -2,7 +2,6 @@ package com.arava.rest.controller;
 
 import com.arava.indexer.manager.SearchIndexManager;
 import com.arava.persistence.entity.Poi;
-import com.arava.rest.dto.PoiDto;
 import com.arava.rest.dto.request.SearchRequest;
 import com.arava.rest.dto.response.SearchResponse;
 import com.arava.server.mapper.Mapper;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Nidhal Dogga
@@ -28,30 +26,18 @@ public class SearchController {
   private SearchIndexManager searchIndexManager;
 
   @Autowired
-  private Mapper<Poi, PoiDto> poiMapper;
+  private Mapper<List<Poi>, SearchResponse> searchResponseMapper;
 
   @PostMapping
   public SearchResponse searchPois(@RequestBody SearchRequest request) {
-    List<PoiDto> pois = searchIndexManager.searchPois(request.searchQuery())
-            .stream()
-            .map(poiMapper::deepMap)
-            .collect(Collectors.toList());
-    return SearchResponse.builder()
-            .count(pois.size())
-            .pois(pois)
-            .build();
+    List<Poi> pois = searchIndexManager.searchPois(request.searchQuery());
+    return searchResponseMapper.deepMap(pois);
   }
 
   @GetMapping("/similar/{poiId}")
   public SearchResponse getSimilar(@PathVariable("poiId") String poiId) {
-    List<PoiDto> pois = searchIndexManager.getSimilarPois(poiId)
-            .stream()
-            .map(poiMapper::deepMap)
-            .collect(Collectors.toList());
-    return SearchResponse.builder()
-            .count(pois.size())
-            .pois(pois)
-            .build();
+    List<Poi> pois = searchIndexManager.getSimilarPois(poiId);
+    return searchResponseMapper.deepMap(pois);
   }
 
 }

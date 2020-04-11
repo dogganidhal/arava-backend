@@ -31,6 +31,7 @@ public class PoiDto {
   private Boolean sponsored;
   private Boolean featured;
   private Boolean activity;
+  private Boolean premium;
   private Boolean draft;
   private MediaDto mainImage;
   private List<MediaDto> medias;

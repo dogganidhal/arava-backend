@@ -27,6 +27,7 @@ public class PoiMerger implements EntityMerger<Poi> {
             .medias(pick(src.getMedias(), dest.getMedias()))
             .sponsored(pick(src.isSponsored(), dest.isSponsored()))
             .activity(pick(src.isActivity(), dest.isActivity()))
+            .premium(pick(src.isPremium(), dest.isPremium()))
             .longitude(pick(src.getLongitude(), dest.getLongitude()))
             .latitude(pick(src.getLatitude(), dest.getLatitude()))
             .ratings(pick(src.getRatings(), dest.getRatings()))

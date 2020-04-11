@@ -87,6 +87,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             .ratings(ratingsMapper.deepMap(object.getRatings()))
             .sponsored(object.isSponsored())
             .activity(object.isActivity())
+            .premium(object.isPremium())
             .build();
   }
 
@@ -127,6 +128,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             .ratings(ratingsMapper.deepMap(object.getRatings()))
             .sponsored(object.isSponsored())
             .activity(object.isActivity())
+            .premium(object.isPremium())
             .build();
   }
 

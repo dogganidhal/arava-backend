@@ -22,6 +22,8 @@ import java.util.List;
 public class SearchResponse {
 
   private List<PoiDto> pois;
+  private List<PoiDto> premiumPois;
   private Integer count;
+  private Integer premiumCount;
 
 }

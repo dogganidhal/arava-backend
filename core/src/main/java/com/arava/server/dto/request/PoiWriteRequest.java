@@ -49,6 +49,7 @@ public class PoiWriteRequest {
   private Boolean sponsored;
   private Boolean featured;
   private Boolean activity;
+  private Boolean premium;
 
   @Builder.Default
   private Boolean draft = true;

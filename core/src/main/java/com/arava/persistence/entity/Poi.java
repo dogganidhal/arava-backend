@@ -61,6 +61,16 @@ public class Poi extends LocalizableEntity {
   private boolean sponsored = false;
 
   /**
+     * Temporary premium tagging
+   */
+
+  @Column
+  @Getter
+  @ColumnDefault(value = "FALSE")
+  @Builder.Default
+  private boolean premium = false;
+
+  /**
    * "Activité" poi (paid subscription level 2)
    */
 
