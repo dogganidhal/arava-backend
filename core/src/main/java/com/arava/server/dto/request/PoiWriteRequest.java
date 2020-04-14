@@ -50,6 +50,7 @@ public class PoiWriteRequest {
   private Boolean featured;
   private Boolean activity;
   private Boolean premium;
+  private Boolean defaultPremium;
 
   @Builder.Default
   private Boolean draft = true;

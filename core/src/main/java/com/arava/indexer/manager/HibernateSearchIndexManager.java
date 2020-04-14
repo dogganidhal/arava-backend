@@ -102,7 +102,18 @@ public class HibernateSearchIndexManager implements SearchIndexManager {
 
     if (query.isFeatured() && (query.getThemeIds() == null || query.getThemeIds().isEmpty())) {
       predicate
-              .must(factory.match()
+              .minimumShouldMatchNumber(1)
+              .should(factory.bool()
+                      .must(factory.match()
+                              .field("premium")
+                              .matching(true)
+                      )
+                      .must(factory.match()
+                              .field("defaultPremium")
+                              .matching(true)
+                      )
+              )
+              .should(factory.match()
                       .field("featured")
                       .matching(true)
               );

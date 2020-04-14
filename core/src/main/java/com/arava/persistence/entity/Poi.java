@@ -44,10 +44,10 @@ public class Poi extends LocalizableEntity {
   private LocalDateTime updated;
 
   @Column
-  @GenericField
   @Getter
-  @ColumnDefault(value = "FALSE")
+  @GenericField
   @Builder.Default
+  @ColumnDefault(value = "FALSE")
   private boolean disabled = false;
 
   /**
@@ -56,8 +56,8 @@ public class Poi extends LocalizableEntity {
 
   @Column
   @Getter
-  @ColumnDefault(value = "FALSE")
   @Builder.Default
+  @ColumnDefault(value = "FALSE")
   private boolean sponsored = false;
 
   /**
@@ -66,9 +66,21 @@ public class Poi extends LocalizableEntity {
 
   @Column
   @Getter
-  @ColumnDefault(value = "FALSE")
+  @GenericField
   @Builder.Default
+  @ColumnDefault(value = "FALSE")
   private boolean premium = false;
+
+  /**
+     * Default temporary premium tagging (returned when no theme is specified)
+   */
+
+  @Column
+  @Getter
+  @GenericField
+  @Builder.Default
+  @ColumnDefault(value = "FALSE")
+  private boolean defaultPremium = false;
 
   /**
    * "Activité" poi (paid subscription level 2)
@@ -76,8 +88,8 @@ public class Poi extends LocalizableEntity {
 
   @Column
   @Getter
-  @ColumnDefault(value = "FALSE")
   @Builder.Default
+  @ColumnDefault(value = "FALSE")
   private boolean activity = false;
 
   /**

@@ -88,6 +88,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             .sponsored(object.isSponsored())
             .activity(object.isActivity())
             .premium(object.isPremium())
+            .defaultPremium(object.isDefaultPremium())
             .build();
   }
 
@@ -129,6 +130,7 @@ public class PoiMapper implements Mapper<Poi, PoiDto> {
             .sponsored(object.isSponsored())
             .activity(object.isActivity())
             .premium(object.isPremium())
+            .defaultPremium(object.isDefaultPremium())
             .build();
   }
 

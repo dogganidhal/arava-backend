@@ -80,6 +80,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
             .sponsored(object.getSponsored())
             .activity(object.getActivity())
             .premium(object.getPremium())
+            .defaultPremium(object.getDefaultPremium())
             .details(detailsMapper.deepMap(object.getDetails()))
             .title(localizedResourceReverseMapper.reverseMap(object.getTitle()))
             .description(object.getDescription() != null ?
