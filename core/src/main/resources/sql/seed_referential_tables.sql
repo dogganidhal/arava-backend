@@ -23,12 +23,12 @@ ON CONFLICT DO NOTHING;
 
 -- INSERT DEFAULT ARCHIPELAGOS
 
-INSERT INTO archipelago (id, name)
-VALUES ('fb9bdda0-df9e-49f1-b737-4cf5bc5d6bf4', 'Archipel de la Société'),
-       ('49b263b0-0326-496d-bfa1-3a3986797bba', 'Archipel Australes'),
-       ('02cbe4a1-fef8-46ec-b89e-30ad801cfd25', 'Archipel des Tuamotu'),
-       ('c75f6eeb-0ca7-4d79-911c-fbba6979a1f3', 'Archipel des Marquises'),
-       ('32b915b5-6fbd-4ece-b660-acab06391247', 'Archipel des Gambiers')
+INSERT INTO archipelago (id, disabled, name)
+VALUES ('fb9bdda0-df9e-49f1-b737-4cf5bc5d6bf4', FALSE, 'Archipel de la Société'),
+       ('49b263b0-0326-496d-bfa1-3a3986797bba', FALSE, 'Archipel Australes'),
+       ('02cbe4a1-fef8-46ec-b89e-30ad801cfd25', FALSE, 'Archipel des Tuamotu'),
+       ('c75f6eeb-0ca7-4d79-911c-fbba6979a1f3', FALSE, 'Archipel des Marquises'),
+       ('32b915b5-6fbd-4ece-b660-acab06391247', FALSE, 'Archipel des Gambiers')
 ON CONFLICT DO NOTHING;
 
 -- INSERT DEFAULT ISLAND IMAGES

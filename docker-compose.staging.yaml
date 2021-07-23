@@ -2,40 +2,62 @@ version: '3.1'
 
 services:
   arava-api:
-    image: docker.artifactory.ndogga.com/arava/arava-api:latest
+    image: dogganidhal/arava-api
     restart: always
+    depends_on:
+      - elastic
+      - db
     ports:
-      - 10100:8080
+      - 8080:8080
     environment:
-      SPRING_PROFILES_ACTIVE: staging
+      SPRING_PROFILES_ACTIVE: production
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/arava
-      SPRING_DATASOURCE_USERNAME: arava-admin
-      SPRING_DATASOURCE_PASSWORD: Admin@rava
-      ELASTICSEARCH_PASSWORD:
-      JWT_SECRET:
+      SPRING_DATASOURCE_USERNAME: 'arava-admin'
+      SPRING_DATASOURCE_PASSWORD: 'Admin@rava'
+      ARAVA_SERVER_URL: https://api.arava-tahiti.com
+      ELASTICSEARCH_HOST: elastic
   arava-admin-api:
-    image: docker.artifactory.ndogga.com/arava/arava-admin-api:latest
+    image: dogganidhal/arava-admin-api
     restart: always
+    depends_on:
+      - elastic
+      - db
     ports:
-      - 10104:8080
+      - 8081:8080
     environment:
-      SPRING_PROFILES_ACTIVE: staging
+      SPRING_PROFILES_ACTIVE: production
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/arava
-      SPRING_DATASOURCE_USERNAME: arava-admin
-      SPRING_DATASOURCE_PASSWORD: Admin@rava
-      ELASTICSEARCH_PASSWORD:
-      JWT_SECRET:
+      SPRING_DATASOURCE_USERNAME: 'arava-admin'
+      SPRING_DATASOURCE_PASSWORD: 'Admin@rava'
+      ARAVA_SERVER_URL: https://api.admin.arava-tahiti.com
+      ELASTICSEARCH_HOST: elastic
   arava-admin:
-    image: docker.artifactory.ndogga.com/arava/arava-admin:latest
+    image: dogganidhal/arava-admin
     restart: always
     ports:
-      - 10103:5000
-  db:
-    image: postgres
+      - 5000:5000
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
     restart: always
     environment:
-      - POSTGRES_DB=arava
-      - POSTGRES_USER=arava-admin
-      - POSTGRES_PASSWORD=Admin@rava
+      "discovery.type": single-node
+    volumes:
+    - elastic:/usr/share/elasticsearch/data
     ports:
-      - 10106:5432
+      - 9200:9200
+      - 9300:9300
+  db:
+    image: postgres:12
+    environment:
+      PG_SYSTEM_MAX_CONNECTIONS: '500'
+      POSTGRES_DB: arava
+      POSTGRES_PASSWORD: 'Admin@rava'
+      POSTGRES_USER: 'arava-admin'
+    volumes:
+    - database:/var/lib/postgresql/data
+    ports:
+    - 5432:5432
+
+volumes:
+  database:
+  elastic:
