@@ -75,6 +75,7 @@ public class WritePoiMapper implements Mapper<PoiWriteRequest, Poi> {
                     mediaMapper.deepMap(object.getMainImage()) :
                     null
             )
+            .light(object.isLight())
             .draft(object.getDraft())
             .featured(object.getFeatured())
             .sponsored(object.getSponsored())

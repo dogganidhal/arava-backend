@@ -30,6 +30,7 @@ public class PoiDto {
   private PoiTheme theme;
   private LatLng coordinate;
   private String island;
+  private boolean light;
   private Boolean sponsored;
   private Boolean featured;
   private Boolean activity;

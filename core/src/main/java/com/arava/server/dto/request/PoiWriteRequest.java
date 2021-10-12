@@ -46,6 +46,8 @@ public class PoiWriteRequest {
   private String themeId;
   private String ownerId;
 
+  @Builder.Default
+  private boolean light = true;
   private Boolean sponsored;
   private Boolean featured;
   private Boolean activity;

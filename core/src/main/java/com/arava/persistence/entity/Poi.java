@@ -50,6 +50,13 @@ public class Poi extends LocalizableEntity {
   @ColumnDefault(value = "FALSE")
   private boolean disabled = false;
 
+  @Column
+  @Getter
+  @GenericField
+  @Builder.Default
+  @ColumnDefault(value = "TRUE")
+  private boolean light = true;
+
   /**
    * "À la une" poi (paid subscription level 1)
    */

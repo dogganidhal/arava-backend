@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by Nidhal Dogga
@@ -43,14 +44,17 @@ public class CoreConfiguration {
   @Bean
   @Primary
   public RestHighLevelClient elasticSearchClient() {
-    CredentialsProvider esCredentialsProvider = new BasicCredentialsProvider();
-    esCredentialsProvider.setCredentials(AuthScope.ANY,
-            new UsernamePasswordCredentials(esUsername, esPassword));
     RestClientBuilder builder = RestClient
             .builder(new HttpHost(esHost, esPort, esProtocol))
-            .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
-                    .setDefaultCredentialsProvider(esCredentialsProvider)
-            );
+            .setHttpClientConfigCallback(httpClientBuilder -> {
+                if (!StringUtils.isEmpty(esUsername) && !StringUtils.isEmpty(esPassword)) {
+                  CredentialsProvider esCredentialsProvider = new BasicCredentialsProvider();
+                  esCredentialsProvider.setCredentials(AuthScope.ANY,
+                          new UsernamePasswordCredentials(esUsername, esPassword));
+                  httpClientBuilder.setDefaultCredentialsProvider(esCredentialsProvider);
+                }
+                return httpClientBuilder;
+            });
     return new RestHighLevelClient(builder);
   }
 

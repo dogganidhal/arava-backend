@@ -6,8 +6,8 @@ spring:
     default-property-inclusion: non_null
   datasource:
     url: jdbc:postgresql://localhost:5432/arava
-    username: root
-    password: root
+    username: postgres
+    password: admin
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
   jpa:
@@ -17,16 +17,20 @@ spring:
     properties:
       hibernate:
         search:
-          default_backend: fs
+          default_backend: es
           automatic_indexing:
             synchronization:
               strategy: async
           backends:
-            fs:
-              type: lucene
-              directory:
-                type: local-filesystem
-                root: ./data/lucene
+            es:
+              type: elasticsearch
+              indexwriter:
+                infostream: true
+              log:
+                json_pretty_printing: true
+              index_defaults:
+                lifecycle:
+                  minimal_required_status: yellow
   main:
     allow-bean-definition-overriding: true
 jwt:
@@ -47,7 +51,6 @@ logging:
           core: TRACE
 
 elasticsearch:
-  host: es.ndogga.com
-  port: 443
-  protocol: https
-  username: elastic
+  host: localhost
+  port: 31015
+  protocol: http
